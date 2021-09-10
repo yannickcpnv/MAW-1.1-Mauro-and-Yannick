@@ -1,2 +1,17 @@
 {
+    "authors": [
+        {
+            "name": "Yannick Baudraz",
+            "email": "Yannick.BAUDRAZ@cpnv.ch"
+        },
+        {
+            "name": "Mauro Santos",
+            "email": "Mauro-Alexandre.COSTA-DOS-SANTOS@cpnv.ch"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Looper\\Controllers\\": "controllers"
+        }
+    }
 }
