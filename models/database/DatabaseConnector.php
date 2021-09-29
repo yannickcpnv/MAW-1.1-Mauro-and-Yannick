@@ -1,6 +1,6 @@
 <?php
 
-namespace Looper\Models;
+namespace Looper\Models\database;
 
 use PDO;
 use PDOStatement;
@@ -8,12 +8,15 @@ use PDOStatement;
 /**
  * This class interact with the SQL database.
  */
-class Database
+class DatabaseConnector
 {
 
+    //region Fields
     private PDO|null     $connection;
     private PDOStatement $statement;
+    //endregion
 
+    //region Constructor
     /**
      * Instantiate a new database object.
      *
@@ -25,20 +28,23 @@ class Database
     {
         $this->connection = new PDO($dsn, $username, $password);
         $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $this->connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     }
+    //endregion
 
+    //region Methods
     /**
      * Returns the result of an executed query.
      *
      * @param string     $query The query, be correctly build for sql syntax.
+     * @param string     $className  Name of the class type wanted in return.
      * @param array|null $queryArray
      *
      * @return array
      */
-    public function fetchRecords(string $query, array $queryArray = null): array
+    public function fetchRecords(string $query, string $className, array $queryArray = null): array
     {
         $this->executeQuery($query, $queryArray);
+        $this->statement->setFetchMode(PDO::FETCH_CLASS, $className);
         return $this->statement->fetchAll();
     }
 
@@ -46,13 +52,15 @@ class Database
      * Return a single row of an executed query.
      *
      * @param string     $query The query, be correctly build for sql syntax.
+     * @param string     $className  Name of the class type wanted in return.
      * @param array|null $queryArray
      *
      * @return array
      */
-    public function fetchOne(string $query, array $queryArray = null): array
+    public function fetchOne(string $query, string $className, array $queryArray = null): array
     {
         $this->executeQuery($query, $queryArray);
+        $this->statement->setFetchMode(PDO::FETCH_CLASS, $className);
         return $this->statement->fetch();
     }
 
@@ -98,4 +106,5 @@ class Database
         $this->statement = $this->connection->prepare($query);
         $this->statement->execute($queryArray);
     }
+    //endregion
 }

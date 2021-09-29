@@ -1,6 +1,6 @@
 <?php
 
-namespace Looper\Models;
+namespace Looper\Models\database\entities;
 
 abstract class ExerciseStatus
 {
