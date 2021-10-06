@@ -2,9 +2,11 @@
 
 namespace Looper\Models\database\entities;
 
+use PDOException;
 use Looper\Models\traits\Arrayable;
 use Looper\Models\traits\Hydratable;
 use Looper\Models\traits\HasAccessors;
+use Looper\Models\database\DatabaseConnector;
 
 abstract class AbstractEntity
 {
@@ -19,6 +21,11 @@ abstract class AbstractEntity
     //endregion
 
     //region Constructors
+    /**
+     * Instantiate an Entity class -- can only be used in child classes.
+     *
+     * @param string[] $fields
+     */
     public function __construct(array $fields)
     {
         self::hydrate($fields);
@@ -33,27 +40,99 @@ abstract class AbstractEntity
      */
     public function getAll(): array
     {
-        return [];
+        $query = "SELECT * FROM " . static::TABLE_NAME;
+
+        return self::createDatabase()->fetchRecords($query, static::class);
     }
 
-    public function get(int $id): AbstractEntity
+    /**
+     * Retrieve an entity from the database.
+     *
+     * @param int $id - The ID.
+     *
+     * @return AbstractEntity|null The entity
+     */
+    public function get(int $id): ?AbstractEntity
     {
-        return $this;
+        $query = "SELECT * FROM " . static::TABLE_NAME . " WHERE id= :id";
+        $queryArray = ["id" => $id];
+        $entityFound = self::createDatabase()->fetchOne($query, static::class, $queryArray);
+
+        return $entityFound ?: null;
     }
 
+    /**
+     * Create a new entity in the database.
+     *
+     * @return bool True if success, otherwise false.
+     */
     public function create(): bool
     {
-        return false;
+        $columns = [];
+        $valueParams = [];
+        foreach ($this->toArray() as $key => $value) {
+            array_push($columns, $key);
+            array_push($valueParams, ":$key");
+        }
+        $columns = implode(',', $columns);
+        $valueParams = implode(',', $valueParams);
+        $query = "INSERT INTO " . static::TABLE_NAME . " ($columns) VALUES ($valueParams)";
+
+        try {
+            $this->id = self::createDatabase()->insert($query, $this->toArray());
+            return true;
+        } catch (PDOException) {
+            return false;
+        }
     }
 
+    /**
+     * Update the entity in the database.
+     *
+     * @return bool True if success, otherwise false.
+     */
     public function save(): bool
     {
-        return false;
+        $array = [];
+        foreach ($this->toArray() as $key => $value) {
+            if ($key != 'id') {
+                array_push($array, "$key=:$key");
+            }
+        }
+        $setLine = implode(',', $array);
+        $query = "UPDATE " . static::TABLE_NAME . " SET $setLine WHERE id=:id";
+
+        try {
+            self::createDatabase()->update($query, $this->toArray());
+            return true;
+        } catch (PDOException) {
+            return false;
+        }
     }
 
+    /**
+     * Delete the entity from the database.
+     *
+     * @param AbstractEntity $model
+     *
+     * @return bool
+     */
     public function delete(AbstractEntity $model): bool
     {
-        return false;
+        $query = "DELETE FROM " . static::TABLE_NAME . " WHERE id=:id";
+        $queryArray = ["id" => $model->id];
+
+        try {
+            self::createDatabase()->delete($query, $queryArray);
+            return true;
+        } catch (PDOException) {
+            return false;
+        }
+    }
+
+    private static function createDatabase(): DatabaseConnector
+    {
+        return new DatabaseConnector($_ENV['DB_DSN'], $_ENV['DB_USER_NAME'], $_ENV['DB_USER_PWD']);
     }
     //endregion
 }

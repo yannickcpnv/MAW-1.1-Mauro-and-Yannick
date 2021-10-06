@@ -12,11 +12,15 @@
     "autoload": {
         "psr-4": {
             "Looper\\Controllers\\": "controllers",
-            "Looper\\Models\\": "models"
+            "Looper\\Models\\": [
+                "models",
+                "test/models"
+            ]
         }
     },
     "require": {
         "ext-pdo": "*",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.5",
+        "vlucas/phpdotenv": "^5.3"
     }
 }
