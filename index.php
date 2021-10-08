@@ -14,7 +14,7 @@ if ($action) {
         case 'take-exercise':
         case 'create-exercise':
         case 'edit-exercise':
-        case 'manage-exercise':
+        case 'manage-exercises':
         case 'list-takes-exercises':
         case 'detail-take-exercises':
         case 'detail-question-exercises':
