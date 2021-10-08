@@ -7,8 +7,8 @@ class Question extends AbstractEntity
 
     protected const TABLE_NAME = 'questions';
 
-    private string   $label;
-    private int      $questionType;
-    private Exercise $exercise;
-    private array    $answers;
+    protected string   $label;
+    protected int      $questionType;
+    protected Exercise $exercise;
+    protected array    $answers;
 }

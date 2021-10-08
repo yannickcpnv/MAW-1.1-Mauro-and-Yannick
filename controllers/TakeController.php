@@ -2,7 +2,7 @@
 
 namespace Looper\Controllers;
 
-class TakeController
+class TakeController extends ViewController
 {
 
 }

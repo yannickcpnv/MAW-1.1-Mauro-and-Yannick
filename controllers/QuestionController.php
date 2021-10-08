@@ -2,7 +2,7 @@
 
 namespace Looper\Controllers;
 
-class QuestionController
+class QuestionController extends ViewController
 {
 
 }
