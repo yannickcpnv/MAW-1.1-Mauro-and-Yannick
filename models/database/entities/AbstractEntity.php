@@ -10,7 +10,6 @@ use Looper\Models\database\DatabaseConnector;
 
 abstract class AbstractEntity
 {
-
     use HasAccessors, Hydratable, Arrayable;
 
     //region Fields
@@ -26,7 +25,7 @@ abstract class AbstractEntity
      *
      * @param string[] $fields
      */
-    public function __construct(array $fields)
+    public function __construct(array $fields = [])
     {
         self::hydrate($fields);
     }
@@ -38,7 +37,7 @@ abstract class AbstractEntity
      *
      * @return AbstractEntity[] An array of all models.
      */
-    public function getAll(): array
+    public static function getAll(): array
     {
         $query = "SELECT * FROM " . static::TABLE_NAME;
 
@@ -52,7 +51,7 @@ abstract class AbstractEntity
      *
      * @return AbstractEntity|null The entity
      */
-    public function get(int $id): ?AbstractEntity
+    public static function get(int $id): ?AbstractEntity
     {
         $query = "SELECT * FROM " . static::TABLE_NAME . " WHERE id= :id";
         $queryArray = ["id" => $id];
@@ -81,7 +80,7 @@ abstract class AbstractEntity
         try {
             $this->id = self::createDatabase()->insert($query, $this->toArray());
             return true;
-        } catch (PDOException) {
+        } catch (PDOException $e) {
             return false;
         }
     }
@@ -130,7 +129,7 @@ abstract class AbstractEntity
         }
     }
 
-    private static function createDatabase(): DatabaseConnector
+    protected static function createDatabase(): DatabaseConnector
     {
         return new DatabaseConnector($_ENV['DB_DSN'], $_ENV['DB_USER_NAME'], $_ENV['DB_USER_PWD']);
     }

@@ -16,7 +16,10 @@
                 "models",
                 "test/models"
             ]
-        }
+        },
+        "files": [
+            "config/config.php"
+        ]
     },
     "require": {
         "ext-pdo": "*",
