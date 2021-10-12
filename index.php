@@ -9,8 +9,11 @@ if ($action) {
         case 'home':
             ViewController::renderPage('home');
             break;
-        case 'list-exercices':
+        case 'list-exercises':
+            (new ExerciseController())->listExercises();
+            break;
         case 'take-exercise':
+            break;
         case 'create-exercise':
             if (!isset($_POST["title"])) {
                 (new ExerciseController())->openCreateExercise();

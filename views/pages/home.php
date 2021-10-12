@@ -8,7 +8,7 @@
 <div class="container dashboard">
     <section class="row">
         <div class="column">
-            <a class="button answering column" href="/?action=list-exercices">Take an exercise</a>
+            <a class="button answering column" href="/?action=list-exercises">Take an exercise</a>
         </div>
         <div class="column">
             <a class="button managing column" href="/?action=create-exercise">Create an exercise</a>
