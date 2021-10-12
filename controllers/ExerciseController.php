@@ -8,6 +8,13 @@ use Looper\Models\database\entities\ExerciseStatus;
 class ExerciseController extends ViewController
 {
 
+    public function listExercises()
+    {
+        $exercises = array_filter(Exercise::getAll(), function ($exercise) {
+            return $exercise->exercise_status_id == ExerciseStatus::BUILDING;
+        });
+        self::renderPage('list_exercises', ["exercises" => $exercises]);
+    }
 
     public function openCreateExercise()
     {
@@ -48,3 +55,4 @@ class ExerciseController extends ViewController
         self::renderPage('take_exercise', ["exercise" => $exercise]);
     }
 }
+
