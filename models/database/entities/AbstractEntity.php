@@ -15,7 +15,7 @@ abstract class AbstractEntity
     //region Fields
     protected const TABLE_NAME = '';
 
-    protected int $id;
+    protected int $id = -1;
 
     //endregion
 

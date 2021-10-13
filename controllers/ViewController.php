@@ -7,7 +7,6 @@ class ViewController
 
     /**
      * Render a view.
-     *
      * @param string $page
      * @param array  $values
      */
