@@ -2,8 +2,6 @@
 
 namespace Looper\Models\database\entities;
 
-use phpDocumentor\Reflection\Types\Self_;
-
 class Exercise extends AbstractEntity
 {
 
@@ -11,12 +9,13 @@ class Exercise extends AbstractEntity
 
     protected string $title;
     protected int    $exercise_status_id;
-    protected array  $questions;
+    /**
+     * @var Question[]
+     */
+    protected array $questions;
 
     /**
      * Get all questions of exercise from the database.
-     *
-     * @return Question[] Exercise questions.
      */
     public function loadQuestions()
     {

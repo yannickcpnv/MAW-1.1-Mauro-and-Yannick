@@ -13,6 +13,9 @@ if ($action) {
             (new ExerciseController())->listExercises();
             break;
         case 'take-exercise':
+            (new ExerciseController())->takeExercise($_GET['exercise-id'] ?? 0);
+            break;
+        case 'save-take':
             break;
         case 'create-exercise':
             if (!isset($_POST["title"])) {
@@ -22,7 +25,7 @@ if ($action) {
             }
             break;
         case 'edit-exercise':
-            (new ExerciseController())->openEditExercise($_GET["id"], $_POST);
+            (new ExerciseController())->openEditExercise($_GET['id'], $_POST);
             break;
         case 'manage-exercises':
         case 'list-takes-exercises':
