@@ -9,9 +9,9 @@ class Exercise extends AbstractEntity
 
     protected const TABLE_NAME = 'exercises';
 
-    protected string $title;
-    protected int    $status;
-    protected array  $questions;
+    protected string $title              = "";
+    protected int    $exercise_status_id = 0;
+    protected array  $questions          = [];
 
     /**
      * Get all questions of exercise from the database.
@@ -27,7 +27,6 @@ class Exercise extends AbstractEntity
             WHERE e.id=:id
         ";
         $queryArray = ['id' => $this->id];
-
-        $questions = self::createDatabase()->fetchRecords($query, Question::class, $queryArray);
+        $this->questions = self::createDatabase()->fetchRecords($query, Question::class, $queryArray);
     }
 }

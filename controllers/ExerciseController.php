@@ -16,7 +16,7 @@ class ExerciseController extends ViewController
     {
         $selectedExercise = Exercise::get($id);
         $selectedExercise->loadQuestions();
-        self::renderPage('edit_exercise', [$selectedExercise]);
+        self::renderPage('edit_exercise', ["selectedExercise" => $selectedExercise]);
     }
 
     public function validateExerciseCreation($exerciseForm)
@@ -24,8 +24,7 @@ class ExerciseController extends ViewController
         if ($exerciseForm["title"] != "") {
             $selectedExercise = new Exercise(["title" => $exerciseForm["title"]]);
             $selectedExercise->create();
-            $selectedExercise->loadQuestions();
-            self::renderPage('edit_exercise', [$selectedExercise]);
+            self::renderPage('edit_exercise', ["selectedExercise" => $selectedExercise]);
         } else {
             self::renderPage('create_exercise');
         }
