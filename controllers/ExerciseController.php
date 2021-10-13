@@ -12,7 +12,8 @@ class ExerciseController extends ViewController
         self::renderPage('create_exercise');
     }
 
-    public function openEditExercise($id, $post = null)
+
+    public function openEditExercise($id, $newQuestionForm = [])
     {
         $selectedExercise = Exercise::get($id);
         $selectedExercise->loadQuestions();
