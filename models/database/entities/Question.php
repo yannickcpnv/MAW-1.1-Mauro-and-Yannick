@@ -24,6 +24,6 @@ class Question extends AbstractEntity
             WHERE q.id=:id
         ";
         $queryArray = ['id' => $this->id];
-        $this->exercise = self::createDatabase()->fetchRecords($query, Exercise::class, $queryArray);
+        $this->exercise = self::createDatabase()->fetchOne($query, Exercise::class, $queryArray);
     }
 }

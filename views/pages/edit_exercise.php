@@ -51,11 +51,7 @@ use Looper\Models\database\entities\QuestionType;
         </section>
         <section class="column">
             <h1>New Field</h1>
-            <form action="/exercises/384/fields" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden"
-                                                                                             value="✓"><input
-                  type="hidden" name="authenticity_token"
-                  value="MN+raibkRZ/w2uIP/y6tsfp83YeCmK0DeWiDaW6RCgR3xr6FQ/0udhAatk+l+7xPlSJ42fD9LQSuUZ51iIChrQ==">
-
+            <form action="/exercises/384/fields" accept-charset="UTF-8" method="post">
                 <div class="field">
                     <label for="field_label">Label</label>
                     <input type="text" name="field[label]" id="field_label">
