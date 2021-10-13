@@ -9,9 +9,9 @@ class Exercise extends AbstractEntity
 
     protected const TABLE_NAME = 'exercises';
 
-    protected string $title              = "";
-    protected int    $exercise_status_id = 0;
-    protected array  $questions          = [];
+    protected string $title;
+    protected int    $exercise_status_id;
+    protected array  $questions;
 
     /**
      * Get all questions of exercise from the database.
