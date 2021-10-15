@@ -3,14 +3,17 @@
 namespace Looper\Controllers;
 
 use Looper\Models\database\entities\Take;
+use Looper\Models\database\entities\Answer;
 use Looper\Models\database\entities\Exercise;
 
 class TakeController extends ViewController
 {
 
-    public function saveTake(array $take, int $id)
+    public function saveTake(array $takeForm, int $id)
     {
-        new Take(['timestamp' => date("Y-m-d H:i:s")]);
+        $take = new Take(['timestamp' => date("Y-m-d H:i:s")]);
+        $answers = array_map(fn($answer) => new Answer(['value' => $answer['value']]), $takeForm['answers']);
+        $take->create($answers);
 
         $exercise = Exercise::get($id);
         $exercise->loadQuestions();

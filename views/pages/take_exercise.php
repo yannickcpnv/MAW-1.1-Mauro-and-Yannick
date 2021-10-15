@@ -21,21 +21,16 @@ $exercise = $values['exercise'];
           method="post"
     >
         <?php foreach ($exercise->questions as $key => $question): ?>
-            <input id="take_answer__id"
-                   name="take[answer][<?= $question->id ?>][id]"
-                   type="hidden"
-                   value="495"
-            >
             <div class="field">
                 <label for="answer_<?= $key ?>"><?= $question->label ?></label>
                 <?php if ($question->question_type_id == QuestionType::SINGLE_LINE_TEXT): ?>
                     <input id="answer_<?= $key ?>"
-                           name="take[answers][<?= $question->id ?>][value]"
+                           name="take[answers][<?= $key ?>][value]"
                            type="text"
                     >
                 <?php else: ?>
-                    <textarea id="question_<?= $key ?>"
-                              name="take[questions][<?= $question->id ?>][value]"
+                    <textarea id="answer_<?= $key ?>"
+                              name="take[answers][<?= $key ?>][value]"
                     ></textarea>
                 <?php endif; ?>
             </div>
