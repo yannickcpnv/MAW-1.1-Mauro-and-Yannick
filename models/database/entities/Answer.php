@@ -7,7 +7,7 @@ class Answer extends AbstractEntity
 
     protected const TABLE_NAME = 'answers';
 
-    protected string   $value;
-    protected Take     $take;
-    protected Question $question;
+    protected string $value;
+    protected int    $take_id;
+    protected int    $question_id;
 }

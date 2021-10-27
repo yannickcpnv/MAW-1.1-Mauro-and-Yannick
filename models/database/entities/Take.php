@@ -10,27 +10,20 @@ class Take extends AbstractEntity
     protected const TABLE_NAME = 'takes';
 
     protected DateTime|string $timestamp;
-    /**@var Answer[] */
-    protected array $answers;
 
     /**
      * @param Answer[]|null $answers
-     *
-     * @return bool
      */
-    public function create(array $answers = null): bool
+    public function create(array $answers = null): void
     {
-        // TODO Check and clean this, YANNICK
-        $result = parent::create();
-
-        if (!$result) {
-            return false;
-        }
+        parent::create();
 
         foreach ($answers as $answer) {
+            if (!isset($answer->take_id)) {
+                $answer->take_id = $this->id;
+            }
             $answer->create();
         }
-        return true;
     }
 
     /**

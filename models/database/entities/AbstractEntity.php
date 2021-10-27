@@ -10,6 +10,7 @@ use Looper\Models\database\DatabaseConnector;
 
 abstract class AbstractEntity
 {
+
     use HasAccessors, Hydratable, Arrayable;
 
     //region Fields
@@ -63,50 +64,46 @@ abstract class AbstractEntity
     /**
      * Create a new entity in the database.
      *
-     * @return bool True if success, otherwise false.
+     * @throws PDOException
      */
-    public function create(): bool
+    public function create(): void
     {
         $columns = [];
         $valueParams = [];
+
         foreach ($this->toArray() as $key => $value) {
             array_push($columns, $key);
             array_push($valueParams, ":$key");
         }
+
         $columns = implode(',', $columns);
         $valueParams = implode(',', $valueParams);
+
         $query = "INSERT INTO " . static::TABLE_NAME . " ($columns) VALUES ($valueParams)";
 
-        try {
-            $this->id = self::createDatabase()->insert($query, $this->toArray());
-            return true;
-        } catch (PDOException $e) {
-            return false;
-        }
+        $this->id = self::createDatabase()->insert($query, $this->toArray());
     }
 
     /**
      * Update the entity in the database.
      *
-     * @return bool True if success, otherwise false.
+     * @throws PDOException
      */
-    public function save(): bool
+    public function save(): void
     {
-        $array = [];
-        foreach ($this->toArray() as $key => $value) {
+        $keys = [];
+        $entityArray = $this->toArray();
+
+        foreach ($entityArray as $key => $value) {
             if ($key != 'id') {
-                array_push($array, "$key=:$key");
+                array_push($keys, "$key=:$key");
             }
         }
-        $setLine = implode(',', $array);
+
+        $setLine = implode(',', $keys);
         $query = "UPDATE " . static::TABLE_NAME . " SET $setLine WHERE id=:id";
 
-        try {
-            self::createDatabase()->update($query, $this->toArray());
-            return true;
-        } catch (PDOException) {
-            return false;
-        }
+        self::createDatabase()->update($query, $entityArray);
     }
 
     /**
@@ -114,19 +111,14 @@ abstract class AbstractEntity
      *
      * @param AbstractEntity $model
      *
-     * @return bool
+     * @throws PDOException
      */
-    public function delete(AbstractEntity $model): bool
+    public function delete(AbstractEntity $model)
     {
         $query = "DELETE FROM " . static::TABLE_NAME . " WHERE id=:id";
         $queryArray = ["id" => $model->id];
 
-        try {
-            self::createDatabase()->delete($query, $queryArray);
-            return true;
-        } catch (PDOException) {
-            return false;
-        }
+        self::createDatabase()->delete($query, $queryArray);
     }
 
     protected static function createDatabase(): DatabaseConnector

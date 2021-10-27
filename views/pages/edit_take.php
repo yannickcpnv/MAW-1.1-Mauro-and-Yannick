@@ -1,7 +1,11 @@
 <?php
 
+use Looper\Models\database\entities\Take;
 use Looper\Models\database\entities\Exercise;
 use Looper\Models\database\entities\QuestionType;
+
+/** @var Take[] $values */
+$take = $values['take'];
 
 /** @var Exercise[] $values */
 $exercise = $values['exercise'];
@@ -15,9 +19,9 @@ $exercise = $values['exercise'];
 </header>
 <main class="container">
     <h1>Your take</h1>
-    <p>If you'd like to come back later to finish, simply submit it with blanks</p>
+    <p>Bookmark this page, it's yours. You'll be able to come back later to finish.</p>
     <form accept-charset="UTF-8"
-          action="?action=save-take&exercise-id=<?= $exercise->id ?>"
+          action="?action=update-take&take-id=<?= $take->id ?>"
           method="post"
     >
         <?php foreach ($exercise->questions as $key => $question): ?>
@@ -28,11 +32,12 @@ $exercise = $values['exercise'];
                     <input id="answer_<?= $key ?>"
                            name="take[answers][<?= $key ?>][value]"
                            type="text"
+                           value="<?= $question->answers[0]->value ?>"
                     >
                 <?php else: ?>
                     <textarea id="answer_<?= $key ?>"
                               name="take[answers][<?= $key ?>][value]"
-                    ></textarea>
+                    ><?= $question->answers[0]->value ?></textarea>
                 <?php endif; ?>
             </div>
         <?php endforeach; ?>

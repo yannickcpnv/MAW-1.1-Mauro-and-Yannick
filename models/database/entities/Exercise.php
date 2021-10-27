@@ -9,15 +9,16 @@ class Exercise extends AbstractEntity
 
     protected string $title;
     protected int    $exercise_status_id;
+
     /**
-     * @var Question[]
+     * @var \Looper\Models\database\entities\Question[]
      */
     protected array $questions;
 
     /**
      * Get all questions of exercise from the database.
      */
-    public function loadQuestions()
+    public function loadQuestions(): void
     {
         $query = "
             SELECT q.id, q.label, q.exercise_id, q.question_type_id
