@@ -9,13 +9,13 @@ use Looper\Models\database\entities\Exercise;
 class TakeController extends ViewController
 {
 
-    public function saveTake(array $takeForm, int $exerciseId)
+    public function saveTake(array $takeForm, int $exerciseId, int $takeId = null)
     {
-        $take = new Take(['timestamp' => date("Y-m-d H:i:s")]);
+        $take = $takeId ? Take::get($takeId) : new Take();
         $answers = array_map(function ($answer) {
             return new Answer(['value' => $answer['value'], 'question_id' => $answer['questionId']]);
         }, $takeForm['answers']);
-        $take->create($answers);
+        $takeId ? $take->save($answers) : $take->create($answers);
 
         $exercise = Exercise::get($exerciseId);
         $exercise->loadQuestions();
@@ -24,7 +24,11 @@ class TakeController extends ViewController
             $question->answers = array_values(array_filter($question->answers, fn($a) => $a->take_id == $take->id));
         }
 
-        $values = ['exercise' => $exercise, 'take' => $take,];
-        ViewController::renderPage('edit_take', $values);
+        $values = [
+            'exercise' => $exercise,
+            'take'     => $take,
+            'mode'     => 'edit',
+        ];
+        ViewController::renderPage('take_exercise', $values);
     }
 }

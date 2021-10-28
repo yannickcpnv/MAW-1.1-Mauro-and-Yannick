@@ -8,6 +8,7 @@ use ReflectionProperty;
 
 trait HasAccessors
 {
+
     public function __get($property)
     {
         return $this->createAccessors($property);
@@ -25,9 +26,9 @@ trait HasAccessors
      * @throws ReflectionProperty
      * @throws RuntimeException
      */
-    private function createAccessors($property, $isSet = false, $value = null)
+    private function createAccessors($property, $isSetter = false, $value = null)
     {
-        $method = $isSet ? 'set' : 'get' . ucfirst($property); //camelCase() method name
+        $method = $isSetter ? 'set' : 'get' . ucfirst($property); //camelCase() method name
         if (method_exists($this, $method)) {
             $reflection = new ReflectionMethod($this, $method);
             if (!$reflection->isPublic()) {
@@ -38,9 +39,9 @@ trait HasAccessors
         if (property_exists($this, $property)) {
             $reflectedProperty = new ReflectionProperty($this, $property);
             $reflectedProperty->setAccessible(true);
-            if ($isSet) {
+            if ($isSetter) {
                 $reflectedProperty->setValue($this, $value);
-            } else {
+            } elseif ($reflectedProperty->isInitialized($this)) {
                 return $reflectedProperty->getValue($this);
             }
         }

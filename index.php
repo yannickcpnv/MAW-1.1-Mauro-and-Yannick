@@ -1,4 +1,5 @@
 <?php
+
 namespace Looper\Controllers;
 
 require_once 'vendor/autoload.php';
@@ -16,7 +17,7 @@ if ($action) {
             (new ExerciseController())->takeExercise($_GET['exercise-id'] ?? 0);
             break;
         case 'save-take':
-            (new TakeController())->saveTake($_POST['take'], $_GET['exercise-id']);
+            (new TakeController())->saveTake($_POST['take'], $_GET['exercise-id'], $_GET['take-id'] ?? null);
             break;
         case 'create-exercise':
             if (!isset($_POST["title"])) {

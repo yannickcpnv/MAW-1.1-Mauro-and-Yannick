@@ -45,7 +45,7 @@ class ExerciseController extends ViewController
     {
         $exercise = Exercise::get($id);
         $exercise->loadQuestions();
-        self::renderPage('take_exercise', ["exercise" => $exercise]);
+        self::renderPage('take_exercise', ["exercise" => $exercise, "mode" => 'create']);
     }
 }
 
