@@ -15,7 +15,7 @@ abstract class AbstractEntity
     //region Fields
     protected const TABLE_NAME = '';
 
-    protected int $id = -1;
+    protected int $id;
 
     //endregion
 
@@ -116,10 +116,10 @@ abstract class AbstractEntity
      *
      * @return bool
      */
-    public function delete(AbstractEntity $model): bool
+    public function delete(): bool
     {
         $query = "DELETE FROM " . static::TABLE_NAME . " WHERE id=:id";
-        $queryArray = ["id" => $model->id];
+        $queryArray = ["id" => $this->id];
 
         try {
             self::createDatabase()->delete($query, $queryArray);

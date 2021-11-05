@@ -11,14 +11,13 @@ class Exercise extends AbstractEntity
 
     protected string $title;
     protected int    $exercise_status_id;
-    protected array  $questions;
 
     /**
      * Get all questions of exercise from the database.
      *
      * @return Question[] Exercise questions.
      */
-    public function loadQuestions()
+    public function getQuestions()
     {
         $query = "
             SELECT q.id, q.label, q.exercise_id, q.question_type_id
@@ -27,6 +26,6 @@ class Exercise extends AbstractEntity
             WHERE e.id=:id
         ";
         $queryArray = ['id' => $this->id];
-        $this->questions = self::createDatabase()->fetchRecords($query, Question::class, $queryArray);
+        return self::createDatabase()->fetchRecords($query, Question::class, $queryArray);
     }
 }
