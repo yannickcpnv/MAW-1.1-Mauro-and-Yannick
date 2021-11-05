@@ -48,10 +48,10 @@ class ExerciseController extends ViewController
             $selectedExercise->save();
             $this->render('manage_exercises');
         } else {
-            self::renderPage(
-                "edit_exercise",
-                ["selectedExercise" => $selectedExercise, "selectedQuestions" => $selectedQuestions]
-            );
+            self::renderPage("edit_exercise", [
+                "selectedExercise"  => $selectedExercise,
+                "selectedQuestions" => $selectedQuestions,
+            ]);
         }
     }
 
@@ -68,7 +68,11 @@ class ExerciseController extends ViewController
     {
         $exercise = Exercise::get($id);
         $questions = $exercise->getQuestions();
-        self::renderPage('take_exercise', ["exercise" => $exercise, 'questions' => $questions, "mode" => 'create']);
+        self::renderPage('take_exercise', [
+            "exercise"  => $exercise,
+            'questions' => $questions,
+            "mode"      => 'create',
+        ]);
     }
 }
 

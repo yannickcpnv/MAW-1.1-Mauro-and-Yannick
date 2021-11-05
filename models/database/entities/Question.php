@@ -10,13 +10,13 @@ class Question extends AbstractEntity
     protected string $label;
     protected int    $question_type_id;
     protected int    $exercise_id;
-    /** @var Answer[] */
-    protected array $answers;
 
     /**
      * Get all answers of Question form the database.
+     *
+     * @return Answer[]
      */
-    public function loadAnswers(): void
+    public function getAnswers(): array
     {
         $query = "
             SELECT a.value, a.question_id, a.take_id
@@ -25,6 +25,7 @@ class Question extends AbstractEntity
             WHERE q.id=:id
         ";
         $queryArray = ['id' => $this->id];
-        $this->answers = self::createDatabase()->fetchRecords($query, Answer::class, $queryArray);
+
+        return self::createDatabase()->fetchRecords($query, Answer::class, $queryArray);
     }
 }

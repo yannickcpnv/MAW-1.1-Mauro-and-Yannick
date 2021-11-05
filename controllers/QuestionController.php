@@ -12,10 +12,10 @@ class QuestionController extends ViewController
     {
         $selectedQuestion = Question::get($id);
         $selectedExercise = Exercise::get($selectedQuestion->exercise_id);
-        self::renderPage(
-            "edit_question",
-            ["selectedQuestion" => $selectedQuestion, "selectedExercise" => $selectedExercise]
-        );
+        self::renderPage("edit_question", [
+            "selectedQuestion" => $selectedQuestion,
+            "selectedExercise" => $selectedExercise,
+        ]);
     }
 
     public function editQuestion($id, $questionForm = [])
@@ -26,10 +26,10 @@ class QuestionController extends ViewController
         $selectedQuestion->save();
         $selectedExercise = Exercise::get($selectedQuestion->exercise_id);
         $selectedQuestions = $selectedExercise->getQuestions();
-        self::renderPage(
-            "edit_exercise",
-            ["selectedExercise" => $selectedExercise, "selectedQuestions" => $selectedQuestions]
-        );
+        self::renderPage("edit_exercise", [
+            "selectedExercise"  => $selectedExercise,
+            "selectedQuestions" => $selectedQuestions,
+        ]);
     }
 
     public function createQuestion(int $exerciseid, $form)
@@ -52,9 +52,9 @@ class QuestionController extends ViewController
         $selectedExercise = Exercise::get($selectedQuestion->exercise_id);
         $selectedQuestion->delete();
         $selectedQuestions = $selectedExercise->getQuestions();
-        self::renderPage(
-            "edit_exercise",
-            ["selectedExercise" => $selectedExercise, "selectedQuestions" => $selectedQuestions]
-        );
+        self::renderPage("edit_exercise", [
+            "selectedExercise"  => $selectedExercise,
+            "selectedQuestions" => $selectedQuestions,
+        ]);
     }
 }

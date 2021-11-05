@@ -1,6 +1,7 @@
 <?php
 
 use Looper\Models\database\entities\Take;
+use Looper\Models\database\entities\Answer;
 use Looper\Models\database\entities\Exercise;
 use Looper\Models\database\entities\Question;
 use Looper\Models\database\entities\QuestionType;
@@ -13,6 +14,9 @@ $exercise = $values['exercise'];
 
 /** @var Question[] $values */
 $questions = $values['questions'];
+
+/** @var Answer[] $answers */
+$answers = $values['answers'];
 
 /** @var string[] $values */
 $pageMode = $values['mode'];
@@ -38,7 +42,7 @@ $isModeEdit = $pageMode == 'edit';
           method="post"
     >
         <?php foreach ($questions as $key => $question): ?>
-            <?php $value = $question?->answers[0]?->value ?? '' ?>
+            <?php $value = $answers[$question->id]?->value ?? '' ?>
             <div class="field">
                 <input name="take[answers][<?= $key ?>][questionId]" type="hidden" value="<?= $question->id ?>">
                 <label for="answer_<?= $key ?>"><?= $question->label ?></label>
@@ -49,7 +53,9 @@ $isModeEdit = $pageMode == 'edit';
                            value="<?= $value ?>"
                     >
                 <?php else: ?>
-                    <textarea id="answer_<?= $key ?>"
+                    <textarea rows="5"
+                              cols="50"
+                              id="answer_<?= $key ?>"
                               name="take[answers][<?= $key ?>][value]"
                     ><?= $value ?></textarea>
                 <?php endif; ?>

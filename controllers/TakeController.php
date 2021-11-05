@@ -12,24 +12,36 @@ class TakeController extends ViewController
     public function saveTake(array $takeForm, int $exerciseId, int $takeId = null)
     {
         $take = $takeId ? Take::get($takeId) : new Take();
-        $answers = array_map(function ($answer) {
-            return new Answer(['value' => $answer['value'], 'question_id' => $answer['questionId']]);
-        }, $takeForm['answers']);
-        $takeId ? $take->save($answers) : $take->create($answers);
+        $takeAnswers = $this->mapAnswers($takeForm['answers']);
+        $takeId ? $take->save($takeAnswers) : $take->create($takeAnswers);
 
         $exercise = Exercise::get($exerciseId);
         $questions = $exercise->getQuestions();
+
+        $answers = [];
         foreach ($questions as $question) {
-            $question->loadAnswers();
-            $question->answers = array_values(array_filter($question->answers, fn($a) => $a->take_id == $take->id));
+            $answerFiltered = array_filter($question->getAnswers(), function ($answer) use ($take) {
+                return $answer->take_id == $take->id;
+            });
+            $answers[$question->id] = reset($answerFiltered);
         }
 
-        $values = [
-            'exercise' => $exercise,
+        ViewController::renderPage('take_exercise', [
+            'exercise'  => $exercise,
             'questions' => $questions,
-            'take'     => $take,
-            'mode'     => 'edit',
-        ];
-        ViewController::renderPage('take_exercise', $values);
+            'answers'   => $answers,
+            'take'      => $take,
+            'mode'      => 'edit',
+        ]);
+    }
+
+    private function mapAnswers($answers): array
+    {
+        return array_map(fn($answer): Answer => new Answer(
+            [
+                'value'       => $answer['value'],
+                'question_id' => $answer['questionId'],
+            ]
+        ), $answers);
     }
 }
