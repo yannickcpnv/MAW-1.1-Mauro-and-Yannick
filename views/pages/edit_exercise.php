@@ -1,14 +1,16 @@
-<html>
-<head>
-    <link rel="stylesheet" href="../../assets/css/milligram.css">
-    <link rel="stylesheet" href="../../assets/css/styles.css">
-    <link rel="stylesheet" href="../../assets/css/fontawesome.css">
-</head>
-<body>
+<?php
+
+use Looper\Models\database\entities\Exercise;
+use Looper\Models\database\entities\QuestionType;
+
+/** @var array $values */
+?>
 <header class="heading managing">
     <section class="container">
-        <a href="/"> <img src="/assets/logo-84d7d70645fbe179ce04c983a5fae1e6cba523d7cd28e0cd49a04707ccbef56e.png"></a>
-        <span class="exercise-label">Exercise: <a href="/exercises/384/fields">Le Code</a></span>
+        <a href="/"><img src="/views/assets/logo/logo.png" alt="Logo"></a>
+        <span class="exercise-label">Exercise: <a
+              href="/?action=create-exercise&id=<?= $values["selectedExercise"]->id ?>"><?=
+                $values["selectedExercise"]->title ?></a></span>
     </section>
 </header>
 <main class="container">
@@ -18,37 +20,41 @@
             <h1>Fields</h1>
             <table class="records">
                 <thead>
-                <tr>
-                    <th>Label</th>
-                    <th>Value kind</th>
-                    <th></th>
-                </tr>
+                    <tr>
+                        <th>Label</th>
+                        <th>Value kind</th>
+                        <th>Action</th>
+                    </tr>
                 </thead>
-
                 <tbody>
-                <tr>
-                    <td>Question 1</td>
-                    <td>single_line</td>
-                    <td>
-                        <a title="Edit" href="/exercises/384/fields/599/edit"><i class="fa fa-edit"></i></a>
-                        <a data-confirm="Are you sure?" title="Destroy" rel="nofollow" data-method="delete"
-                           href="/exercises/384/fields/599"><i class="fa fa-trash"></i></a>
-                    </td>
-                </tr>
+                    <?php
+                    foreach ($values["selectedExercise"]->questions as $question): ?>
+                        <tr>
+                            <td><?= $question->label ?></td>
+                            <td><?= QuestionType::toString($question->question_type_id) ?></td>
+                            <td>
+                                <a title="Edit" href="/?action=editQuestion&id=<?= $question ?>"><i class="fa
+                            fa-edit"></i></a>
+                                <a data-confirm="Are you sure?" href="/exercises/384/fields/599"><i class="fa
+                            fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    <?php
+                    endforeach; ?>
                 </tbody>
             </table>
 
             <a data-confirm="Are you sure? You won't be able to further edit this exercise" class="button"
                rel="nofollow" data-method="put" href="/exercises/384?exercise%5Bstatus%5D=answering"><i
-                    class="fa fa-comment"></i> Complete and be ready for answers</a>
+                  class="fa fa-comment"></i> Complete and be ready for answers</a>
 
         </section>
         <section class="column">
             <h1>New Field</h1>
             <form action="/exercises/384/fields" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden"
                                                                                              value="✓"><input
-                    type="hidden" name="authenticity_token"
-                    value="MN+raibkRZ/w2uIP/y6tsfp83YeCmK0DeWiDaW6RCgR3xr6FQ/0udhAatk+l+7xPlSJ42fD9LQSuUZ51iIChrQ==">
+                  type="hidden" name="authenticity_token"
+                  value="MN+raibkRZ/w2uIP/y6tsfp83YeCmK0DeWiDaW6RCgR3xr6FQ/0udhAatk+l+7xPlSJ42fD9LQSuUZ51iIChrQ==">
 
                 <div class="field">
                     <label for="field_label">Label</label>
@@ -70,5 +76,3 @@
         </section>
     </div>
 </main>
-</body>
-</html>

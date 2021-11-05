@@ -106,3 +106,5 @@ composer.phar
 # composer.lock
 
 /config/.env
+
+/config/.env

@@ -8,21 +8,36 @@ $action = $_GET['action'] ?? null;
 if ($action) {
     switch ($action) {
         case 'home':
-            (new HomeController())->home();
+            ViewController::renderPage('home');
             break;
-        case 'list-exercices':
+        case 'list-exercises':
+            (new ExerciseController())->listExercises();
+            break;
         case 'take-exercise':
+            (new ExerciseController())->takeExercise($_GET['exercise-id'] ?? 0);
+            break;
+        case 'save-take':
+            (new TakeController())->saveTake($_POST['take'], $_GET['exercise-id'], $_GET['take-id'] ?? null);
+            break;
         case 'create-exercise':
+            if (!isset($_POST["title"])) {
+                (new ExerciseController())->openCreateExercise();
+            } else {
+                (new ExerciseController())->validateExerciseCreation($_POST);
+            }
+            break;
         case 'edit-exercise':
+            (new ExerciseController())->openEditExercise($_GET['id'], $_POST);
+            break;
         case 'manage-exercises':
         case 'list-takes-exercises':
         case 'detail-take-exercises':
         case 'detail-question-exercises':
             break;
         default:
-            require_once 'views/pages/404.php';
+            ViewController::renderPage('404');
             break;
     }
 } else {
-    (new HomeController())->home();
+    ViewController::renderPage('home');
 }

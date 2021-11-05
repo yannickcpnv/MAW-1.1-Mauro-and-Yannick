@@ -1,28 +1,20 @@
-<?php
+<header class="dashboard">
+    <section class="container">
+        <p><img src="/views/assets/logo/logo.png" alt="Logo"></p>
+        <h1>Exercise<br>Looper</h1>
+    </section>
+</header>
 
-ob_start();
-?>
-    <header class="dashboard">
-        <section class="container">
-            <p><img src="/views/assets/logo/logo.png" alt="Logo"></p>
-            <h1>Exercise<br>Looper</h1>
-        </section>
-    </header>
-
-    <div class="container dashboard">
-        <section class="row">
-            <div class="column">
-                <a class="button answering column" href="/?action=list-exercices">Take an exercise</a>
-            </div>
-            <div class="column">
-                <a class="button managing column" href="/?action=create-exercise">Create an exercise</a>
-            </div>
-            <div class="column">
-                <a class="button results column" href="/?action=manage-exercises">Manage an exercise</a>
-            </div>
-        </section>
-    </div>
-
-<?php
-$content = ob_get_clean();
-require 'views/includes/layout.php';
+<div class="container dashboard">
+    <section class="row">
+        <div class="column">
+            <a class="button answering column" href="/?action=list-exercises">Take an exercise</a>
+        </div>
+        <div class="column">
+            <a class="button managing column" href="/?action=create-exercise">Create an exercise</a>
+        </div>
+        <div class="column">
+            <a class="button results column" href="/?action=manage-exercises">Manage an exercise</a>
+        </div>
+    </section>
+</div>

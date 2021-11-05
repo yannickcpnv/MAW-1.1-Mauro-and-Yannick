@@ -23,12 +23,14 @@ USE `looper` ;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `looper`.`takes` ;
 
-CREATE TABLE IF NOT EXISTS `looper`.`takes` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `timestamp` DATETIME NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
-ENGINE = InnoDB;
+CREATE TABLE IF NOT EXISTS `looper`.`takes`
+(
+    `id`        INT      NOT NULL AUTO_INCREMENT,
+    `timestamp` DATETIME NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `id_UNIQUE` (`id` ASC)
+)
+    ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -36,12 +38,14 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `looper`.`exercise_statuses` ;
 
-CREATE TABLE IF NOT EXISTS `looper`.`exercise_statuses` (
-  `id` INT NOT NULL,
-  `name` VARCHAR(45) NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
-ENGINE = InnoDB;
+CREATE TABLE IF NOT EXISTS `looper`.`exercise_statuses`
+(
+    `id`   INT         NOT NULL,
+    `name` VARCHAR(45) NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `id_UNIQUE` (`id` ASC)
+)
+    ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -49,19 +53,21 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `looper`.`exercises` ;
 
-CREATE TABLE IF NOT EXISTS `looper`.`exercises` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(45) NOT NULL,
-  `exercise_status_id` INT NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`),
-  INDEX `fk_exercises_exercise_statuses1_idx` (`exercise_status_id` ASC) VISIBLE,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  CONSTRAINT `fk_exercises_exercise_statuses1`
-    FOREIGN KEY (`exercise_status_id`)
-    REFERENCES `looper`.`exercise_statuses` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+CREATE TABLE IF NOT EXISTS `looper`.`exercises`
+(
+    `id`                 INT         NOT NULL AUTO_INCREMENT,
+    `title`              VARCHAR(45) NOT NULL,
+    `exercise_status_id` INT         NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`),
+    INDEX `fk_exercises_exercise_statuses1_idx` (`exercise_status_id` ASC),
+    UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+    CONSTRAINT `fk_exercises_exercise_statuses1`
+        FOREIGN KEY (`exercise_status_id`)
+            REFERENCES `looper`.`exercise_statuses` (`id`)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE
+)
+    ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -69,12 +75,14 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `looper`.`question_types` ;
 
-CREATE TABLE IF NOT EXISTS `looper`.`question_types` (
-  `id` INT NOT NULL,
-  `name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
-ENGINE = InnoDB;
+CREATE TABLE IF NOT EXISTS `looper`.`question_types`
+(
+    `id`   INT         NOT NULL,
+    `name` VARCHAR(45) NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `id_UNIQUE` (`id` ASC)
+)
+    ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -82,26 +90,28 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `looper`.`questions` ;
 
-CREATE TABLE IF NOT EXISTS `looper`.`questions` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `label` VARCHAR(45) NOT NULL,
-  `exercise_id` INT NOT NULL,
-  `question_type_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_Questions_Exercises_idx` (`exercise_id` ASC) VISIBLE,
-  INDEX `fk_questions_question_types1_idx` (`question_type_id` ASC) VISIBLE,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  CONSTRAINT `fk_Questions_Exercises`
-    FOREIGN KEY (`exercise_id`)
-    REFERENCES `looper`.`exercises` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_questions_question_types1`
-    FOREIGN KEY (`question_type_id`)
-    REFERENCES `looper`.`question_types` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+CREATE TABLE IF NOT EXISTS `looper`.`questions`
+(
+    `id`               INT         NOT NULL AUTO_INCREMENT,
+    `label`            VARCHAR(45) NOT NULL,
+    `exercise_id`      INT         NOT NULL,
+    `question_type_id` INT         NOT NULL,
+    PRIMARY KEY (`id`),
+    INDEX `fk_Questions_Exercises_idx` (`exercise_id` ASC),
+    INDEX `fk_questions_question_types1_idx` (`question_type_id` ASC),
+    UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+    CONSTRAINT `fk_Questions_Exercises`
+        FOREIGN KEY (`exercise_id`)
+            REFERENCES `looper`.`exercises` (`id`)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE,
+    CONSTRAINT `fk_questions_question_types1`
+        FOREIGN KEY (`question_type_id`)
+            REFERENCES `looper`.`question_types` (`id`)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE
+)
+    ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -109,24 +119,26 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `looper`.`answers` ;
 
-CREATE TABLE IF NOT EXISTS `looper`.`answers` (
-  `take_id` INT NOT NULL,
-  `question _id` INT NOT NULL,
-  `value` TEXT NOT NULL,
-  PRIMARY KEY (`take_id`, `question _id`),
-  INDEX `fk_Takes_has_Questions_Questions1_idx` (`question _id` ASC) VISIBLE,
-  INDEX `fk_Takes_has_Questions_Takes1_idx` (`take_id` ASC) VISIBLE,
-  CONSTRAINT `fk_Takes_has_Questions_Takes1`
-    FOREIGN KEY (`take_id`)
-    REFERENCES `looper`.`takes` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Takes_has_Questions_Questions1`
-    FOREIGN KEY (`question _id`)
-    REFERENCES `looper`.`questions` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+CREATE TABLE IF NOT EXISTS `looper`.`answers`
+(
+    `take_id`     INT  NOT NULL,
+    `question_id` INT  NOT NULL,
+    `value`       TEXT NOT NULL,
+    PRIMARY KEY (`take_id`, question_id),
+    INDEX `fk_Takes_has_Questions_Questions1_idx` (question_id ASC),
+    INDEX `fk_Takes_has_Questions_Takes1_idx` (`take_id` ASC),
+    CONSTRAINT `fk_Takes_has_Questions_Takes1`
+        FOREIGN KEY (`take_id`)
+            REFERENCES `looper`.`takes` (`id`)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE,
+    CONSTRAINT `fk_Takes_has_Questions_Questions1`
+        FOREIGN KEY (question_id)
+            REFERENCES `looper`.`questions` (`id`)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE
+)
+    ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
