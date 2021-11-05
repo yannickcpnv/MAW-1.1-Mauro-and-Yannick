@@ -113,10 +113,10 @@ abstract class AbstractEntity
      *
      * @throws PDOException
      */
-    public function delete(AbstractEntity $model)
+    public function delete()
     {
         $query = "DELETE FROM " . static::TABLE_NAME . " WHERE id=:id";
-        $queryArray = ["id" => $model->id];
+        $queryArray = ["id" => $this->id];
 
         self::createDatabase()->delete($query, $queryArray);
     }

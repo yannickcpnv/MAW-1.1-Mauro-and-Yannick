@@ -2,6 +2,8 @@
 
 namespace Looper\Models\database\entities;
 
+use phpDocumentor\Reflection\Types\Self_;
+
 class Exercise extends AbstractEntity
 {
 
@@ -11,14 +13,11 @@ class Exercise extends AbstractEntity
     protected int    $exercise_status_id;
 
     /**
-     * @var \Looper\Models\database\entities\Question[]
-     */
-    protected array $questions;
-
-    /**
      * Get all questions of exercise from the database.
+     *
+     * @return Question[] Exercise questions.
      */
-    public function loadQuestions(): void
+    public function getQuestions()
     {
         $query = "
             SELECT q.id, q.label, q.exercise_id, q.question_type_id
@@ -27,6 +26,6 @@ class Exercise extends AbstractEntity
             WHERE e.id=:id
         ";
         $queryArray = ['id' => $this->id];
-        $this->questions = self::createDatabase()->fetchRecords($query, Question::class, $queryArray);
+        return self::createDatabase()->fetchRecords($query, Question::class, $queryArray);
     }
 }

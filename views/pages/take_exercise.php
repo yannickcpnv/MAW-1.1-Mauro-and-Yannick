@@ -2,13 +2,17 @@
 
 use Looper\Models\database\entities\Take;
 use Looper\Models\database\entities\Exercise;
+use Looper\Models\database\entities\Question;
 use Looper\Models\database\entities\QuestionType;
 
 /** @var Take[] $values */
 $take = $values['take'] ?? null;
 
-/** @var Exercise[] $values */
+/** @var Exercise $values */
 $exercise = $values['exercise'];
+
+/** @var Question[] $values */
+$questions = $values['questions'];
 
 /** @var string[] $values */
 $pageMode = $values['mode'];
@@ -33,7 +37,7 @@ $isModeEdit = $pageMode == 'edit';
           action="?action=save-take&exercise-id=<?= $exercise->id . $takeIdParam ?>"
           method="post"
     >
-        <?php foreach ($exercise->questions as $key => $question): ?>
+        <?php foreach ($questions as $key => $question): ?>
             <?php $value = $question?->answers[0]?->value ?? '' ?>
             <div class="field">
                 <input name="take[answers][<?= $key ?>][questionId]" type="hidden" value="<?= $question->id ?>">

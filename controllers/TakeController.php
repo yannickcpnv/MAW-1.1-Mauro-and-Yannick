@@ -18,14 +18,15 @@ class TakeController extends ViewController
         $takeId ? $take->save($answers) : $take->create($answers);
 
         $exercise = Exercise::get($exerciseId);
-        $exercise->loadQuestions();
-        foreach ($exercise->questions as $question) {
+        $questions = $exercise->getQuestions();
+        foreach ($questions as $question) {
             $question->loadAnswers();
             $question->answers = array_values(array_filter($question->answers, fn($a) => $a->take_id == $take->id));
         }
 
         $values = [
             'exercise' => $exercise,
+            'questions' => $questions,
             'take'     => $take,
             'mode'     => 'edit',
         ];

@@ -13,3 +13,5 @@
 
 <!-- Fontawesome -->
 <link rel="stylesheet" href="/views/assets/css/styles.css">
+
+<script src="/views/assets/js/app.js" defer></script>
