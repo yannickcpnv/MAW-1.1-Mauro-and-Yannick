@@ -4,10 +4,11 @@ MAW 1.1 Copy of Looper project for ES dev technician formation.
 
 ## Requirements
 
-| Tools                                         | Version |
-|-----------------------------------------------|---------|
-| [PHP](https://www.php.net/downloads.php)      | 8.0.10  |
-| [Composer](https://getcomposer.org/download/) | 2.1.6   |
+| Tools                                         | Version            |
+|-----------------------------------------------|--------------------|
+| [PHP](https://www.php.net/downloads.php)      | 8.0.10             |
+| [Composer](https://getcomposer.org/download/) | 2.1.6              |
+| [MariaDB](https://mariadb.org/download/)      | 10.3.31-MariaDB    |
 
 ## Installation
 
@@ -18,9 +19,21 @@ git clone https://github.com/yannickcpnv/MAW-1.1-Mauro-and-Yannick.git
 composer install
 ```
 
+### Database
+
+Run the scripts `create_model.sql` and `insert_data.sql` from the folder _sql_.
+
+Create a new user for the application.
+
+```sql
+CREATE USER 'user_name'@'localhost' IDENTIFIED BY 'user_password';
+GRANT ALL ON `dbname`.* TO 'user_name'@'localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+```
+
 ## Usage
 
-1. In the _config_ folger youcan find a _.example.env_ file, rename it to _.env_.
+1. In the _config_ folder you can find a _.example.env_ file, rename it to _.env_.
    ```dotenv
    DB_SQL_DRIVER = mysql
    DB_HOSTNAME   = localhost
@@ -33,5 +46,4 @@ composer install
    ```
 2. Use your personal variables.
 3. Enable php extensions in you php.ini :
-   1. ext-pdo => Database access
-4. 
+    1. ext-pdo => Database access
