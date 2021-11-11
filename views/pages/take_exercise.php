@@ -36,9 +36,12 @@ $isModeEdit = $pageMode == 'edit';
     <?php else: ?>
         <p>If you'd like to come back later to finish, simply submit it with blanks</p>
     <?php endif; ?>
-    <?php $takeIdParam = $pageMode == 'edit' ? '&take-id=' . $take->id : '' ?>
     <form accept-charset="UTF-8"
-          action="?action=save-take&exercise-id=<?= $exercise->id . $takeIdParam ?>"
+        <?php if ($pageMode == 'edit'): ?>
+            action="?action=edit-take&exercise-id=<?= $exercise->id ?>&take-id=<?= $take->id ?>"
+        <?php else: ?>
+            action="?action=create-take&exercise-id=<?= $exercise->id ?>"
+        <?php endif; ?>
           method="post"
     >
         <?php foreach ($questions as $key => $question): ?>
