@@ -6,10 +6,14 @@
         beStrictAboutTodoAnnotatedTests="true"
         beStrictAboutOutputDuringTests="true"
         beStrictAboutCoversAnnotation="true"
-        verbose="true"
         testdox="true"
+        cacheResultFile="./test/.phpunit.result.cache"
 >
     <logging>
         <testdoxHtml outputFile="test/test-dox.html"/>
     </logging>
+
+    <php>
+        <env name="APP_ENV" value="test"/>
+    </php>
 </phpunit>

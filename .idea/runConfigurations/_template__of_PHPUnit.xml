@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+    <CommandLine>
+      <envs>
+        <env name="APP_ENV" value="test" />
+      </envs>
+    </CommandLine>
+    <TestRunner bootstrap_file="$PROJECT_DIR$/vendor/autoload.php" configuration_file="$PROJECT_DIR$/phpunit.xml.dist" use_alternative_bootstrap_file="true" use_alternative_configuration_file="true" />
+    <method v="2" />
+  </configuration>
+</component>

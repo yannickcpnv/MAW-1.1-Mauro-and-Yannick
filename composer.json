@@ -22,10 +22,7 @@
         ]
     },
     "scripts": {
-        "test": [
-            "@putenv APP_ENV=test",
-            "vendor/bin/phpunit test --testdox"
-        ]
+        "test": "vendor/bin/phpunit test --testdox"
     },
     "require": {
         "ext-pdo": "*",
