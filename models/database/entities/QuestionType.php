@@ -5,9 +5,9 @@ namespace Looper\Models\database\entities;
 abstract class QuestionType
 {
 
-    public const SINGLE_LINE_TEXT = 0;
-    public const SINGLE_LINE_LIST = 1;
-    public const MULTI_LINE_TEXT  = 2;
+    public const SINGLE_LINE_TEXT = 1;
+    public const SINGLE_LINE_LIST = 2;
+    public const MULTI_LINE_TEXT  = 3;
 
     static function toString(int $value): ?string
     {

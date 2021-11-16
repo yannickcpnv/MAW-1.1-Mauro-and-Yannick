@@ -1,4 +1,5 @@
 <?php
+
 namespace Looper\Controllers;
 
 require_once 'vendor/autoload.php';
@@ -38,6 +39,11 @@ if ($action) {
         case 'complete-exercise':
             (new ExerciseController())->completeExercise($_GET["id"]);
             break;
+        case 'delete-exercise':
+            (new ExerciseController())->removeExercise($_GET["id"]);
+            break;
+        case 'close-exercise':
+            (new ExerciseController())->closeExercise($_GET["id"]);
             break;
         case 'delete-question':
             (new QuestionController())->removeQuestion($_GET["id"]);
@@ -52,7 +58,6 @@ if ($action) {
                     (new QuestionController())->editQuestion($_GET["id"], $_POST);
                 }
             }
-
             break;
         case 'edit-question-view':
             if (!isset($_POST["field_label"])) {
@@ -61,7 +66,9 @@ if ($action) {
                 (new QuestionController())->editQuestion($_GET["id"], $_POST);
             }
             break;
-        case 'manage-exercise':
+        case 'manage-exercises':
+            (new ExerciseController())->openManageExercise();
+            break;
         case 'list-takes-exercises':
         case 'detail-take-exercises':
         case 'detail-question-exercises':

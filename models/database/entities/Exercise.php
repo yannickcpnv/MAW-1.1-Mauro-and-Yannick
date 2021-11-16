@@ -28,4 +28,15 @@ class Exercise extends AbstractEntity
         $queryArray = ['id' => $this->id];
         return self::createDatabase()->fetchRecords($query, Question::class, $queryArray);
     }
+
+    public static function getExercisesByStatus(int $statusId)
+    {
+        $query = "
+            SELECT e.id, e.title, e.exercise_status_id
+            FROM exercises as e
+            WHERE e.exercise_status_id=:status
+        ";
+        $queryArray = ['status' => $statusId];
+        return self::createDatabase()->fetchRecords($query, Exercise::class, $queryArray);
+    }
 }

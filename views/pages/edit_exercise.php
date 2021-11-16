@@ -66,9 +66,11 @@ use Looper\Models\database\entities\QuestionType;
                 <div class="field">
                     <label for="field_value_kind">Value kind</label>
                     <select name="field_value_kind" id="field_value_kind">
-                        <option selected="selected" value="0">Single line text</option>
-                        <option value="1">List of single lines</option>
-                        <option value="2">Multi-line text</option>
+                        <option selected="selected" value="<?= QuestionType::SINGLE_LINE_TEXT ?>">Single line
+                            text
+                        </option>
+                        <option value="<?= QuestionType::SINGLE_LINE_LIST ?>">List of single lines</option>
+                        <option value="<?= QuestionType::MULTI_LINE_TEXT ?>">Multi-line text</option>
                     </select>
                 </div>
                 <div class="actions">

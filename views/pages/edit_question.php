@@ -30,18 +30,21 @@ use Looper\Models\database\entities\QuestionType;
             <label for="field_value_kind">Value kind</label>
             <select name="field_value_kind" id="field_value_kind">
                 <option
-                    <?= $values["selectedQuestion"]->question_type_id == 0 ? 'selected' : '' ?>
-                  value="0">Single line text
+                    <?= $values["selectedQuestion"]->question_type_id == QuestionType::SINGLE_LINE_TEXT ? 'selected'
+                        : '' ?>
+                  value="<?= QuestionType::SINGLE_LINE_TEXT ?>">Single line text
                 </option>
 
                 <option
-                    <?= $values["selectedQuestion"]->question_type_id == 1 ? 'selected' : '' ?>
-                  value="1">List of single lines
+                    <?= $values["selectedQuestion"]->question_type_id == QuestionType::SINGLE_LINE_LIST ? 'selected'
+                        : '' ?>
+                  value="<?= QuestionType::SINGLE_LINE_LIST ?>">List of single lines
                 </option>
 
                 <option
-                    <?= $values["selectedQuestion"]->question_type_id == 2 ? 'selected' : '' ?>
-                  value="2">Multi-line text
+                    <?= $values["selectedQuestion"]->question_type_id == QuestionType::MULTI_LINE_TEXT ? 'selected'
+                        : '' ?>
+                  value="<?= QuestionType::MULTI_LINE_TEXT ?>">Multi-line text
                 </option>
 
             </select>
