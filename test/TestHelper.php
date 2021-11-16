@@ -9,7 +9,7 @@ class TestHelper
 
     public static function createDatabase(): void
     {
-        self::runScriptFromFile(__DIR__ . "sql/looper_test.sql");
+        self::runScriptFromFile(__DIR__ . "/sql/looper_test.sql");
     }
 
     private static function runScriptFromFile(string $fileName): void

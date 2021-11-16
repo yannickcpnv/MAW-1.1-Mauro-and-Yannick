@@ -14,17 +14,11 @@ class DatabaseConnectorTest extends TestCase
     private string            $query;
     private string            $fakeClass;
 
-    /**
-     * @beforeClass
-     */
     public static function setUpBeforeClass(): void
     {
         TestHelper::createMiniDatabase();
     }
 
-    /**
-     * @before
-     */
     public final function setUp(): void
     {
         TestHelper::createMiniDatabase();
@@ -120,9 +114,6 @@ class DatabaseConnectorTest extends TestCase
         self::assertTrue($isSuccess);
     }
 
-    /**
-     * @afterClass
-     */
     public static function tearDownAfterClass(): void
     {
         TestHelper::dropDatabase('mini_test');
