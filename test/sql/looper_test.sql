@@ -56,10 +56,10 @@ CREATE TABLE IF NOT EXISTS `exercises`
 -- Listage des données de la table looper_test.exercises : ~3 rows (environ)
 /*!40000 ALTER TABLE `exercises`
     DISABLE KEYS */;
-INSERT INTO `exercises` (`id`, `title`, `exercise_status_id`)
-VALUES (2, 'Exercise Building', 0),
-       (3, 'Exercise Answering', 1),
-       (4, 'Exercise Closed', 2);
+INSERT INTO `exercises` (`title`, `exercise_status_id`)
+VALUES ('Exercise Building', 1),
+       ('Exercise Answering', 2),
+       ('Exercise Closed', 3);
 /*!40000 ALTER TABLE `exercises`
     ENABLE KEYS */;
 
@@ -77,9 +77,9 @@ CREATE TABLE IF NOT EXISTS `exercise_statuses`
 /*!40000 ALTER TABLE `exercise_statuses`
     DISABLE KEYS */;
 INSERT INTO `exercise_statuses` (`id`, `name`)
-VALUES (0, 'Building'),
-       (1, 'Answering'),
-       (2, 'Closed');
+VALUES (1, 'Building'),
+       (2, 'Answering'),
+       (3, 'Closed');
 /*!40000 ALTER TABLE `exercise_statuses`
     ENABLE KEYS */;
 
@@ -103,8 +103,8 @@ CREATE TABLE IF NOT EXISTS `questions`
 /*!40000 ALTER TABLE `questions`
     DISABLE KEYS */;
 INSERT INTO `questions` (`id`, `label`, `exercise_id`, `question_type_id`)
-VALUES (1, 'Question to answer', 3, 0),
-       (2, 'Closed Question', 4, 1);
+VALUES (1, 'Question to answer', 2, 0),
+       (2, 'Closed Question', 3, 1);
 /*!40000 ALTER TABLE `questions`
     ENABLE KEYS */;
 
@@ -122,9 +122,9 @@ CREATE TABLE IF NOT EXISTS `question_types`
 /*!40000 ALTER TABLE `question_types`
     DISABLE KEYS */;
 INSERT INTO `question_types` (`id`, `name`)
-VALUES (0, 'Single Line Text'),
-       (1, 'Single Line List'),
-       (2, 'Multi Line Text');
+VALUES (1, 'Single Line Text'),
+       (2, 'Single Line List'),
+       (3, 'Multi Line Text');
 /*!40000 ALTER TABLE `question_types`
     ENABLE KEYS */;
 
@@ -141,9 +141,9 @@ CREATE TABLE IF NOT EXISTS `takes`
 -- Listage des données de la table looper_test.takes : ~2 rows (environ)
 /*!40000 ALTER TABLE `takes`
     DISABLE KEYS */;
-INSERT INTO `takes` (`id`, `timestamp`)
-VALUES (1, '2021-09-10 11:16:58'),
-       (2, '2021-09-10 11:18:11');
+INSERT INTO `takes` (`timestamp`)
+VALUES ('2021-09-10 11:16:58'),
+       ('2021-09-10 11:18:11');
 /*!40000 ALTER TABLE `takes`
     ENABLE KEYS */;
 

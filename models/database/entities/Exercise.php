@@ -2,8 +2,6 @@
 
 namespace Looper\Models\database\entities;
 
-use phpDocumentor\Reflection\Types\Self_;
-
 class Exercise extends AbstractEntity
 {
 
@@ -17,7 +15,7 @@ class Exercise extends AbstractEntity
      *
      * @return Question[] Exercise questions.
      */
-    public function getQuestions()
+    public function getQuestions(): array
     {
         $query = "
             SELECT q.id, q.label, q.exercise_id, q.question_type_id
@@ -43,7 +41,14 @@ class Exercise extends AbstractEntity
         return self::createDatabase()->fetchRecords($query, Take::class, $queryArray);
     }
 
-    public static function getExercisesByStatus(int $statusId)
+    /**
+     * Retrieve all exercises that have the status given.
+     *
+     * @param int $statusId The ID status to search.
+     *
+     * @return Exercise[] Exercises from the given status.
+     */
+    public static function getExercisesByStatus(int $statusId): array
     {
         $query = "
             SELECT e.id, e.title, e.exercise_status_id
