@@ -9,19 +9,33 @@ use Looper\Models\database\entities\Exercise;
 class TakeController extends ViewController
 {
 
-    public function saveTake(array $takeForm, int $exerciseId, int $takeId = null)
+    public function editTake(array $takeForm, int $exerciseId, int $takeId)
     {
-        $take = $takeId ? Take::get($takeId) : new Take();
+        $take = Take::get($takeId);
         $takeAnswers = $this->mapAnswers($takeForm['answers']);
-        $takeId ? $take->save($takeAnswers) : $take->create($takeAnswers);
+        $take->save($takeAnswers);
 
+        $this->showDetails($exerciseId, $take->id);
+    }
+
+    public function createTake(array $takeForm)
+    {
+        $take = new Take();
+        $takeAnswers = $this->mapAnswers($takeForm['answers']);
+        $take->create($takeAnswers);
+
+        header('Location: http://localhost:8080?action=edit-take&exercise-id=3&take-id=25');
+    }
+
+    public function showDetails(int $exerciseId, int $takeId)
+    {
         $exercise = Exercise::get($exerciseId);
         $questions = $exercise->getQuestions();
 
         $answers = [];
         foreach ($questions as $question) {
-            $answerFiltered = array_filter($question->getAnswers(), function ($answer) use ($take) {
-                return $answer->take_id == $take->id;
+            $answerFiltered = array_filter($question->getAnswers(), function ($answer) use ($takeId) {
+                return $answer->take_id == $takeId;
             });
             $answers[$question->id] = reset($answerFiltered);
         }
@@ -30,7 +44,7 @@ class TakeController extends ViewController
             'exercise'  => $exercise,
             'questions' => $questions,
             'answers'   => $answers,
-            'take'      => $take,
+            'take'      => Take::get($takeId),
             'mode'      => 'edit',
         ]);
     }
