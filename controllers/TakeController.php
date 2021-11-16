@@ -18,13 +18,13 @@ class TakeController extends ViewController
         $this->showDetails($exerciseId, $take->id);
     }
 
-    public function createTake(array $takeForm)
+    public function createTake(array $takeForm, int $exerciseId, array $server)
     {
         $take = new Take();
         $takeAnswers = $this->mapAnswers($takeForm['answers']);
         $take->create($takeAnswers);
 
-        header('Location: http://localhost:8080?action=edit-take&exercise-id=3&take-id=25');
+        header("Location: {$server['HTTP_ORIGIN']}?action=edit-take&exercise-id=$exerciseId&take-id=$take->id");
     }
 
     public function showDetails(int $exerciseId, int $takeId)

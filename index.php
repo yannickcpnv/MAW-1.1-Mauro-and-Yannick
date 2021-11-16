@@ -17,7 +17,7 @@ if ($action) {
             (new ExerciseController())->takeExercise($_GET['exercise-id'] ?? 0);
             break;
         case 'create-take':
-            (new TakeController())->createTake($_POST['take']);
+            (new TakeController())->createTake($_POST['take'], $_GET['exercise-id'], $_SERVER);
             break;
         case 'edit-take':
             if (isset($_POST['take'])) {
