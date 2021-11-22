@@ -76,11 +76,11 @@ if ($action) {
         case 'manage-exercises':
             (new ExerciseController())->openManageExercise();
             break;
-        case 'exercises-results':
+        case 'exercise-results':
             (new ExerciseController())->openExerciseResults($_GET["id"]);
             break;
-        case 'detail-take-exercises':
-        case 'detail-question-exercises':
+        case 'take-results':
+        case 'question-results':
             break;
         default:
             ViewController::renderPage('404');

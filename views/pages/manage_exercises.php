@@ -67,7 +67,7 @@ use Looper\Models\database\entities\Exercise;
                         <tr>
                             <td><?= $exercise->title ?></td>
                             <td>
-                                <a title="Show results" href="/?action=exercises-results&id=<?= $exercise->id ?>"><i
+                                <a title="Show results" href="/?action=exercise-results&id=<?= $exercise->id ?>"><i
                                       class="fa fa-chart-bar"></i></a>
                                 <a title="Close" rel="nofollow" data-method="put"
                                    href="/?action=close-exercise&id=<?= $exercise->id ?>"><i class="fa
@@ -96,7 +96,7 @@ use Looper\Models\database\entities\Exercise;
                         <tr>
                             <td><?= $exercise->title ?></td>
                             <td>
-                                <a title="Show results" href="/?action=exercises-results&id=<?= $exercise->id ?>"><i
+                                <a title="Show results" href="/?action=exercise-results&id=<?= $exercise->id ?>"><i
                                       class="fa fa-chart-bar"></i></a>
                                 <a data-confirm="Are you sure?" title="Destroy" rel="nofollow" data-method="delete"
                                    href="/?action=delete-exercise&id=<?= $exercise->id ?>"><i class="fa

@@ -11,7 +11,7 @@ use Looper\Models\database\entities\Exercise;
     <section class="container">
         <a href="/"><img src="/views/assets/logo/logo.png"></a>
         <span class="exercise-label">Exercise: <a
-              href="/?action=exercises-results&id=<?= $values["selectedExercises"]->id ?>"><?= $values["selectedExercises"]->title ?></a></span>
+              href="/?action=exercise-results&id=<?= $values["selectedExercises"]->id ?>"><?= $values["selectedExercises"]->title ?></a></span>
     </section>
 </header>
 <main class="container">
