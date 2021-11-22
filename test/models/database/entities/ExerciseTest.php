@@ -31,6 +31,7 @@ class ExerciseTest extends TestCase
 
         /* Then */
         $this->assertContainsOnlyInstancesOf(Question::class, $questions);
+        $this->assertNotNull($questions[0]->label);
     }
 
     public function testGetExercisesByStatus()
