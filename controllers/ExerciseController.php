@@ -110,5 +110,34 @@ class ExerciseController extends ViewController
         $selectedExercise->save();
         $this->openManageExercise();
     }
+
+    public function openExerciseResults(int $id)
+    {
+        $selectedExercises = Exercise::get($id);
+        $questions = $selectedExercises->getQuestions();
+        $takes = $selectedExercises->getTakes();
+        $answers = [[]];
+        foreach ($questions as $question) {
+            foreach ($question->getAnswers() as $answer) {
+                if (str_replace(' ', '', $answer->value) == "") {
+                    $type = "fa-times empty";
+                } elseif (strlen($answer->value) > 9) {
+                    $type = "fa-check-double filled";
+                } else {
+                    $type = "fa-check short";
+                }
+                $answers[$answer->take_id][$answer->question_id] = $type;
+            }
+        }
+        $this->render(
+            'result_exercise',
+            [
+                "selectedExercises" => $selectedExercises,
+                "questions"         => $questions,
+                "takes"             => $takes,
+                "answers"           => $answers,
+            ]
+        );
+    }
 }
 

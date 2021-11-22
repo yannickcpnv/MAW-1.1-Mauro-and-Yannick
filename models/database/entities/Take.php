@@ -83,4 +83,10 @@ class Take extends AbstractEntity
     {
         return DateTime::createFromFormat("Y-m-d H:i:s", $strTimestamp);
     }
+
+    private function dateTimeToString($strTimestamp): string
+    {
+        return $this->timestamp->format("Y-m-d H:i:s T");
+    }
 }
+
