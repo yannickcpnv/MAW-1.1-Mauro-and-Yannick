@@ -76,7 +76,9 @@ if ($action) {
         case 'manage-exercises':
             (new ExerciseController())->openManageExercise();
             break;
-        case 'list-takes-exercises':
+        case 'exercises-results':
+            (new ExerciseController())->openExerciseResults($_GET["id"]);
+            break;
         case 'detail-take-exercises':
         case 'detail-question-exercises':
             break;

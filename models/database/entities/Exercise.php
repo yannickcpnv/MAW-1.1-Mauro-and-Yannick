@@ -29,6 +29,20 @@ class Exercise extends AbstractEntity
         return self::createDatabase()->fetchRecords($query, Question::class, $queryArray);
     }
 
+    public function getTakes()
+    {
+        $query = "
+            SELECT t.id, t.timestamp
+            FROM takes as t
+                inner join answers a on t.id = a.take_id
+                inner join questions q on a.question_id = q.id
+                inner join exercises e on q.exercise_id = e.id
+            WHERE e.id=:id
+        ";
+        $queryArray = ['id' => $this->id];
+        return self::createDatabase()->fetchRecords($query, Take::class, $queryArray);
+    }
+
     public static function getExercisesByStatus(int $statusId)
     {
         $query = "
