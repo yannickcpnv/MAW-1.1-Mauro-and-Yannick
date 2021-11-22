@@ -20,10 +20,11 @@ USE `looper_test`;
 -- Listage de la structure de la table looper_test. answers
 CREATE TABLE IF NOT EXISTS `answers`
 (
+    `id`          int(11) NOT NULL AUTO_INCREMENT,
     `take_id`     int(11) NOT NULL,
     `question_id` int(11) NOT NULL,
     `value`       text    NOT NULL,
-    PRIMARY KEY (`take_id`, `question_id`),
+    PRIMARY KEY (`id`),
     KEY `fk_Takes_has_Questions_Questions1_idx` (`question_id`),
     KEY `fk_Takes_has_Questions_Takes1_idx` (`take_id`),
     CONSTRAINT `fk_Takes_has_Questions_Questions1` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,

@@ -17,8 +17,7 @@
             "Looper\\Test\\Models\\": "test/models"
         },
         "files": [
-            "config/config.php",
-            "phpunit.xml.dist"
+            "config/config.php"
         ]
     },
     "scripts": {

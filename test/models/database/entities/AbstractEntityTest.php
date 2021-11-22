@@ -10,8 +10,11 @@ use Looper\Test\fake\FakeEntity;
 class AbstractEntityTest extends TestCase
 {
 
+    private static string $defaultEnvDsn;
+
     public static function setUpBeforeClass(): void
     {
+        self::$defaultEnvDsn = $_ENV['DB_DSN'];
         $_ENV['DB_DSN'] = "{$_ENV['DB_SQL_DRIVER']}:host={$_ENV['DB_HOSTNAME']};
                             dbname={$_ENV['DB_MINI_NAME']};port={$_ENV['DB_PORT']};
                             charset={$_ENV['DB_CHARSET']}";
@@ -29,10 +32,10 @@ class AbstractEntityTest extends TestCase
         $expectedEntitiesQuantity = 50;
 
         /* When */
-        $entityies = FakeEntity::getAll();
+        $entities = FakeEntity::getAll();
 
         /* Then */
-        $this->assertCount($expectedEntitiesQuantity, $entityies);
+        $this->assertCount($expectedEntitiesQuantity, $entities);
     }
 
     public function testGet()
@@ -116,5 +119,6 @@ class AbstractEntityTest extends TestCase
     public static function tearDownAfterClass(): void
     {
         TestHelper::dropDatabase('mini_test');
+        $_ENV['DB_DSN'] = self::$defaultEnvDsn;
     }
 }
