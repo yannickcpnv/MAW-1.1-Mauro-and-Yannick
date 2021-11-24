@@ -40,7 +40,8 @@ class DatabaseConnectorTest extends TestCase
         $entities = $this->databaseConnector->fetchRecords($this->query, $this->fakeClass);
 
         /* Then */
-        self::assertContainsOnlyInstancesOf($this->fakeClass, $entities);
+        $this->assertContainsOnlyInstancesOf($this->fakeClass, $entities);
+        $this->assertNotNull($entities[0]->id);
     }
 
     public final function testFetchOne(): void
@@ -54,7 +55,7 @@ class DatabaseConnectorTest extends TestCase
         $entity = $this->databaseConnector->fetchOne($this->query, $this->fakeClass, $queryArray);
 
         /* Then */
-        self::assertInstanceOf($this->fakeClass, $entity);
+        $this->assertInstanceOf($this->fakeClass, $entity);
     }
 
     public final function testInsert(): void
@@ -76,7 +77,7 @@ class DatabaseConnectorTest extends TestCase
         $lastInsertedId = $this->databaseConnector->insert($this->query, $queryArray);
 
         /* Then */
-        self::assertEquals($expectedNewId, $lastInsertedId);
+        $this->assertEquals($expectedNewId, $lastInsertedId);
     }
 
     /**
@@ -94,12 +95,12 @@ class DatabaseConnectorTest extends TestCase
         $affectedRows = $this->databaseConnector->update($this->query, $queryArray);
 
         /* Then */
-        self::assertEquals(1, $affectedRows);
+        $this->assertEquals(1, $affectedRows);
         $entity = $this->databaseConnector->fetchOne(
             "SELECT first_name FROM users_test WHERE id=$entityId",
             $this->fakeClass
         );
-        self::assertEquals($entityFirstName, $entity->first_name);
+        $this->assertEquals($entityFirstName, $entity->first_name);
     }
 
     public final function testDelete(): void
@@ -111,7 +112,7 @@ class DatabaseConnectorTest extends TestCase
         $isSuccess = $this->databaseConnector->delete($this->query, ['id' => 1]);
 
         /* Then */
-        self::assertTrue($isSuccess);
+        $this->assertTrue($isSuccess);
     }
 
     public static function tearDownAfterClass(): void

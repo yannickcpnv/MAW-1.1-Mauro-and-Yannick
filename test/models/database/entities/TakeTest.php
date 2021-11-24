@@ -68,6 +68,9 @@ class TakeTest extends TestCase
         }
     }
 
+    /**
+     * @depends testGet
+     */
     public function testSave()
     {
         /* Given */
