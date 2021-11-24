@@ -108,3 +108,4 @@ composer.phar
 /config/.env
 /test/.phpunit.result.cache
 /test/test-dox.html
+/.phpunit.cache/

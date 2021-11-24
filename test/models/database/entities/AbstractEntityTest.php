@@ -7,6 +7,9 @@ use Looper\Test\TestHelper;
 use PHPUnit\Framework\TestCase;
 use Looper\Test\fake\FakeEntity;
 
+/**
+ * @coversDefaultClass \Looper\Models\database\entities\AbstractEntity
+ */
 class AbstractEntityTest extends TestCase
 {
 
@@ -26,6 +29,8 @@ class AbstractEntityTest extends TestCase
         TestHelper::createMiniDatabase();
     }
 
+    /**
+     */
     public function testGetAll()
     {
         /* Given */
@@ -38,6 +43,8 @@ class AbstractEntityTest extends TestCase
         $this->assertCount($expectedEntitiesQuantity, $entities);
     }
 
+    /**
+     */
     public function testGet()
     {
         /* Given */
@@ -53,6 +60,8 @@ class AbstractEntityTest extends TestCase
         $this->assertEquals($expectedIpAddress, $entity->ip_address);
     }
 
+    /**
+     */
     public function testCreate()
     {
         /* Given */
@@ -79,16 +88,18 @@ class AbstractEntityTest extends TestCase
     /**
      * @depends testGet
      */
+    /**
+     */
     public function testSave()
     {
         /* Given */
         $entityId = 8;
         $futurEntity = new FakeEntity(
             [
-                "id" => $entityId,
+                "id"         => $entityId,
                 "first_name" => "Darth",
-                "last_name" => "Vader",
-                "email" => "vader@imperial.emp",
+                "last_name"  => "Vader",
+                "email"      => "vader@imperial.emp",
                 "ip_address" => "255.255.255.255",
             ]
         );

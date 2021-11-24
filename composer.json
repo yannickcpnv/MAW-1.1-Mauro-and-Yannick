@@ -24,6 +24,11 @@
         "test": [
             "@putenv APP_ENV=test",
             "vendor/bin/phpunit test --testdox"
+        ],
+        "test:coverage": [
+            "@putenv APP_ENV=test",
+            "@putenv XDEBUG_MODE=coverage",
+            "vendor/bin/phpunit test"
         ]
     },
     "require": {

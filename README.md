@@ -53,8 +53,25 @@ FLUSH PRIVILEGES;
 
 ## Test
 
+There are tests for the models classes.
+
+### Basic mode
+
 Run the script _test/sql/create_db_test_admin.sql_ to create the test user.
 
 ```bash
 composer test
 ```
+
+This wil create the file _.phpunit.cache/test-dox.html_ that show tests results.
+
+### Coverage mode
+
+You can also see the code coverage
+
+```bash
+composer test:coverage
+```
+
+To see the result of the coverage, open the file _.phpunit.cache/code-coverage/html/index.html_ or
+_.phpunit.cache/code-coverage/html/dashboard.html_
