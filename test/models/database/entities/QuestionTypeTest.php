@@ -16,7 +16,7 @@ class QuestionTypeTest extends TestCase
         $this->expectedString = '';
     }
 
-    public function testToString_singleLineText(): void
+    public function testToStringReturnsSingleLineText(): void
     {
         /* Given */
         $this->expectedString = 'SINGLE_LINE_TEXT';
@@ -25,7 +25,7 @@ class QuestionTypeTest extends TestCase
         $this->whenAndThen();
     }
 
-    public function testToString_singleLineList(): void
+    public function testToStringReturnsSingleLineList(): void
     {
         /* Given */
         $this->expectedString = 'SINGLE_LINE_LIST';
@@ -34,7 +34,7 @@ class QuestionTypeTest extends TestCase
         $this->whenAndThen();
     }
 
-    public function testToString_multiLineText(): void
+    public function testToStringReturnsMultiLineText(): void
     {
         /* Given */
         $this->expectedString = 'MULTI_LINE_TEXT';
@@ -43,7 +43,7 @@ class QuestionTypeTest extends TestCase
         $this->whenAndThen();
     }
 
-    public function testToString_defaultValue(): void
+    public function testToStringReturnsDefaultValue(): void
     {
         /* Given */
         $this->expectedString = 'SINGLE_LINE_TEXT';

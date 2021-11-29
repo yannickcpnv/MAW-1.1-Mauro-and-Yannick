@@ -48,7 +48,7 @@ class ExerciseTest extends TestCase
         $this->assertNotNull($takes[0]->timestamp);
     }
 
-    public function testGetTakes_exerciseWithoutTakes()
+    public function testGetTakesWhenExerciseHasNotTakes()
     {
         /* Given */
         $exercise = Exercise::get(1);

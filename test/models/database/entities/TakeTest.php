@@ -76,12 +76,16 @@ class TakeTest extends TestCase
         /* Given */
         $takeId = 2;
         $take = Take::get($takeId);
-        $answers = [new Answer(['value' => 'I am the question', 'question_id' => 1])];
+
+        $answerId = 2;
+        $expectedValue = 'I am the question';
+        $answers = [new Answer(['id' => $answerId, 'value' => $expectedValue, 'question_id' => 1])];
 
         /* When */
         $take->save($answers);
 
         /* Then */
         $this->assertEquals($take->timestamp, Take::get($takeId)->timestamp);
+        $this->assertEquals($expectedValue, Answer::get($answerId)->value);
     }
 }
