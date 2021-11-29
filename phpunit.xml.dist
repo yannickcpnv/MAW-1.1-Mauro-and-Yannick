@@ -5,6 +5,7 @@
          cacheResultFile=".phpunit.cache/test-results"
          beStrictAboutOutputDuringTests="true"
          beStrictAboutTodoAnnotatedTests="true"
+         beStrictAboutTestsThatDoNotTestAnything="false"
          convertDeprecationsToExceptions="true"
          verbose="true"
          colors="true"

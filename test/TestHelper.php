@@ -36,6 +36,6 @@ class TestHelper
     public static function dropDatabase(string $dbName): void
     {
         $connection = self::createConnection();
-        $connection->exec("DROP DATABASE $dbName");
+        $connection->exec("DROP DATABASE IF EXISTS $dbName");
     }
 }

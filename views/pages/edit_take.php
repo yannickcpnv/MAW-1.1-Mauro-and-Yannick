@@ -27,6 +27,7 @@ $exercise = $values['exercise'];
         <?php foreach ($exercise->questions as $key => $question): ?>
             <div class="field">
                 <input name="take[answers][<?= $key ?>][questionId]" type="hidden" value="<?= $question->id ?>">
+                <input name="take[answers][<?= $key ?>][id]" type="hidden" value="<?= $question->answer[0]->id ?>">
                 <label for="answer_<?= $key ?>"><?= $question->label ?></label>
                 <?php if ($question->question_type_id == QuestionType::SINGLE_LINE_TEXT): ?>
                     <input id="answer_<?= $key ?>"

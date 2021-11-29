@@ -4,13 +4,12 @@ namespace Looper\Test\Models\database\entities;
 
 use PDOException;
 use Looper\Test\TestHelper;
-use PHPUnit\Framework\TestCase;
 use Looper\Test\fake\FakeEntity;
 
 /**
  * @coversDefaultClass \Looper\Models\database\entities\AbstractEntity
  */
-class AbstractEntityTest extends TestCase
+class AbstractEntityTest extends AbstractDatabaseEntityTest
 {
 
     private static string $defaultEnvDsn;
