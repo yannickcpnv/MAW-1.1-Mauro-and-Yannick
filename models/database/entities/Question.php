@@ -28,4 +28,17 @@ class Question extends AbstractEntity
 
         return self::createDatabase()->fetchRecords($query, Answer::class, $queryArray);
     }
+
+    public function getAnswerByTakeId(int $takeid): Answer
+    {
+        $query = "
+            SELECT a.take_id, a.question_id, a.value
+            FROM answers a
+                inner join questions q on a.question_id = q.id
+                inner join takes t on a.take_id = t.id
+            WHERE q.id=:answerid and t.id=:takeid
+        ";
+        $queryArray = ['answerid' => $this->id, 'takeid' => $takeid];
+        return self::createDatabase()->fetchOne($query, Answer::class, $queryArray);
+    }
 }

@@ -59,4 +59,21 @@ class TakeController extends ViewController
             return $answer;
         }, $answers);
     }
+
+    public function openTakeResults(int $takeid, $exerciseid)
+    {
+        $exercise = Exercise::get($exerciseid);
+        $take = Take::get($takeid);
+        $questions = $take->getQuestions();
+        $answers = [];
+        foreach ($questions as $question) {
+            $answers[$question->id] = $question->getAnswerByTakeId($take->id);
+        }
+        ViewController::renderPage('result_take', [
+            'exercise'  => $exercise,
+            'take'      => $take,
+            'questions' => $questions,
+            'answers'   => $answers,
+        ]);
+    }
 }

@@ -36,9 +36,11 @@ class Exercise extends AbstractEntity
                 inner join questions q on a.question_id = q.id
                 inner join exercises e on q.exercise_id = e.id
             WHERE e.id=:id
+            GROUP BY t.id
         ";
         $queryArray = ['id' => $this->id];
-        return self::createDatabase()->fetchRecords($query, Take::class, $queryArray);
+        $var = self::createDatabase()->fetchRecords($query, Take::class, $queryArray);
+        return $var;
     }
 
     /**

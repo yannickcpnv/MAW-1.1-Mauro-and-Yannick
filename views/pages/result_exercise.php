@@ -32,7 +32,8 @@ use Looper\Models\database\entities\Exercise;
             foreach ($values["takes"] as $take): ?>
                 <tr>
                     <td><a
-                          href="/?action=takes-results&id=<?= $take->id ?>"><?= $take->timestamp ?></a>
+                          href="/?action=take-results&takeid=<?= $take->id ?>&exerciseid=<?= $values["selectedExercises"]->id ?>"><?=
+                            $take->timestamp->format('Y-m-d H:i:s e') ?></a>
                     </td>
                     <?php
                     foreach ($values["questions"] as $question): ?>

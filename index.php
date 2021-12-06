@@ -80,6 +80,8 @@ if ($action) {
             (new ExerciseController())->openExerciseResults($_GET["id"]);
             break;
         case 'take-results':
+            (new TakeController())->openTakeResults($_GET["takeid"], $_GET["exerciseid"]);
+            break;
         case 'question-results':
             break;
         default:
