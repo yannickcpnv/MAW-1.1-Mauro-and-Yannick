@@ -46,8 +46,12 @@ $isModeEdit = $pageMode == 'edit';
     >
         <?php foreach ($questions as $key => $question): ?>
             <?php $value = $answers[$question->id]?->value ?? '' ?>
+            <?php $id = $answers[$question->id]?->id ?? '' ?>
             <div class="field">
                 <input name="take[answers][<?= $key ?>][questionId]" type="hidden" value="<?= $question->id ?>">
+                <?php if ($id): ?>
+                    <input name="take[answers][<?= $key ?>][id]" type="hidden" value="<?= $id ?>">
+                <?php endif; ?>
                 <label for="answer_<?= $key ?>"><?= $question->label ?></label>
                 <?php if ($question->question_type_id == QuestionType::SINGLE_LINE_TEXT): ?>
                     <input id="answer_<?= $key ?>"

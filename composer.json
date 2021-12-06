@@ -12,13 +12,23 @@
     "autoload": {
         "psr-4": {
             "Looper\\Controllers\\": "controllers",
-            "Looper\\Models\\": [
-                "models",
-                "test/models"
-            ]
+            "Looper\\Models\\": "models",
+            "Looper\\Test\\": "test",
+            "Looper\\Test\\Models\\": "test/models"
         },
         "files": [
             "config/config.php"
+        ]
+    },
+    "scripts": {
+        "test": [
+            "@putenv APP_ENV=test",
+            "vendor/bin/phpunit test --testdox"
+        ],
+        "test:coverage": [
+            "@putenv APP_ENV=test",
+            "@putenv XDEBUG_MODE=coverage",
+            "vendor/bin/phpunit test"
         ]
     },
     "require": {

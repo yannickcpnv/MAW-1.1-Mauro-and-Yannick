@@ -19,7 +19,7 @@ class Question extends AbstractEntity
     public function getAnswers(): array
     {
         $query = "
-            SELECT a.value, a.question_id, a.take_id
+            SELECT a.id, a.value, a.question_id, a.take_id
             FROM answers a
                 INNER JOIN questions q on a.question_id = q.id
             WHERE q.id=:id

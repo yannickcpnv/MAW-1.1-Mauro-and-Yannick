@@ -106,5 +106,6 @@ composer.phar
 # composer.lock
 
 /config/.env
-
-/config/.env
+/test/.phpunit.result.cache
+/test/test-dox.html
+/.phpunit.cache/

@@ -51,11 +51,12 @@ class TakeController extends ViewController
 
     private function mapAnswers($answers): array
     {
-        return array_map(fn($answer): Answer => new Answer(
-            [
-                'value'       => $answer['value'],
-                'question_id' => $answer['questionId'],
-            ]
-        ), $answers);
+        return array_map(function ($answerArray): Answer {
+            $answer = new Answer(['value' => $answerArray['value'], 'question_id' => $answerArray['questionId']]);
+            if (isset($answerArray['id'])) {
+                $answer->id = $answerArray['id'];
+            }
+            return $answer;
+        }, $answers);
     }
 }

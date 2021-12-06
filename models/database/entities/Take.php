@@ -11,11 +11,6 @@ class Take extends AbstractEntity
 
     protected DateTime|string $timestamp;
 
-    public function __construct()
-    {
-        parent::__construct(['timestamp' => date("Y-m-d H:i:s")]);
-    }
-
     /**
      * Retrieve all takes from database.
      *
@@ -53,6 +48,7 @@ class Take extends AbstractEntity
      */
     public function create(array $answers = null): void
     {
+        $this->timestamp = date("Y-m-d H:i:s");
         parent::create();
 
         foreach ($answers as $answer) {
@@ -82,11 +78,6 @@ class Take extends AbstractEntity
     private static function strToDateTime($strTimestamp): DateTime|bool
     {
         return DateTime::createFromFormat("Y-m-d H:i:s", $strTimestamp);
-    }
-
-    private function dateTimeToString($strTimestamp): string
-    {
-        return $this->timestamp->format("Y-m-d H:i:s T");
     }
 }
 

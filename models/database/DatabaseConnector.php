@@ -89,7 +89,7 @@ class DatabaseConnector
      * @param string $query The query, be correctly build for sql syntax.
      * @param array  $queryArray
      *
-     * @return int
+     * @return int  The number of rows affected.
      */
     public function update(string $query, array $queryArray): int
     {
@@ -104,9 +104,9 @@ class DatabaseConnector
      * @param string $query The query, be correctly build for sql syntax.
      * @param array  $queryArray
      *
-     * @return int
+     * @return bool True if the query is ok, otherwise false.
      */
-    public function delete(string $query, array $queryArray): int
+    public function delete(string $query, array $queryArray): bool
     {
         return $this->executeQuery($query, $queryArray);
     }
