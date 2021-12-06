@@ -91,6 +91,23 @@ class Take extends AbstractEntity
         return self::createDatabase()->fetchRecords($query, Question::class, $queryArray);
     }
 
+    /**
+     * Get an answer from a question id and using the instantiated take.
+     *
+     * @param int $questionId The question ID
+     *
+     * @return Answer
+     */
+    public function getAnswerFromQuestionId(int $questionId): Answer
+    {
+        $query = "
+            SELECT id, take_id, question_id, value
+            FROM answers
+            WHERE take_id=:take_id AND question_id=:question_id
+        ";
+        $queryArray = ['take_id' => $this->id, 'question_id' => $questionId];
+        return self::createDatabase()->fetchRecords($query, Answer::class, $queryArray)[0];
+    }
 
     private static function strToDateTime($strTimestamp): DateTime|bool
     {

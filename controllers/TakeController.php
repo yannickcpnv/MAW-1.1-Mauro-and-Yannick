@@ -60,7 +60,7 @@ class TakeController extends ViewController
         }, $answers);
     }
 
-    public function openTakeResults(int $takeid, $exerciseid)
+    public function openTakeResult(int $takeid, $exerciseid)
     {
         $exercise = Exercise::get($exerciseid);
         $take = Take::get($takeid);

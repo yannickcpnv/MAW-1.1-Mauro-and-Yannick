@@ -1,11 +1,14 @@
 <?php
 
+use Looper\Models\database\entities\Take;
+use Looper\Models\database\entities\Answer;
 use Looper\Models\database\entities\Exercise;
+use Looper\Models\database\entities\Question;
 
 /** @var Exercise $values ["selectedExercises"] */
-/** @var Questions[] $values ["questions"] */
-/** @var Takes[] $values ["takes"] */
-/** @var answers[] $values ["selectedExercises"] */
+/** @var Question[] $values ["questions"] */
+/** @var Take[] $values ["takes"] */
+/** @var Answer[] $values ["selectedExercises"] */
 ?>
 <header class="heading results">
     <section class="container">
@@ -19,12 +22,11 @@ use Looper\Models\database\entities\Exercise;
         <thead>
             <tr>
                 <th>Take</th>
-                <?php
-                array_map(function ($question) {
-                    echo "<th><a href='/?action=questions-results&id=" . $question->id
-                         . "'>$question->label</a></th>";
-                }, $values["questions"]) ?>
-
+                <?php foreach ($values['questions'] as $question): ?>
+                    <th><a
+                          href='/?action=question-results&id=<?= $question->id ?>&exerciseId=<?= $values["selectedExercises"]->id ?>'><?= $question->label ?></a>
+                    </th>
+                <?php endforeach; ?>
             </tr>
         </thead>
         <tbody>

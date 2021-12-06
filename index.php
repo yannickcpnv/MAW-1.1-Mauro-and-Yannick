@@ -80,9 +80,10 @@ if ($action) {
             (new ExerciseController())->openExerciseResults($_GET["id"]);
             break;
         case 'take-results':
-            (new TakeController())->openTakeResults($_GET["takeid"], $_GET["exerciseid"]);
+            (new TakeController())->openTakeResult($_GET["takeid"], $_GET["exerciseid"]);
             break;
         case 'question-results':
+            (new QuestionController())->openQuestionResult($_GET['id'], $_GET['exerciseId']);
             break;
         default:
             ViewController::renderPage('404');
