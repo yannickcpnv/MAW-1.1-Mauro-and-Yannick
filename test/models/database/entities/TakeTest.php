@@ -88,4 +88,24 @@ class TakeTest extends TestCase
         $this->assertEquals($take->timestamp, Take::get($takeId)->timestamp);
         $this->assertEquals($expectedValue, Answer::get($answerId)->value);
     }
+
+    public function testGetAnswerByQuestionId()
+    {
+        /* Given */
+        $takeId = 1;
+        $take = Take::get($takeId);
+
+        $answerId = 1;
+        $expectedAnswer = Answer::get($answerId);
+
+        $questionId = 2;
+        $expectedAnswerValue = 'I\'m here POG';
+
+        /* When */
+        $actualAnswer = $take->getAnswerByQuestionId($questionId);
+
+        /* Then */
+        $this->assertEquals($expectedAnswer, $actualAnswer);
+        $this->assertEquals($expectedAnswerValue, $actualAnswer->value);
+    }
 }

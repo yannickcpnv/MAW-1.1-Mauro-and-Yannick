@@ -98,7 +98,7 @@ class Take extends AbstractEntity
      *
      * @return Answer
      */
-    public function getAnswerFromQuestionId(int $questionId): Answer
+    public function getAnswerByQuestionId(int $questionId): Answer
     {
         $query = "
             SELECT id, take_id, question_id, value
