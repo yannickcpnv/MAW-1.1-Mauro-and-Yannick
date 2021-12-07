@@ -13,9 +13,13 @@ class Take extends AbstractEntity
 
     public function __construct()
     {
-        parent::__construct(['timestamp' => date("Y-m-d H:i:s")]);
-        if (is_string($this->timestamp)) {
-            $this->timestamp = self::strToDateTime($this->timestamp);
+        parent::__construct();
+        if (isset($this->timestamp)) {
+            if (is_string($this->timestamp)) {
+                $this->timestamp = self::strToDateTime($this->timestamp);
+            }
+        } else {
+            $this->timestamp = date("Y-m-d H:i:s");
         }
     }
 

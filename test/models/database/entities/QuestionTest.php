@@ -32,4 +32,20 @@ class QuestionTest extends TestCase
         $this->assertContainsOnlyInstancesOf(Answer::class, $answers);
         $this->assertNotNull($answers[0]->value);
     }
+
+    public function testGetAnswerByTakeId()
+    {
+        /* Given */
+        $takeId = 1;
+        $questionId = 2;
+        $question = Question::get($questionId);
+        $answerId = 1;
+        $answer = Answer::get($answerId);
+
+        /* When */
+        $resultingAnswer = $question->getAnswerByTakeId($takeId);
+
+        /* Then */
+        $this->assertEquals($answer, $resultingAnswer);
+    }
 }

@@ -12,8 +12,8 @@ use Looper\Models\database\entities\QuestionType;
         </a>
         <span class="exercise-label">Exercise:
             <a
-              href="/?action=edit-question&id=<?= $values["selectedExercise"]->id ?>">
-                <?= $values["selectedExercise"]->name ?>
+              href="/?action=edit-exercise&id=<?= $values["selectedExercise"]->id ?>">
+                <?= $values["selectedExercise"]->title ?>
             </a>
         </span>
     </section>
