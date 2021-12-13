@@ -42,8 +42,9 @@ use Looper\Models\database\entities\Exercise;
                                 <a title="Manage fields" href="/?action=edit-exercise&id=<?= $exercise->id ?>"><i
                                       class="fa fa-edit"></i></a>
                                 <a data-confirm="Are you sure?" title="Destroy" rel="nofollow" data-method="delete"
-                                   href="/?action=delete-exercise&id=<?= $exercise->id ?>"<i
-                                  class="fa fa-trash popup-confirm"></i></a>
+                                   href="/?action=delete-exercise&id=<?= $exercise->id ?>">
+                                    <i class="fa fa-trash popup-confirm"></i>
+                                </a>
                             </td>
                         </tr>
                     <?php
@@ -99,8 +100,9 @@ use Looper\Models\database\entities\Exercise;
                                 <a title="Show results" href="/?action=exercise-results&id=<?= $exercise->id ?>"><i
                                       class="fa fa-chart-bar"></i></a>
                                 <a data-confirm="Are you sure?" title="Destroy" rel="nofollow" data-method="delete"
-                                   href="/?action=delete-exercise&id=<?= $exercise->id ?>"><i class="fa
-                                   fa-trash"></i></a>
+                                   href="/?action=delete-exercise&id=<?= $exercise->id ?>">
+                                    <i class="fa fa-trash popup-confirm"></i>
+                                </a>
                             </td>
                         </tr>
                     <?php

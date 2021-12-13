@@ -27,6 +27,17 @@ class TakeController extends ViewController
         header("Location: {$server['HTTP_ORIGIN']}?action=edit-take&exercise-id=$exerciseId&take-id=$take->id");
     }
 
+    private function mapAnswers(array $answers): array
+    {
+        return array_map(function ($answerForm): Answer {
+            $answer = new Answer(['value' => $answerForm['value'], 'question_id' => $answerForm['questionId']]);
+            if (isset($answerForm['id'])) {
+                $answer->id = $answerForm['id'];
+            }
+            return $answer;
+        }, $answers);
+    }
+
     public function showDetails(int $exerciseId, int $takeId)
     {
         $exercise = Exercise::get($exerciseId);
@@ -47,17 +58,6 @@ class TakeController extends ViewController
             'take'      => Take::get($takeId),
             'mode'      => 'edit',
         ]);
-    }
-
-    private function mapAnswers($answers): array
-    {
-        return array_map(function ($answerArray): Answer {
-            $answer = new Answer(['value' => $answerArray['value'], 'question_id' => $answerArray['questionId']]);
-            if (isset($answerArray['id'])) {
-                $answer->id = $answerArray['id'];
-            }
-            return $answer;
-        }, $answers);
     }
 
     public function openTakeResult(int $takeid, $exerciseid)
