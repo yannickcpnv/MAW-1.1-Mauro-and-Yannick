@@ -57,4 +57,12 @@ class QuestionController extends ViewController
             "selectedQuestions" => $selectedQuestions,
         ]);
     }
+
+    public function openQuestionResult(int $id)
+    {
+        $selectedQuestion = Question::get($id);
+        $selectedExercise = Exercise::get($selectedQuestion->exercise_id);
+        $takes = $selectedExercise->getTakes();
+        self::renderPage('result_question', compact('selectedQuestion', 'selectedExercise', 'takes'));
+    }
 }

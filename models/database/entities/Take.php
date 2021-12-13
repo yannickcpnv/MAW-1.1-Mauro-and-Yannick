@@ -11,6 +11,18 @@ class Take extends AbstractEntity
 
     protected DateTime|string $timestamp;
 
+    public function __construct()
+    {
+        parent::__construct();
+        if (isset($this->timestamp)) {
+            if (is_string($this->timestamp)) {
+                $this->timestamp = self::strToDateTime($this->timestamp);
+            }
+        } else {
+            $this->timestamp = date("Y-m-d H:i:s");
+        }
+    }
+
     /**
      * Retrieve all takes from database.
      *
@@ -19,9 +31,6 @@ class Take extends AbstractEntity
     public static function getAll(): array
     {
         $takes = parent::getAll();
-        foreach ($takes as $take) {
-            $take->timestamp = self::strToDateTime($take->timestamp);
-        }
 
         return $takes;
     }
@@ -36,7 +45,6 @@ class Take extends AbstractEntity
     public static function get(int $id): ?Take
     {
         $take = parent::get($id);
-        $take->timestamp = self::strToDateTime($take->timestamp);
 
         return $take;
     }
@@ -48,7 +56,6 @@ class Take extends AbstractEntity
      */
     public function create(array $answers = null): void
     {
-        $this->timestamp = date("Y-m-d H:i:s");
         parent::create();
 
         foreach ($answers as $answer) {
@@ -73,6 +80,37 @@ class Take extends AbstractEntity
             }
             $answer->save();
         }
+    }
+
+    public function getQuestions()
+    {
+        $query = "
+            SELECT q.id, q.label, q.exercise_id, q.question_type_id
+            FROM questions as q
+                inner join answers a on q.id = a.question_id
+                inner join takes t on a.take_id = t.id
+            WHERE t.id=:id
+        ";
+        $queryArray = ['id' => $this->id];
+        return self::createDatabase()->fetchRecords($query, Question::class, $queryArray);
+    }
+
+    /**
+     * Get an answer from a question id and using the instantiated take.
+     *
+     * @param int $questionId The question ID
+     *
+     * @return Answer
+     */
+    public function getAnswerByQuestionId(int $questionId): Answer
+    {
+        $query = "
+            SELECT id, take_id, question_id, value
+            FROM answers
+            WHERE take_id=:take_id AND question_id=:question_id
+        ";
+        $queryArray = ['take_id' => $this->id, 'question_id' => $questionId];
+        return self::createDatabase()->fetchRecords($query, Answer::class, $queryArray)[0];
     }
 
     private static function strToDateTime($strTimestamp): DateTime|bool

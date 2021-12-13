@@ -8,6 +8,8 @@ use Looper\Test\TestHelper;
 use PHPUnit\Framework\TestCase;
 use Looper\Models\database\entities\Take;
 use Looper\Models\database\entities\Answer;
+use Looper\Models\database\entities\Question;
+use Looper\Models\database\entities\Exercise;
 
 class TakeTest extends TestCase
 {
@@ -87,5 +89,39 @@ class TakeTest extends TestCase
         /* Then */
         $this->assertEquals($take->timestamp, Take::get($takeId)->timestamp);
         $this->assertEquals($expectedValue, Answer::get($answerId)->value);
+    }
+
+    public function testGetAnswerByQuestionId()
+    {
+        /* Given */
+        $takeId = 1;
+        $take = Take::get($takeId);
+
+        $answerId = 1;
+        $expectedAnswer = Answer::get($answerId);
+
+        $questionId = 2;
+        $expectedAnswerValue = 'I\'m here POG';
+
+        /* When */
+        $actualAnswer = $take->getAnswerByQuestionId($questionId);
+
+        /* Then */
+        $this->assertEquals($expectedAnswer, $actualAnswer);
+        $this->assertEquals($expectedAnswerValue, $actualAnswer->value);
+    }
+
+    public function testGetQuestions()
+    {
+        /* Given */
+        $takeId = 1;
+        $questionId = 2;
+        $take = TAKE::get($takeId);
+        $question = Question::get($questionId);
+        /* When */
+        $resultingQuestion = $take->getQuestions($takeId)[0];
+
+        /* Then */
+        $this->assertEquals($question, $resultingQuestion);
     }
 }
