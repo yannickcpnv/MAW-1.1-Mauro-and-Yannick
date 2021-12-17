@@ -3,21 +3,19 @@
 namespace Looper\Controllers;
 
 use Looper\Models\database\entities\Exercise;
-use Looper\Models\database\entities\Question;
 use Looper\Models\database\entities\ExerciseStatus;
 
 class ExerciseController extends ViewController
 {
 
-    public function openCreateExercise()
+    public function openCreateExercise(): void
     {
         $this->render('create_exercise');
     }
 
-
-    public function openEditExercise($id)
+    public function openEditExercise(int $exerciseId): void
     {
-        $selectedExercise = Exercise::get($id);
+        $selectedExercise = Exercise::get($exerciseId);
         $selectedQuestions = $selectedExercise->getQuestions();
         self::renderPage(
             "edit_exercise",
@@ -25,7 +23,7 @@ class ExerciseController extends ViewController
         );
     }
 
-    public function validateExerciseCreation($exerciseForm)
+    public function validateExerciseCreation(array $exerciseForm): void
     {
         if ($exerciseForm["title"] != "") {
             $selectedExercise =
@@ -41,9 +39,9 @@ class ExerciseController extends ViewController
         }
     }
 
-    public function completeExercise(int $id)
+    public function completeExercise(int $exerciseId): void
     {
-        $selectedExercise = Exercise::get($id);
+        $selectedExercise = Exercise::get($exerciseId);
         $selectedQuestions = $selectedExercise->getQuestions();
         if (count($selectedQuestions) > 0) {
             $selectedExercise->exercise_status_id = ExerciseStatus::ANSWERING;
@@ -57,7 +55,7 @@ class ExerciseController extends ViewController
         }
     }
 
-    public function listExercises()
+    public function listExercises(): void
     {
         $exercises = array_filter(Exercise::getAll(), function ($exercise) {
             return $exercise->exercise_status_id == ExerciseStatus::ANSWERING;
@@ -65,9 +63,9 @@ class ExerciseController extends ViewController
         self::renderPage('list_exercises', ["exercises" => $exercises]);
     }
 
-    public function takeExercise(int $id)
+    public function takeExercise(int $exerciseId): void
     {
-        $exercise = Exercise::get($id);
+        $exercise = Exercise::get($exerciseId);
         $questions = $exercise->getQuestions();
         self::renderPage('take_exercise', [
             "exercise"  => $exercise,
@@ -76,7 +74,7 @@ class ExerciseController extends ViewController
         ]);
     }
 
-    public function openManageExercise()
+    public function openManageExercise(): void
     {
         $exercisesBuilding = Exercise::getExercisesByStatus(ExerciseStatus::BUILDING);
         $exercisesAnswering = Exercise::getExercisesByStatus(ExerciseStatus::ANSWERING);
@@ -96,14 +94,14 @@ class ExerciseController extends ViewController
         );
     }
 
-    public function removeExercise(int $id)
+    public function removeExercise(int $id): void
     {
         $selectedExercise = Exercise::get($id);
         $selectedExercise->delete();
         $this->openManageExercise();
     }
 
-    public function closeExercise(int $id)
+    public function closeExercise(int $id): void
     {
         $selectedExercise = Exercise::get($id);
         $selectedExercise->exercise_status_id = ExerciseStatus::CLOSED;
@@ -111,7 +109,7 @@ class ExerciseController extends ViewController
         $this->openManageExercise();
     }
 
-    public function openExerciseResults(int $id)
+    public function openExerciseResults(int $id): void
     {
         $selectedExercises = Exercise::get($id);
         $questions = $selectedExercises->getQuestions();

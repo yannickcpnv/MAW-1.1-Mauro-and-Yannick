@@ -27,7 +27,12 @@ class Exercise extends AbstractEntity
         return self::createDatabase()->fetchRecords($query, Question::class, $queryArray);
     }
 
-    public function getTakes()
+    /**
+     * Get all takes of exercise from the database.
+     *
+     * @return Take[] Exercise takes.
+     */
+    public function getTakes(): array
     {
         $query = "
             SELECT t.id, t.timestamp

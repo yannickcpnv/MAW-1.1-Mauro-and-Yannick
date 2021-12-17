@@ -17,12 +17,12 @@ class ExerciseTest extends TestCase
         TestHelper::createDatabase();
     }
 
-    public final function setUp(): void
+    public function setUp(): void
     {
         TestHelper::createDatabase();
     }
 
-    public function testGetQuestions()
+    public function testGetQuestions(): void
     {
         /* Given */
         $exercise = Exercise::get(3);
@@ -35,7 +35,7 @@ class ExerciseTest extends TestCase
         $this->assertNotNull($questions[0]->label);
     }
 
-    public function testGetTakes()
+    public function testGetTakes(): void
     {
         /* Given */
         $exercise = Exercise::get(3);
@@ -48,7 +48,7 @@ class ExerciseTest extends TestCase
         $this->assertNotNull($takes[0]->timestamp);
     }
 
-    public function testGetTakesWhenExerciseHasNotTakes()
+    public function testGetTakesWhenExerciseHasNotTakes(): void
     {
         /* Given */
         $exercise = Exercise::get(1);
@@ -60,7 +60,7 @@ class ExerciseTest extends TestCase
         $this->assertEmpty($takes);
     }
 
-    public function testGetExercisesByStatus()
+    public function testGetExercisesByStatus(): void
     {
         /* Given */
         $exerciseStatus = ExerciseStatus::BUILDING;

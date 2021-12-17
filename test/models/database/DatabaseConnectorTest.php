@@ -19,7 +19,7 @@ class DatabaseConnectorTest extends TestCase
         TestHelper::createMiniDatabase();
     }
 
-    public final function setUp(): void
+    final public function setUp(): void
     {
         TestHelper::createMiniDatabase();
         $this->databaseConnector = new DatabaseConnector(
@@ -30,7 +30,7 @@ class DatabaseConnectorTest extends TestCase
         $this->fakeClass = FakeEntity::class;
     }
 
-    public final function testFetchRecords(): void
+    final public function testFetchRecords(): void
     {
         /* Given */
 
@@ -44,7 +44,7 @@ class DatabaseConnectorTest extends TestCase
         $this->assertNotNull($entities[0]->id);
     }
 
-    public final function testFetchOne(): void
+    final public function testFetchOne(): void
     {
         /* Given */
         $this->query = "SELECT id FROM users_test WHERE id=:id";
@@ -58,7 +58,7 @@ class DatabaseConnectorTest extends TestCase
         $this->assertInstanceOf($this->fakeClass, $entity);
     }
 
-    public final function testInsert(): void
+    final public function testInsert(): void
     {
         /* Given */
         $this->query = "
@@ -83,7 +83,7 @@ class DatabaseConnectorTest extends TestCase
     /**
      * @depends testFetchOne
      */
-    public final function testUpdate(): void
+    final public function testUpdate(): void
     {
         /* Given */
         $this->query = "UPDATE users_test set first_name = :first_name WHERE id=:id";
@@ -103,7 +103,7 @@ class DatabaseConnectorTest extends TestCase
         $this->assertEquals($entityFirstName, $entity->first_name);
     }
 
-    public final function testDelete(): void
+    final public function testDelete(): void
     {
         /* Given */
         $this->query = "DELETE FROM users_test WHERE id=:id";

@@ -4,6 +4,9 @@ namespace Looper\Models\database\entities;
 
 use DateTime;
 
+/**
+ * this class is designed to represent an {@link Exercise} take.
+ */
 class Take extends AbstractEntity
 {
 
@@ -11,6 +14,9 @@ class Take extends AbstractEntity
 
     protected DateTime|string $timestamp;
 
+    /**
+     * Instantiate a new {@link Take}.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -21,18 +27,6 @@ class Take extends AbstractEntity
         } else {
             $this->timestamp = date("Y-m-d H:i:s");
         }
-    }
-
-    /**
-     * Retrieve all takes from database.
-     *
-     * @return Take[] An array of all takes.
-     */
-    public static function getAll(): array
-    {
-        $takes = parent::getAll();
-
-        return $takes;
     }
 
     /**
@@ -82,7 +76,12 @@ class Take extends AbstractEntity
         }
     }
 
-    public function getQuestions()
+    /**
+     * Retrieve all questions of the take.
+     *
+     * @return array
+     */
+    public function getQuestions(): array
     {
         $query = "
             SELECT q.id, q.label, q.exercise_id, q.question_type_id

@@ -108,12 +108,8 @@ abstract class AbstractEntity
 
     /**
      * Delete the entity from the database.
-     *
-     * @param AbstractEntity $model
-     *
-     * @throws PDOException
      */
-    public function delete()
+    public function delete(): void
     {
         $query = "DELETE FROM " . static::TABLE_NAME . " WHERE id=:id";
         $queryArray = ["id" => $this->id];

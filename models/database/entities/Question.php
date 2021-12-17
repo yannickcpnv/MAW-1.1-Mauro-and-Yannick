@@ -29,7 +29,7 @@ class Question extends AbstractEntity
         return self::createDatabase()->fetchRecords($query, Answer::class, $queryArray);
     }
 
-    public function getAnswerByTakeId(int $takeid): Answer
+    public function getAnswerByTakeId(int $takeId): Answer
     {
         $query = "
             SELECT a.id, a.take_id, a.question_id, a.value
@@ -38,7 +38,7 @@ class Question extends AbstractEntity
                 inner join takes t on a.take_id = t.id
             WHERE q.id=:answerid and t.id=:takeid
         ";
-        $queryArray = ['answerid' => $this->id, 'takeid' => $takeid];
+        $queryArray = ['answerid' => $this->id, 'takeid' => $takeId];
         return self::createDatabase()->fetchOne($query, Answer::class, $queryArray);
     }
 }

@@ -15,12 +15,12 @@ class QuestionTest extends TestCase
         TestHelper::createDatabase();
     }
 
-    public final function setUp(): void
+    public function setUp(): void
     {
         TestHelper::createDatabase();
     }
 
-    public function testGetAnswers()
+    public function testGetAnswers(): void
     {
         /* Given */
         $question = new Question(['id' => 2]);
@@ -33,7 +33,7 @@ class QuestionTest extends TestCase
         $this->assertNotNull($answers[0]->value);
     }
 
-    public function testGetAnswerByTakeId()
+    public function testGetAnswerByTakeId(): void
     {
         /* Given */
         $takeId = 1;

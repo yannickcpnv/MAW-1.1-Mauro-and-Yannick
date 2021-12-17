@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 use Looper\Models\database\entities\Take;
 use Looper\Models\database\entities\Answer;
 use Looper\Models\database\entities\Question;
-use Looper\Models\database\entities\Exercise;
 
 class TakeTest extends TestCase
 {
@@ -19,12 +18,12 @@ class TakeTest extends TestCase
         TestHelper::createDatabase();
     }
 
-    public final function setUp(): void
+    final public function setUp(): void
     {
         TestHelper::createDatabase();
     }
 
-    public function testGetAll()
+    public function testGetAll(): void
     {
         /* Given */
         $expectedTakeQuantity = 2;
@@ -38,7 +37,7 @@ class TakeTest extends TestCase
         $this->assertEquals($expectedTimeStamp, $takes[0]->timestamp);
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         /* Given */
         $takeId = 1;
@@ -53,7 +52,7 @@ class TakeTest extends TestCase
         $this->assertEquals($expectedTimeStamp, $take->timestamp);
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         /* Given */
         $take = new Take();
@@ -73,7 +72,7 @@ class TakeTest extends TestCase
     /**
      * @depends testGet
      */
-    public function testSave()
+    public function testSave(): void
     {
         /* Given */
         $takeId = 2;
@@ -91,7 +90,7 @@ class TakeTest extends TestCase
         $this->assertEquals($expectedValue, Answer::get($answerId)->value);
     }
 
-    public function testGetAnswerByQuestionId()
+    public function testGetAnswerByQuestionId(): void
     {
         /* Given */
         $takeId = 1;
@@ -111,7 +110,7 @@ class TakeTest extends TestCase
         $this->assertEquals($expectedAnswerValue, $actualAnswer->value);
     }
 
-    public function testGetQuestions()
+    public function testGetQuestions(): void
     {
         /* Given */
         $takeId = 1;

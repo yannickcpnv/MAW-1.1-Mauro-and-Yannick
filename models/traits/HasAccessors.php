@@ -9,12 +9,12 @@ use ReflectionProperty;
 trait HasAccessors
 {
 
-    public function __get($property)
+    public function __get(string $property): mixed
     {
         return $this->createAccessors($property);
     }
 
-    public function __set($property, $value)
+    public function __set(string $property, mixed $value): void
     {
         $this->createAccessors($property, true, $value);
     }
@@ -26,7 +26,7 @@ trait HasAccessors
      * @throws ReflectionProperty
      * @throws RuntimeException
      */
-    private function createAccessors($property, $isSetter = false, $value = null)
+    private function createAccessors(string $property, bool $isSetter = false, mixed $value = null): mixed
     {
         $method = $isSetter ? 'set' : 'get' . ucfirst($property); //camelCase() method name
         if (method_exists($this, $method)) {
