@@ -118,7 +118,7 @@ class TakeTest extends TestCase
         $take = TAKE::get($takeId);
         $question = Question::get($questionId);
         /* When */
-        $resultingQuestion = $take->getQuestions($takeId)[0];
+        $resultingQuestion = $take->getQuestions()[0];
 
         /* Then */
         $this->assertEquals($question, $resultingQuestion);

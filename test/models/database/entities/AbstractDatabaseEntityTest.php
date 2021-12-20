@@ -11,11 +11,6 @@ use PHPUnit\Framework\TestCase;
 abstract class AbstractDatabaseEntityTest extends TestCase
 {
 
-    public static function setUpBeforeClass(): void
-    {
-        TestHelper::createDatabase();
-    }
-
     public function setUp(): void
     {
         TestHelper::createDatabase();

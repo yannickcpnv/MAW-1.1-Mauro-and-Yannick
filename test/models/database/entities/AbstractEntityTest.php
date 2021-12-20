@@ -5,6 +5,7 @@ namespace Looper\Test\Models\database\entities;
 use PDOException;
 use Looper\Test\TestHelper;
 use Looper\Test\fake\FakeEntity;
+use Looper\Models\database\entities\EntityNotFoundException;
 
 /**
  * @coversDefaultClass \Looper\Models\database\entities\AbstractEntity
@@ -28,8 +29,6 @@ class AbstractEntityTest extends AbstractDatabaseEntityTest
         TestHelper::createMiniDatabase();
     }
 
-    /**
-     */
     public function testGetAll(): void
     {
         /* Given */
@@ -42,25 +41,31 @@ class AbstractEntityTest extends AbstractDatabaseEntityTest
         $this->assertCount($expectedEntitiesQuantity, $entities);
     }
 
-    /**
-     */
     public function testGet(): void
     {
         /* Given */
         $entityId = 12;
-        $expectedClassInstance = FakeEntity::class;
         $expectedIpAddress = "122.88.122.26";
 
         /* When */
         $entity = FakeEntity::get($entityId);
 
         /* Then */
-        $this->assertInstanceOf($expectedClassInstance, $entity);
         $this->assertEquals($expectedIpAddress, $entity->ip_address);
     }
 
-    /**
-     */
+    public function testGetNoutFound(): void
+    {
+        /* Given */
+        $entityId = 12345;
+
+        /* Except */
+        $this->expectException(EntityNotFoundException::class);
+
+        /* When */
+        FakeEntity::get($entityId);
+    }
+
     public function testCreate(): void
     {
         /* Given */
@@ -86,8 +91,6 @@ class AbstractEntityTest extends AbstractDatabaseEntityTest
 
     /**
      * @depends testGet
-     */
-    /**
      */
     public function testSave(): void
     {
@@ -123,6 +126,7 @@ class AbstractEntityTest extends AbstractDatabaseEntityTest
         $entity->delete();
 
         /* Then */
+        $this->expectException(EntityNotFoundException::class);
         $this->assertNull(FakeEntity::get($entityId));
     }
 

@@ -2,8 +2,12 @@
 
 use Looper\Models\database\entities\Exercise;
 
-/** @var Exercise[] $values */
-/** @var Exercise $exercise */
+//region Variables used in page
+/** @var array $values */
+
+/** @var Exercise[] $exercises */
+$exercises = $values["exercises"]
+//endregion
 ?>
 
 <header class="heading answering">
@@ -13,7 +17,7 @@ use Looper\Models\database\entities\Exercise;
 </header>
 <main class="container">
     <ul class="ansering-list">
-        <?php foreach ($values["exercises"] as $exercise): ?>
+        <?php foreach ($exercises as $exercise): ?>
             <li class="row">
                 <div class="column card">
                     <div class="title"><?= $exercise->title ?></div>

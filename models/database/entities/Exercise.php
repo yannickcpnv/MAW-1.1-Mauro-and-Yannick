@@ -10,6 +10,30 @@ class Exercise extends AbstractEntity
     protected string $title;
     protected int    $exercise_status_id;
 
+    public function __construct(array $fields = [])
+    {
+        parent::__construct($fields);
+        $this->exercise_status_id = $this->exercise_status_id ?? ExerciseStatus::BUILDING;
+    }
+
+    /**
+     * Get all exercises with status answering.
+     *
+     * @return Exercise[] All exercices with status Answering.
+     */
+    public static function getAllAnswering(): array
+    {
+        $query = "
+            SELECT e.id, e.title, e.exercise_status_id
+            FROM exercises e
+                INNER JOIN exercise_statuses es on e.exercise_status_id = es.id
+            WHERE exercise_status_id=:exercise_status_id
+        ";
+        $queryArray = ['exercise_status_id' => ExerciseStatus::ANSWERING];
+
+        return self::createDatabase()->fetchRecords($query, __CLASS__, $queryArray);
+    }
+
     /**
      * Get all questions of exercise from the database.
      *
@@ -24,6 +48,7 @@ class Exercise extends AbstractEntity
             WHERE e.id=:id
         ";
         $queryArray = ['id' => $this->id];
+
         return self::createDatabase()->fetchRecords($query, Question::class, $queryArray);
     }
 
@@ -44,8 +69,8 @@ class Exercise extends AbstractEntity
             GROUP BY t.id
         ";
         $queryArray = ['id' => $this->id];
-        $var = self::createDatabase()->fetchRecords($query, Take::class, $queryArray);
-        return $var;
+
+        return self::createDatabase()->fetchRecords($query, Take::class, $queryArray);
     }
 
     /**
@@ -63,6 +88,36 @@ class Exercise extends AbstractEntity
             WHERE e.exercise_status_id=:status
         ";
         $queryArray = ['status' => $statusId];
-        return self::createDatabase()->fetchRecords($query, Exercise::class, $queryArray);
+
+        return self::createDatabase()->fetchRecords($query, __CLASS__, $queryArray);
+    }
+
+    /**
+     * Check if the exercise has questions.
+     *
+     * @return bool True if exercise has questions, otherwise false.
+     */
+    public function hasQuestions(): bool
+    {
+        $query = "
+            SELECT true
+            FROM exercises e
+                INNER JOIN questions q on e.id = q.exercise_id
+            WHERE e.id=:id
+        ";
+        $queryArray = ['id' => $this->id];
+
+        return self::createDatabase()->check($query, $queryArray);
+    }
+
+    /**
+     * Update the status to the next state.
+     */
+    public function updateStatus(): void
+    {
+        $this->exercise_status_id = match ($this->exercise_status_id) {
+            ExerciseStatus::BUILDING => ExerciseStatus::ANSWERING,
+            ExerciseStatus::ANSWERING => ExerciseStatus::CLOSED,
+        };
     }
 }

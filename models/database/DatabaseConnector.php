@@ -36,11 +36,12 @@ class DatabaseConnector
     /**
      * Returns the result of an executed query.
      *
-     * @param string     $query     The query, be correctly build for sql syntax.
-     * @param string     $className Name of the class type wanted in return.
-     * @param array|null $queryArray
+     * @param string     $query      The query. It needs to be correctly build for sql syntax.
+     * @param string     $className  Name of the class type wanted in return.
+     * @param array|null $queryArray An array of values with as many elements as there are bound parameters in the SQL
+     *                               statement being executed.
      *
-     * @return array
+     * @return array An array of entities that represent the records, empty array if there are no records.
      */
     public function fetchRecords(string $query, string $className, array $queryArray = null): array
     {
@@ -53,12 +54,12 @@ class DatabaseConnector
     /**
      * Return a single row of an executed query.
      *
-     * @param string     $query      The query, be correctly build for sql syntax.
-     * @param string     $className  Name of the class type wanted in return.
-     * @param array|null $queryArray An array of values with as many elements as there are bound parameters in the SQL
-     *                               statement being executed.
+     * @param string     $query       The query. It needs to be correctly build for sql syntax.
+     * @param string     $className   Name of the class type wanted in return.
+     * @param array|null $queryArray  An array of values with as many elements as there are bound parameters in the SQL
+     *                                statement being executed.
      *
-     * @return AbstractEntity|false - An entity that represent the record, false if the record doesn't exist.
+     * @return AbstractEntity|false - An entity that represent the record, false if there are no record.
      */
     public function fetchOne(string $query, string $className, array $queryArray = null): AbstractEntity|false
     {
@@ -69,25 +70,42 @@ class DatabaseConnector
     }
 
     /**
+     * Only check if the query returned at lest a row or not.
+     *
+     * @param string $query      The query. It needs to be correctly build for sql syntax.
+     * @param array  $queryArray An array of values with as many elements as there are bound parameters in the SQL
+     *                           statement being executed.
+     */
+    public function check(string $query, array $queryArray): array|bool
+    {
+        $this->executeQuery($query, $queryArray);
+        $this->statement->setFetchMode(PDO::FETCH_BOUND);
+
+        return $this->statement->fetch();
+    }
+
+    /**
      * Insert data from an executed query.
      *
-     * @param string $query The query, be correctly build for sql syntax.
-     * @param array  $queryArray
+     * @param string $query      The query. It needs to be correctly build for sql syntax.
+     * @param array  $queryArray An array of values with as many elements as there are bound parameters in the SQL
+     *                           statement being executed.
      *
-     * @return int
+     * @return int The new id of the inserted row.
      */
     public function insert(string $query, array $queryArray): int
     {
         $this->executeQuery($query, $queryArray);
 
-        return intval($this->connection->lastInsertId());
+        return (int)$this->connection->lastInsertId();
     }
 
     /**
      * Update data from an executed query.
      *
-     * @param string $query The query, be correctly build for sql syntax.
-     * @param array  $queryArray
+     * @param string $query      The query. It needs to be correctly build for sql syntax.
+     * @param array  $queryArray An array of values with as many elements as there are bound parameters in the SQL
+     *                           statement being executed.
      *
      * @return int  The number of rows affected.
      */
@@ -101,8 +119,9 @@ class DatabaseConnector
     /**
      * Update data from an executed query.
      *
-     * @param string $query The query, be correctly build for sql syntax.
-     * @param array  $queryArray
+     * @param string $query      The query. It needs to be correctly build for sql syntax.
+     * @param array  $queryArray An array of values with as many elements as there are bound parameters in the SQL
+     *                           statement being executed.
      *
      * @return bool True if the query is ok, otherwise false.
      */
@@ -114,7 +133,7 @@ class DatabaseConnector
     /**
      * Execute a query received as parameter.
      *
-     * @param string     $query      The query, be correctly build for sql syntax.
+     * @param string     $query      The query. It needs to be correctly build for sql syntax.
      * @param array|null $queryArray An array of values with as many elements as there are bound parameters in the SQL
      *                               statement being executed
      *

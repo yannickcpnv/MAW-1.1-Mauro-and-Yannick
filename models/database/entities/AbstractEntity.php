@@ -2,7 +2,6 @@
 
 namespace Looper\Models\database\entities;
 
-use PDOException;
 use Looper\Models\traits\Arrayable;
 use Looper\Models\traits\Hydratable;
 use Looper\Models\traits\HasAccessors;
@@ -28,7 +27,7 @@ abstract class AbstractEntity
      */
     public function __construct(array $fields = [])
     {
-        self::hydrate($fields);
+        $this->hydrate($fields);
     }
     //endregion
 
@@ -50,21 +49,25 @@ abstract class AbstractEntity
      *
      * @param int $id - The ID.
      *
-     * @return AbstractEntity|null The entity
+     * @return AbstractEntity The entity
+     * @throws EntityNotFoundException If the entity is not found by its 'id' in the database.
      */
-    public static function get(int $id): ?AbstractEntity
+    public static function get(int $id): AbstractEntity
     {
         $query = "SELECT * FROM " . static::TABLE_NAME . " WHERE id= :id";
         $queryArray = ["id" => $id];
         $entityFound = self::createDatabase()->fetchOne($query, static::class, $queryArray);
 
-        return $entityFound ?: null;
+        if (empty($entityFound)) {
+            throw new EntityNotFoundException(static::class);
+        }
+
+        return $entityFound;
     }
 
     /**
      * Create a new entity in the database.
-     *
-     * @throws PDOException
+     * It's also set the instance 'id' property to the value of the new inserted id.
      */
     public function create(): void
     {
@@ -72,8 +75,8 @@ abstract class AbstractEntity
         $valueParams = [];
 
         foreach ($this->toArray() as $key => $value) {
-            array_push($columns, $key);
-            array_push($valueParams, ":$key");
+            $columns[] = $key;
+            $valueParams[] = ":$key";
         }
 
         $columns = implode(',', $columns);
@@ -86,8 +89,6 @@ abstract class AbstractEntity
 
     /**
      * Update the entity in the database.
-     *
-     * @throws PDOException
      */
     public function save(): void
     {
@@ -95,8 +96,8 @@ abstract class AbstractEntity
         $entityArray = $this->toArray();
 
         foreach ($entityArray as $key => $value) {
-            if ($key != 'id') {
-                array_push($keys, "$key=:$key");
+            if ($key !== 'id') {
+                $keys[] = "$key=:$key";
             }
         }
 

@@ -14,16 +14,16 @@ if ($action) {
             (new ExerciseController())->listExercises();
             break;
         case 'take-exercise':
-            (new ExerciseController())->takeExercise($_GET['exercise-id'] ?? 0);
+            (new TakeController())->openCreateTake($_GET['exercise-id'] ?? 0);
             break;
         case 'create-take':
-            (new TakeController())->createTake($_POST['take'], $_GET['exercise-id'], $_SERVER);
+            (new TakeController())->createTake($_POST['take'], $_GET['exercise-id'], $_SERVER['HTTP_ORIGIN']);
             break;
         case 'edit-take':
             if (isset($_POST['take'])) {
                 (new TakeController())->editTake($_POST['take'], $_GET['exercise-id'], $_GET['take-id']);
             } else {
-                (new TakeController())->showDetails($_GET['exercise-id'], $_GET['take-id']);
+                (new TakeController())->openEditTake($_GET['exercise-id'], $_GET['take-id']);
             }
             break;
         case 'create-exercise':

@@ -20,8 +20,8 @@ abstract class QuestionType
     {
         return match ($value) {
             default => "SINGLE_LINE_TEXT",
-            QuestionType::SINGLE_LINE_LIST => "SINGLE_LINE_LIST",
-            QuestionType::MULTI_LINE_TEXT => "MULTI_LINE_TEXT",
+            self::SINGLE_LINE_LIST => "SINGLE_LINE_LIST",
+            self::MULTI_LINE_TEXT => "MULTI_LINE_TEXT",
         };
     }
 }

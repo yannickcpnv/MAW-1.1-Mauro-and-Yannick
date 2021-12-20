@@ -28,4 +28,9 @@ class ViewController
     {
         self::renderPage($page, $values);
     }
+
+    protected function redirect(string $location):void
+    {
+        header("Location: $location");
+    }
 }

@@ -30,20 +30,6 @@ class Take extends AbstractEntity
     }
 
     /**
-     * Retrieve a take from the database.
-     *
-     * @param int $id - The ID.
-     *
-     * @return Take|null The take
-     */
-    public static function get(int $id): ?Take
-    {
-        $take = parent::get($id);
-
-        return $take;
-    }
-
-    /**
      * Create a new take in the database.
      *
      * @param Answer[]|null $answers
@@ -79,7 +65,7 @@ class Take extends AbstractEntity
     /**
      * Retrieve all questions of the take.
      *
-     * @return array
+     * @return Question[]
      */
     public function getQuestions(): array
     {
