@@ -34,6 +34,7 @@
     "require": {
         "ext-pdo": "*",
         "phpunit/phpunit": "^9.5",
-        "vlucas/phpdotenv": "^5.3"
+        "vlucas/phpdotenv": "^5.3",
+        "bramus/router": "~1.6"
     }
 }

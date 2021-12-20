@@ -38,9 +38,9 @@ $isModeEdit = $pageMode == 'edit';
     <?php endif; ?>
     <form accept-charset="UTF-8"
         <?php if ($pageMode == 'edit'): ?>
-            action="?action=edit-take&exercise-id=<?= $exercise->id ?>&take-id=<?= $take->id ?>"
+            action="/edit-take/<?= $exercise->id ?>/<?= $take->id ?>"
         <?php else: ?>
-            action="?action=create-take&exercise-id=<?= $exercise->id ?>"
+            action="/create-take/<?= $exercise->id ?>"
         <?php endif; ?>
           method="post"
     >

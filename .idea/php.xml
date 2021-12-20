@@ -43,6 +43,12 @@
       <path value="$PROJECT_DIR$/vendor/graham-campbell/result-type" />
       <path value="$PROJECT_DIR$/vendor/vlucas/phpdotenv" />
       <path value="$PROJECT_DIR$/vendor/steampixel/simple-php-router" />
+      <path value="$PROJECT_DIR$/vendor/bramus/router" />
+      <path value="$PROJECT_DIR$/vendor/router/demo" />
+      <path value="$PROJECT_DIR$/vendor/router/demo-multilang" />
+      <path value="$PROJECT_DIR$/vendor/router/src" />
+      <path value="$PROJECT_DIR$/vendor/router/tests" />
+      <path value="$PROJECT_DIR$/vendor/router/.github" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0" />

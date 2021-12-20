@@ -9,7 +9,7 @@ use Looper\Models\database\entities\QuestionType;
     <section class="container">
         <a href="/"><img src="/views/assets/logo/logo.png" alt="Logo"></a>
         <span class="exercise-label">Exercise: <a
-              href="/?action=edit-exercise&id=<?= $values["selectedExercise"]->id ?>"><?=
+              href="/edit-exercise/<?= $values["selectedExercise"]->id ?>"><?=
                 $values["selectedExercise"]->title ?></a></span>
     </section>
 </header>
@@ -33,11 +33,11 @@ use Looper\Models\database\entities\QuestionType;
                             <td><?= $question->label ?></td>
                             <td><?= QuestionType::toString($question->question_type_id) ?></td>
                             <td>
-                                <a title="Edit" href="/?action=edit-question-view&id=<?= $question->id ?>">
+                                <a title="Edit" href="/edit-question-view/<?= $question->id ?>">
                                     <i class="fa fa-edit"></i></a>
                                 <a class="popup-confirm"
                                    data-confirm="Are you sure?"
-                                   href="/?action=delete-question&id=<?= $question->id ?>"
+                                   href="/delete-question/<?= $question->id ?>"
                                 >
                                     <i class="fa fa-trash"></i>
                                 </a>
@@ -50,13 +50,13 @@ use Looper\Models\database\entities\QuestionType;
 
             <a data-confirm="Are you sure? You won't be able to further edit this exercise" class="button popup-confirm"
                rel="nofollow" data-method="put"
-               href="/?action=complete-exercise&id=<?= $values["selectedExercise"]->id ?>"><i
+               href="/complete-exercise/<?= $values["selectedExercise"]->id ?>"><i
                   class="fa fa-comment"></i> Complete and be ready for answers</a>
 
         </section>
         <section class="column">
             <h1>New Field</h1>
-            <form action="/?action=create-question&id=<?= $values["selectedExercise"]->id ?>" accept-charset="UTF-8"
+            <form action="/create-question/<?= $values["selectedExercise"]->id ?>" accept-charset="UTF-8"
                   method="post">
                 <div class="field">
                     <label for="field_label">Label</label>

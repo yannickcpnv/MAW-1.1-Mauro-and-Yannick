@@ -7,12 +7,10 @@ use Looper\Models\database\entities\QuestionType;
 ?>
 <header class="heading managing">
     <section class="container">
-        <a href="/">
-            <img src="views/assets/logo/logo.png">
-        </a>
+        <a href="/"><img src="/views/assets/logo/logo.png"></a>
         <span class="exercise-label">Exercise:
             <a
-              href="/?action=edit-exercise&id=<?= $values["selectedExercise"]->id ?>">
+              href="/edit-exercise/<?= $values["selectedExercise"]->id ?>">
                 <?= $values["selectedExercise"]->title ?>
             </a>
         </span>
@@ -20,7 +18,7 @@ use Looper\Models\database\entities\QuestionType;
 </header>
 <main class="container">
     <h1>Editing Field</h1>
-    <form action="/?action=edit-question&id=<?= $values["selectedQuestion"]->id ?>" accept-charset="UTF-8"
+    <form action="/edit-question/<?= $values["selectedQuestion"]->id ?>" accept-charset="UTF-8"
           method="post">
         <div class="field">
             <label for="field_label">Label</label>

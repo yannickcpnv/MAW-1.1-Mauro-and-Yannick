@@ -10,7 +10,7 @@ use Looper\Models\database\entities\Exercise;
 <header class="heading results">
     <section class="container">
         <a href="/"><img src="/views/assets/logo/logo.png"></a>
-        <span class="exercise-label">Exercise: <a href="/?action=exercise-results&id=<?= $values["exercise"]->id ?>">
+        <span class="exercise-label">Exercise: <a href="/exercise-results/<?= $values["exercise"]->id ?>">
                 <?= $values['exercise']->title ?>
             </a></span>
     </section>
