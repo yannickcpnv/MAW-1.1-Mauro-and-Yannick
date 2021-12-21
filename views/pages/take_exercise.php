@@ -31,7 +31,7 @@ $questions = $values['questions']
     >
         <?php foreach ($questions as $index => $question): ?>
             <div class="field">
-                <input name="take[answers][<?= $index ?>][questionId]" type="hidden" value="<?= $question->id ?>">
+                <input name="take[answers][<?= $index ?>][question_id]" type="hidden" value="<?= $question->id ?>">
                 <label for="answer_<?= $index ?>"><?= $question->label ?></label>
                 <?php if ($question->question_type_id === QuestionType::SINGLE_LINE_TEXT): ?>
                     <input id="answer_<?= $index ?>"

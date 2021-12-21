@@ -2,23 +2,11 @@
 
 namespace Looper\Test\Models\database\entities;
 
-use Looper\Test\TestHelper;
-use PHPUnit\Framework\TestCase;
 use Looper\Models\database\entities\Answer;
 use Looper\Models\database\entities\Question;
 
-class QuestionTest extends TestCase
+class QuestionTest extends AbstractDatabaseEntityTest
 {
-
-    public static function setUpBeforeClass(): void
-    {
-        TestHelper::createDatabase();
-    }
-
-    public function setUp(): void
-    {
-        TestHelper::createDatabase();
-    }
 
     public function testGetAnswers(): void
     {

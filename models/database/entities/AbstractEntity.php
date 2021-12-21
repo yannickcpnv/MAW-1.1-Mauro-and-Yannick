@@ -44,6 +44,11 @@ abstract class AbstractEntity
         return self::createDatabase()->fetchRecords($query, static::class);
     }
 
+    protected static function createDatabase(): DatabaseConnector
+    {
+        return new DatabaseConnector($_ENV['DB_DSN'], $_ENV['DB_USER_NAME'], $_ENV['DB_USER_PWD']);
+    }
+
     /**
      * Retrieve an entity from the database.
      *
@@ -116,11 +121,6 @@ abstract class AbstractEntity
         $queryArray = ["id" => $this->id];
 
         self::createDatabase()->delete($query, $queryArray);
-    }
-
-    protected static function createDatabase(): DatabaseConnector
-    {
-        return new DatabaseConnector($_ENV['DB_DSN'], $_ENV['DB_USER_NAME'], $_ENV['DB_USER_PWD']);
     }
     //endregion
 }

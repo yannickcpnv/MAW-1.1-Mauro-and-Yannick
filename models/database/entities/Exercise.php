@@ -35,6 +35,25 @@ class Exercise extends AbstractEntity
     }
 
     /**
+     * Retrieve all exercises that have the status given.
+     *
+     * @param int $statusId The ID status to search.
+     *
+     * @return Exercise[] Exercises from the given status.
+     */
+    public static function getExercisesByStatus(int $statusId): array
+    {
+        $query = "
+            SELECT e.id, e.title, e.exercise_status_id
+            FROM exercises as e
+            WHERE e.exercise_status_id=:status
+        ";
+        $queryArray = ['status' => $statusId];
+
+        return self::createDatabase()->fetchRecords($query, __CLASS__, $queryArray);
+    }
+
+    /**
      * Get all questions of exercise from the database.
      *
      * @return Question[] Exercise questions.
@@ -71,25 +90,6 @@ class Exercise extends AbstractEntity
         $queryArray = ['id' => $this->id];
 
         return self::createDatabase()->fetchRecords($query, Take::class, $queryArray);
-    }
-
-    /**
-     * Retrieve all exercises that have the status given.
-     *
-     * @param int $statusId The ID status to search.
-     *
-     * @return Exercise[] Exercises from the given status.
-     */
-    public static function getExercisesByStatus(int $statusId): array
-    {
-        $query = "
-            SELECT e.id, e.title, e.exercise_status_id
-            FROM exercises as e
-            WHERE e.exercise_status_id=:status
-        ";
-        $queryArray = ['status' => $statusId];
-
-        return self::createDatabase()->fetchRecords($query, __CLASS__, $queryArray);
     }
 
     /**

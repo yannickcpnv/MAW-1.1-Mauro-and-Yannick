@@ -27,7 +27,7 @@ class TakeController extends ViewController
     public function createTake(array $takeForm, int $exerciseId, string $httpOrigin): void
     {
         $take = new Take();
-        $take->create(EntityConverter::answersArrayToAnswers($takeForm['answers']));
+        $take->create(EntityConverter::answersFormToAnswers($takeForm['answers']));
 
         $this->redirect("$httpOrigin?action=edit-take&exercise-id=$exerciseId&take-id=$take->id");
     }
@@ -42,7 +42,7 @@ class TakeController extends ViewController
     public function editTake(array $takeForm, int $exerciseId, int $takeId): void
     {
         $take = Take::get($takeId);
-        $take->save(EntityConverter::answersArrayToAnswers($takeForm['answers']));
+        $take->save(EntityConverter::answersFormToAnswers($takeForm['answers']));
 
         $this->openEditTake($exerciseId, $take->id);
     }

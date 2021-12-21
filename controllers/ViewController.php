@@ -5,6 +5,11 @@ namespace Looper\Controllers;
 class ViewController
 {
 
+    protected function render(string $page, array $values = []): void
+    {
+        self::renderPage($page, $values);
+    }
+
     /**
      * Render a view.
      *
@@ -24,12 +29,7 @@ class ViewController
         require 'views/includes/layout.php';
     }
 
-    protected function render(string $page, array $values = []): void
-    {
-        self::renderPage($page, $values);
-    }
-
-    protected function redirect(string $location):void
+    protected function redirect(string $location): void
     {
         header("Location: $location");
     }

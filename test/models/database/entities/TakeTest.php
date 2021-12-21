@@ -5,12 +5,11 @@ namespace Looper\Test\Models\database\entities;
 use DateTime;
 use PDOException;
 use Looper\Test\TestHelper;
-use PHPUnit\Framework\TestCase;
 use Looper\Models\database\entities\Take;
 use Looper\Models\database\entities\Answer;
 use Looper\Models\database\entities\Question;
 
-class TakeTest extends TestCase
+class TakeTest extends AbstractDatabaseEntityTest
 {
 
     public static function setUpBeforeClass(): void

@@ -52,6 +52,22 @@ class DatabaseConnector
     }
 
     /**
+     * Execute a query received as parameter.
+     *
+     * @param string     $query      The query. It needs to be correctly build for sql syntax.
+     * @param array|null $queryArray An array of values with as many elements as there are bound parameters in the SQL
+     *                               statement being executed
+     *
+     * @return bool True if the query is ok, otherwise false.
+     */
+    public function executeQuery(string $query, array $queryArray = null): bool
+    {
+        $this->statement = $this->connection->prepare($query);
+
+        return $this->statement->execute($queryArray);
+    }
+
+    /**
      * Return a single row of an executed query.
      *
      * @param string     $query       The query. It needs to be correctly build for sql syntax.
@@ -128,22 +144,6 @@ class DatabaseConnector
     public function delete(string $query, array $queryArray): bool
     {
         return $this->executeQuery($query, $queryArray);
-    }
-
-    /**
-     * Execute a query received as parameter.
-     *
-     * @param string     $query      The query. It needs to be correctly build for sql syntax.
-     * @param array|null $queryArray An array of values with as many elements as there are bound parameters in the SQL
-     *                               statement being executed
-     *
-     * @return bool True if the query is ok, otherwise false.
-     */
-    public function executeQuery(string $query, array $queryArray = null): bool
-    {
-        $this->statement = $this->connection->prepare($query);
-
-        return $this->statement->execute($queryArray);
     }
     //endregion
 }

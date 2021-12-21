@@ -29,6 +29,11 @@ class Take extends AbstractEntity
         }
     }
 
+    private static function strToDateTime($strTimestamp): DateTime|bool
+    {
+        return DateTime::createFromFormat("Y-m-d H:i:s", $strTimestamp);
+    }
+
     /**
      * Create a new take in the database.
      *
@@ -96,11 +101,6 @@ class Take extends AbstractEntity
         ";
         $queryArray = ['take_id' => $this->id, 'question_id' => $questionId];
         return self::createDatabase()->fetchRecords($query, Answer::class, $queryArray)[0];
-    }
-
-    private static function strToDateTime($strTimestamp): DateTime|bool
-    {
-        return DateTime::createFromFormat("Y-m-d H:i:s", $strTimestamp);
     }
 }
 

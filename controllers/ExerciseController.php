@@ -63,13 +63,6 @@ class ExerciseController extends ViewController
         }
     }
 
-    public function listExercises(): void
-    {
-        $exercises = Exercise::getAllAnswering();
-
-        $this->render('list_exercises', ["exercises" => $exercises]);
-    }
-
     public function openManageExercise(): void
     {
         $exercisesBuilding = Exercise::getExercisesByStatus(ExerciseStatus::BUILDING);
@@ -79,11 +72,18 @@ class ExerciseController extends ViewController
         $this->render(
             'manage_exercises',
             [
-                "exercisesBuilding"  => $exercisesBuilding,
+                "exercisesBuilding" => $exercisesBuilding,
                 "exercisesAnswering" => $exercisesAnswering,
-                "exercisesClosed"    => $exercisesClosed,
+                "exercisesClosed" => $exercisesClosed,
             ]
         );
+    }
+
+    public function listExercises(): void
+    {
+        $exercises = Exercise::getAllAnswering();
+
+        $this->render('list_exercises', ["exercises" => $exercises]);
     }
 
     /**
@@ -122,8 +122,8 @@ class ExerciseController extends ViewController
             'result_exercise',
             [
                 "selectedExercise" => $selectedExercise,
-                "questions"         => $questions,
-                "takes"             => $takes,
+                "questions"        => $questions,
+                "takes"            => $takes,
             ]
         );
     }
