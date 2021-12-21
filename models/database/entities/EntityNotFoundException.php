@@ -2,10 +2,10 @@
 
 namespace Looper\Models\database\entities;
 
-use Exception;
+use RuntimeException;
 use JetBrains\PhpStorm\Pure;
 
-class EntityNotFoundException extends Exception
+class EntityNotFoundException extends RuntimeException
 {
 
     #[Pure] public function __construct(string $entityClassName)

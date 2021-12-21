@@ -8,23 +8,14 @@ use Looper\Models\database\entities\Exercise;
 class QuestionController extends ViewController
 {
 
-    /**
-     * @throws \Looper\Models\database\entities\EntityNotFoundException
-     */
     public function openEditQuestion($questionId): void
     {
         $selectedQuestion = Question::get($questionId);
         $selectedExercise = Exercise::get($selectedQuestion->exercise_id);
 
-        $this->render("edit_question", [
-            "selectedQuestion" => $selectedQuestion,
-            "selectedExercise" => $selectedExercise,
-        ]);
+        $this->render("edit_question", compact('selectedQuestion', 'selectedExercise'));
     }
 
-    /**
-     * @throws \Looper\Models\database\entities\EntityNotFoundException
-     */
     public function editQuestion($id, $questionForm = []): void
     {
         $selectedQuestion = Question::get($id);
@@ -35,15 +26,9 @@ class QuestionController extends ViewController
         $selectedExercise = Exercise::get($selectedQuestion->exercise_id);
         $selectedQuestions = $selectedExercise->getQuestions();
 
-        $this->render("edit_exercise", [
-            "selectedExercise"  => $selectedExercise,
-            "selectedQuestions" => $selectedQuestions,
-        ]);
+        $this->render("edit_exercise", compact('selectedExercise', 'selectedQuestions'));
     }
 
-    /**
-     * @throws \Looper\Models\database\entities\EntityNotFoundException
-     */
     public function createQuestion(int $exerciseId, $form): void
     {
         $selectedExercise = Exercise::get($exerciseId);
@@ -57,15 +42,9 @@ class QuestionController extends ViewController
         $selectedQuestion->create();
         $selectedQuestions = $selectedExercise->getQuestions();
 
-        $this->render(
-            "edit_exercise",
-            ["selectedExercise" => $selectedExercise, "selectedQuestions" => $selectedQuestions]
-        );
+        $this->render("edit_exercise", compact('selectedExercise', 'selectedQuestions'));
     }
 
-    /**
-     * @throws \Looper\Models\database\entities\EntityNotFoundException
-     */
     public function removeQuestion(int $id): void
     {
         $selectedQuestion = Question::get($id);
@@ -75,24 +54,15 @@ class QuestionController extends ViewController
 
         $selectedQuestions = $selectedExercise->getQuestions();
 
-        $this->render("edit_exercise", [
-            "selectedExercise"  => $selectedExercise,
-            "selectedQuestions" => $selectedQuestions,
-        ]);
+        $this->render("edit_exercise", compact('selectedExercise', 'selectedQuestions'));
     }
 
-    /**
-     * @throws \Looper\Models\database\entities\EntityNotFoundException
-     */
     public function openQuestionResult(int $id): void
     {
         $selectedQuestion = Question::get($id);
         $selectedExercise = Exercise::get($selectedQuestion->exercise_id);
         $takes = $selectedExercise->getTakes();
 
-        $this->render(
-            'result_question',
-            compact('selectedQuestion', 'selectedExercise', 'takes')
-        );
+        $this->render('result_question', compact('selectedQuestion', 'selectedExercise', 'takes'));
     }
 }

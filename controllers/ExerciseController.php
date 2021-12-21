@@ -13,18 +13,12 @@ class ExerciseController extends ViewController
         $this->render('create_exercise');
     }
 
-    /**
-     * @throws \Looper\Models\database\entities\EntityNotFoundException
-     */
     public function openEditExercise(int $exerciseId): void
     {
         $selectedExercise = Exercise::get($exerciseId);
         $selectedQuestions = $selectedExercise->getQuestions();
 
-        $this->render(
-            "edit_exercise",
-            ["selectedExercise" => $selectedExercise, "selectedQuestions" => $selectedQuestions]
-        );
+        $this->render("edit_exercise", compact('selectedExercise', 'selectedQuestions'));
     }
 
     public function validateExerciseCreation(array $exerciseForm): void
@@ -34,18 +28,12 @@ class ExerciseController extends ViewController
             $selectedExercise->create();
             $selectedQuestions = $selectedExercise->getQuestions();
 
-            $this->render(
-                "edit_exercise",
-                ["selectedExercise" => $selectedExercise, "selectedQuestions" => $selectedQuestions]
-            );
+            $this->render("edit_exercise", compact('selectedExercise', 'selectedQuestions'));
         } else {
             $this->render('create_exercise');
         }
     }
 
-    /**
-     * @throws \Looper\Models\database\entities\EntityNotFoundException
-     */
     public function completeExercise(int $exerciseId): void
     {
         $selectedExercise = Exercise::get($exerciseId);
@@ -56,10 +44,7 @@ class ExerciseController extends ViewController
             $selectedExercise->save();
             $this->openManageExercise();
         } else {
-            $this->render("edit_exercise", [
-                "selectedExercise"  => $selectedExercise,
-                "selectedQuestions" => $selectedQuestions,
-            ]);
+            $this->render("edit_exercise", compact('selectedExercise', 'selectedQuestions'));
         }
     }
 
@@ -69,26 +54,16 @@ class ExerciseController extends ViewController
         $exercisesAnswering = Exercise::getExercisesByStatus(ExerciseStatus::ANSWERING);
         $exercisesClosed = Exercise::getExercisesByStatus(ExerciseStatus::CLOSED);
 
-        $this->render(
-            'manage_exercises',
-            [
-                "exercisesBuilding" => $exercisesBuilding,
-                "exercisesAnswering" => $exercisesAnswering,
-                "exercisesClosed" => $exercisesClosed,
-            ]
-        );
+        $this->render('manage_exercises', compact('exercisesBuilding', 'exercisesAnswering', 'exercisesClosed'));
     }
 
     public function listExercises(): void
     {
         $exercises = Exercise::getAllAnswering();
 
-        $this->render('list_exercises', ["exercises" => $exercises]);
+        $this->render('list_exercises', compact('exercises'));
     }
 
-    /**
-     * @throws \Looper\Models\database\entities\EntityNotFoundException
-     */
     public function removeExercise(int $id): void
     {
         $selectedExercise = Exercise::get($id);
@@ -97,9 +72,6 @@ class ExerciseController extends ViewController
         $this->openManageExercise();
     }
 
-    /**
-     * @throws \Looper\Models\database\entities\EntityNotFoundException
-     */
     public function closeExercise(int $id): void
     {
         $selectedExercise = Exercise::get($id);
@@ -109,23 +81,13 @@ class ExerciseController extends ViewController
         $this->openManageExercise();
     }
 
-    /**
-     * @throws \Looper\Models\database\entities\EntityNotFoundException
-     */
     public function openExerciseResults(int $id): void
     {
         $selectedExercise = Exercise::get($id);
         $questions = $selectedExercise->getQuestions();
         $takes = $selectedExercise->getTakes();
 
-        $this->render(
-            'result_exercise',
-            [
-                "selectedExercise" => $selectedExercise,
-                "questions"        => $questions,
-                "takes"            => $takes,
-            ]
-        );
+        $this->render('result_exercise', compact('selectedExercise', 'questions', 'takes'));
     }
 }
 

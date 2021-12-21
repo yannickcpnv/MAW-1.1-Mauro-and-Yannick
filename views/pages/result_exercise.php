@@ -7,7 +7,7 @@ use Looper\Models\database\entities\Question;
 /** @var array $values */
 
 /** @var Exercise $selectedExercise */
-$selectedExercise = $values["selectedExercises"];
+$selectedExercise = $values["selectedExercise"];
 
 /** @var Question $questions */
 $questions = $values['questions'];
@@ -24,6 +24,7 @@ $questions = $values['questions'];
     <table>
         <thead>
             <tr>
+                Use compact() function instead of associative array
                 <th>Take</th>
                 <?php foreach ($questions as $question): ?>
                     <th><a
