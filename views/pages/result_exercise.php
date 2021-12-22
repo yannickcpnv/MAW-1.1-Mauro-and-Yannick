@@ -14,7 +14,7 @@ use Looper\Models\database\entities\Question;
     <section class="container">
         <a href="/"><img src="/views/assets/logo/logo.png"></a>
         <span class="exercise-label">Exercise: <a
-              href="/exercise-results/<?= $values["selectedExercises"]->id ?>"><?=
+              href="/exercises/<?= $values["selectedExercises"]->id ?>"><?=
                 $values["selectedExercises"]->title ?></a></span>
     </section>
 </header>
@@ -26,7 +26,7 @@ use Looper\Models\database\entities\Question;
                 <?php
                 foreach ($values['questions'] as $question): ?>
                     <th><a
-                          href='/question-results/<?= $question->id ?>'><?= $question->label ?></a>
+                          href='/exercises/<?= $values["selectedExercises"]->id ?>/questions/<?= $question->id ?>'><?= $question->label ?></a>
                     </th>
                 <?php
                 endforeach; ?>
@@ -37,7 +37,7 @@ use Looper\Models\database\entities\Question;
             foreach ($values["takes"] as $take): ?>
                 <tr>
                     <td><a
-                          href="/take-results/<?= $values["selectedExercises"]->id ?>/<?= $take->id ?>"><?=
+                          href="/exercises/<?= $values["selectedExercises"]->id ?>/takes/<?= $take->id ?>"><?=
                             $take->timestamp->format('Y-m-d H:i:s e') ?></a>
                     </td>
                     <?php

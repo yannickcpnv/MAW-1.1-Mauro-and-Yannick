@@ -17,7 +17,7 @@ use Looper\Models\database\entities\Exercise;
             <li class="row">
                 <div class="column card">
                     <div class="title"><?= $exercise->title ?></div>
-                    <a class="button" href="/take-exercise/<?= $exercise->id ?>">Take it</a>
+                    <a class="button" href="/exercises/<?= $exercise->id ?>/createTake">Take it</a>
                 </div>
             </li>
         <?php endforeach; ?>

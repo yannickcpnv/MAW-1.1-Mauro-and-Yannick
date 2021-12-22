@@ -35,15 +35,16 @@ use Looper\Models\database\entities\Exercise;
                             <td><?php
                                 if ($values["nbQuestions"][$exercise->id] > 0): ?>
                                     <a title="Be ready for answers" rel="nofollow" data-method="put"
-                                       href="/complete-exercise/<?= $exercise->id ?>"><i
+                                       href="/exercises/<?= $exercise->id ?>/complete"><i
                                           class="fa fa-comment"></i></a>
                                 <?php
                                 endif; ?>
-                                <a title="Manage fields" href="/edit-exercise/<?= $exercise->id ?>"><i
+                                <a title="Manage fields" href="/exercises/<?= $exercise->id ?>/edit"><i
                                       class="fa fa-edit"></i></a>
                                 <a data-confirm="Are you sure?" title="Destroy" rel="nofollow" data-method="delete"
-                                   href="/delete-exercise/<?= $exercise->id ?>">
-                                    <i class="fa fa-trash popup-confirm"></i>
+                                   class="popup-confirm"
+                                   href="/exercises/<?= $exercise->id ?>/delete">
+                                    <i class="fa fa-trash"></i>
                                 </a>
                             </td>
                         </tr>
@@ -68,10 +69,10 @@ use Looper\Models\database\entities\Exercise;
                         <tr>
                             <td><?= $exercise->title ?></td>
                             <td>
-                                <a title="Show results" href="/exercise-results/<?= $exercise->id ?>"><i
+                                <a title="Show results" href="/exercises/<?= $exercise->id ?>"><i
                                       class="fa fa-chart-bar"></i></a>
                                 <a title="Close" rel="nofollow" data-method="put"
-                                   href="/close-exercise/<?= $exercise->id ?>"><i class="fa
+                                   href="/exercises/<?= $exercise->id ?>/close"><i class="fa
                                    fa-minus-circle"></i></a>
                             </td>
                         </tr>
@@ -90,18 +91,18 @@ use Looper\Models\database\entities\Exercise;
                         <th></th>
                     </tr>
                 </thead>
-
                 <tbody>
                     <?php
                     foreach ($values["exercisesClosed"] as $exercise) : ?>
                         <tr>
                             <td><?= $exercise->title ?></td>
                             <td>
-                                <a title="Show results" href="/exercise-results/<?= $exercise->id ?>"><i
+                                <a title="Show results" href="/exercises/<?= $exercise->id ?>"><i
                                       class="fa fa-chart-bar"></i></a>
                                 <a data-confirm="Are you sure?" title="Destroy" rel="nofollow" data-method="delete"
-                                   href="/delete-exercise/<?= $exercise->id ?>">
-                                    <i class="fa fa-trash popup-confirm"></i>
+                                   class="popup-confirm"
+                                   href="/exercises/<?= $exercise->id ?>/delete">
+                                    <i class="fa fa-trash"></i>
                                 </a>
                             </td>
                         </tr>

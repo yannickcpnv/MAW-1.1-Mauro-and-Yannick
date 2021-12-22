@@ -10,7 +10,7 @@ use Looper\Models\database\entities\QuestionType;
         <a href="/"><img src="/views/assets/logo/logo.png"></a>
         <span class="exercise-label">Exercise:
             <a
-              href="/edit-exercise/<?= $values["selectedExercise"]->id ?>">
+              href="/exercises/<?= $values["selectedExercise"]->id ?>/edit">
                 <?= $values["selectedExercise"]->title ?>
             </a>
         </span>
@@ -18,8 +18,10 @@ use Looper\Models\database\entities\QuestionType;
 </header>
 <main class="container">
     <h1>Editing Field</h1>
-    <form action="/edit-question/<?= $values["selectedQuestion"]->id ?>" accept-charset="UTF-8"
-          method="post">
+    <form
+      action="/exercises/<?= $values["selectedExercise"]->id ?>/questions/<?= $values["selectedQuestion"]->id ?>/edit"
+      accept-charset="UTF-8"
+      method="post">
         <div class="field">
             <label for="field_label">Label</label>
             <input type="text" value="<?= $values["selectedQuestion"]->label ?>" name="field_label" id="field_label">
