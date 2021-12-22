@@ -25,7 +25,7 @@ class TakeController extends ViewController
         $takeAnswers = $this->mapAnswers($takeForm['answers']);
         $take->create($takeAnswers);
         $hostname = $_ENV["HOST_NAME"];
-        header("Location: $hostname/edit-take/$exerciseId/$take->id");
+        header("Location: $hostname/exercises/$exerciseId/takes/$take->id/edit");
     }
 
     private function mapAnswers(array $answers): array
