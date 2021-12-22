@@ -7,7 +7,7 @@
 <main class="container">
     <title>ExerciseLooper</title>
     <h1>New Exercise</h1>
-    <form action="/?action=create-exercise" accept-charset="UTF-8" method="post">
+    <form action="/exercises/createExercise" accept-charset="UTF-8" method="post">
         <div class="field">
             <label for="exercise_title">Title</label>
             <input type="text" name="title" id="exercise_title">

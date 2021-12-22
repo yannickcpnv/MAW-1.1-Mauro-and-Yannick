@@ -13,7 +13,7 @@ use Looper\Models\database\entities\Exercise;
     <section class="container">
         <a href="/"><img src="/views/assets/logo/logo.png"></a>
         <span class="exercise-label">
-            Exercise: <a href="/?action=exercise-results&id=<?= $values["selectedExercise"]->id ?>">
+            Exercise: <a href="/exercises/<?= $values["selectedExercise"]->id ?>">
                 <?= $values['selectedExercise']->title ?>
             </a>
         </span>
@@ -21,7 +21,7 @@ use Looper\Models\database\entities\Exercise;
 </header>
 <main class="container">
     <title>ExerciseLooper</title>
-    <h1>ad</h1>
+    <h1><?= $values['selectedQuestion']->label ?></h1>
     <table>
         <thead>
             <tr>
@@ -31,10 +31,11 @@ use Looper\Models\database\entities\Exercise;
         </thead>
 
         <tbody>
-            <?php foreach ($values['takes'] as $key => $take): ?>
+            <?php
+            foreach ($values['takes'] as $key => $take): ?>
                 <tr>
                     <td><a
-                          href="/?action=take-results&takeid=<?= $take->id ?>&exerciseid=<?= $values["selectedExercise"]->id ?>">
+                          href="/exercises/<?= $values["selectedExercise"]->id ?>/takes/<?= $take->id ?>">
                             <?= $take->timestamp->format('Y-m-d H:i:s e') ?>
                         </a>
                     </td>

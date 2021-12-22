@@ -18,13 +18,14 @@ class TakeController extends ViewController
         $this->showDetails($exerciseId, $take->id);
     }
 
-    public function createTake(array $takeForm, int $exerciseId, array $server)
+    public function createTake(array $takeForm, int $exerciseId)
     {
+        require_once "config/.env";
         $take = new Take();
         $takeAnswers = $this->mapAnswers($takeForm['answers']);
         $take->create($takeAnswers);
-
-        header("Location: {$server['HTTP_ORIGIN']}?action=edit-take&exercise-id=$exerciseId&take-id=$take->id");
+        $hostname = $_ENV["HOST_NAME"];
+        header("Location: $hostname/exercises/$exerciseId/takes/$take->id/edit");
     }
 
     private function mapAnswers(array $answers): array
