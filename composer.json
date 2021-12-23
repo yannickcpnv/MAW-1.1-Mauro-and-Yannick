@@ -34,6 +34,10 @@
     "require": {
         "ext-pdo": "*",
         "phpunit/phpunit": "^9.5",
-        "vlucas/phpdotenv": "^5.3"
+        "vlucas/phpdotenv": "^5.3",
+        "icanboogie/accessor": "^4.0"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest"
     }
 }

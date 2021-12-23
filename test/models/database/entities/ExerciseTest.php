@@ -10,7 +10,7 @@ use Looper\Models\database\entities\ExerciseStatus;
 class ExerciseTest extends AbstractDatabaseEntityTest
 {
 
-    public function testConstruct()
+    public function testConstruct(): void
     {
         /* Given */
         $expectedStatus = ExerciseStatus::BUILDING;

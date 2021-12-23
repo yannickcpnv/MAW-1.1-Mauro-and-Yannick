@@ -24,7 +24,6 @@ $questions = $values['questions'];
     <table>
         <thead>
             <tr>
-                Use compact() function instead of associative array
                 <th>Take</th>
                 <?php foreach ($questions as $question): ?>
                     <th><a

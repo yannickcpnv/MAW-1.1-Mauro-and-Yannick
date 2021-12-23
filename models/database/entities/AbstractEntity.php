@@ -4,13 +4,16 @@ namespace Looper\Models\database\entities;
 
 use Looper\Models\traits\Arrayable;
 use Looper\Models\traits\Hydratable;
-use Looper\Models\traits\HasAccessors;
+use ICanBoogie\Accessor\AccessorCamelTrait;
 use Looper\Models\database\DatabaseConnector;
 
+/**
+ * @property-read int $id
+ */
 abstract class AbstractEntity
 {
 
-    use HasAccessors, Hydratable, Arrayable;
+    use AccessorCamelTrait, Hydratable, Arrayable;
 
     //region Fields
     protected const TABLE_NAME = '';
@@ -19,23 +22,11 @@ abstract class AbstractEntity
 
     //endregion
 
-    //region Constructors
-    /**
-     * Instantiate an Entity class -- can only be used in child classes.
-     *
-     * @param string[] $fields
-     */
-    public function __construct(array $fields = [])
-    {
-        $this->hydrate($fields);
-    }
-    //endregion
-
     //region Methods
     /**
      * Retrieve all models from database.
      *
-     * @return AbstractEntity[] An array of all models.
+     * @return static[] An array of all models.
      */
     public static function getAll(): array
     {
@@ -54,10 +45,10 @@ abstract class AbstractEntity
      *
      * @param int $id - The ID.
      *
-     * @return AbstractEntity The entity
+     * @return static The entity
      * @throws EntityNotFoundException If the entity is not found by its 'id' in the database.
      */
-    public static function get(int $id): AbstractEntity
+    public static function get(int $id): static
     {
         $query = "SELECT * FROM " . static::TABLE_NAME . " WHERE id= :id";
         $queryArray = ["id" => $id];
@@ -122,5 +113,8 @@ abstract class AbstractEntity
 
         self::createDatabase()->delete($query, $queryArray);
     }
+
+    /** @noinspection PhpUnused */
+    protected function getId(): int { return $this->id; }
     //endregion
 }

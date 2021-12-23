@@ -6,6 +6,8 @@ use DateTime;
 
 /**
  * this class is designed to represent an {@link Exercise} take.
+ *
+ * @property-read DateTime|string $timestamp
  */
 class Take extends AbstractEntity
 {
@@ -48,7 +50,6 @@ class Take extends AbstractEntity
                 $answer->take_id = $this->id;
             }
             $answer->create();
-            unset($answer->id);
         }
     }
 
@@ -102,5 +103,7 @@ class Take extends AbstractEntity
         $queryArray = ['take_id' => $this->id, 'question_id' => $questionId];
         return self::createDatabase()->fetchRecords($query, Answer::class, $queryArray)[0];
     }
+
+    protected function getTimestamp(): DateTime|string { return $this->timestamp; }
 }
 

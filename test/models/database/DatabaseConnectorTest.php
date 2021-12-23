@@ -96,6 +96,7 @@ class DatabaseConnectorTest extends TestCase
 
         /* Then */
         $this->assertEquals(1, $affectedRows);
+        /** @var FakeEntity $entity */
         $entity = $this->databaseConnector->fetchOne(
             "SELECT first_name FROM users_test WHERE id=$entityId",
             $this->fakeClass

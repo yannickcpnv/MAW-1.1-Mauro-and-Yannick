@@ -110,7 +110,7 @@ class AbstractEntityTest extends AbstractDatabaseEntityTest
         $futurEntity->save();
 
         /* Then */
-        $this->assertEquals($futurEntity->firstname, FakeEntity::get($entityId)->firstname);
+        $this->assertEquals($futurEntity->first_name, FakeEntity::get($entityId)->first_name);
     }
 
     /**

@@ -2,13 +2,16 @@
 
 namespace Looper\Models\database\entities;
 
+/**
+ * This class is designed to represent an exercise.
+ */
 class Exercise extends AbstractEntity
 {
 
     protected const TABLE_NAME = 'exercises';
 
-    protected string $title;
-    protected int    $exercise_status_id;
+    public string $title;
+    public int    $exercise_status_id;
 
     public function __construct(array $fields = [])
     {

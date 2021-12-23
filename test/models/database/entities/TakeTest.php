@@ -4,23 +4,12 @@ namespace Looper\Test\Models\database\entities;
 
 use DateTime;
 use PDOException;
-use Looper\Test\TestHelper;
 use Looper\Models\database\entities\Take;
 use Looper\Models\database\entities\Answer;
 use Looper\Models\database\entities\Question;
 
 class TakeTest extends AbstractDatabaseEntityTest
 {
-
-    public static function setUpBeforeClass(): void
-    {
-        TestHelper::createDatabase();
-    }
-
-    final public function setUp(): void
-    {
-        TestHelper::createDatabase();
-    }
 
     public function testGetAll(): void
     {
@@ -40,14 +29,12 @@ class TakeTest extends AbstractDatabaseEntityTest
     {
         /* Given */
         $takeId = 1;
-        $expectedClass = Take::class;
         $expectedTimeStamp = DateTime::createFromFormat('Y-m-d H:i:s', '2021-09-10 11:16:58');
 
         /* When */
         $take = Take::get($takeId);
 
         /* Then */
-        $this->assertInstanceOf($expectedClass, $take);
         $this->assertEquals($expectedTimeStamp, $take->timestamp);
     }
 

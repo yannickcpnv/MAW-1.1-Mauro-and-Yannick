@@ -7,10 +7,13 @@ use Looper\Models\database\entities\QuestionType;
 
 //region Variables used in page
 /** @var array $values */
+
 /** @var Take $take */
 $take = $values['take'];
+
 /** @var Exercise $exercise */
 $exercise = $values['exercise'];
+
 /** @var Question[] $questions */
 $questions = $values['questions']
 //endregion

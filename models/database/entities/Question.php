@@ -2,14 +2,27 @@
 
 namespace Looper\Models\database\entities;
 
+/**
+ * This class is designed to represent a question of an exercise.
+ *
+ * @property-read int $exercise_id
+ */
 class Question extends AbstractEntity
 {
 
     protected const TABLE_NAME = 'questions';
 
-    protected string $label;
-    protected int    $question_type_id;
-    protected int    $exercise_id;
+    public string $label;
+    public int    $question_type_id;
+    public int    $exercise_id;
+
+    /**
+     * @return int
+     */
+    public function getExerciseId(): int
+    {
+        return $this->exercise_id;
+    }
 
     /**
      * Get all answers of Question form the database.

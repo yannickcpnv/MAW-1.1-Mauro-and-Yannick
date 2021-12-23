@@ -47,7 +47,7 @@ class QuestionTypeTest extends TestCase
     {
         /* Given */
         $this->expectedString = 'SINGLE_LINE_TEXT';
-        $this->value = QuestionType::SINGLE_LINE_TEXT;
+        $this->value = 123;
 
         $this->whenAndThen();
     }
