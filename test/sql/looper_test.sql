@@ -37,7 +37,8 @@ CREATE TABLE IF NOT EXISTS `answers`
     DISABLE KEYS */;
 INSERT INTO `answers` (`take_id`, `question_id`, `value`)
 VALUES (1, 2, 'I\'m here POG'),
-       (2, 2, 'OMG SAME POGGERS');
+       (2, 2, 'OMG SAME POGGERS'),
+       (2, 3, 'OMGG ANOTHER POGGERS');
 /*!40000 ALTER TABLE `answers`
     ENABLE KEYS */;
 

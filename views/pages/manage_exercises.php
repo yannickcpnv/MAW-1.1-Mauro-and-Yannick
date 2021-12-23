@@ -2,11 +2,18 @@
 
 use Looper\Models\database\entities\Exercise;
 
-/** @var Exercise[]  exercisesBuilding */
-/** @var Exercise[]  exercisesAnswering */
-/** @var Exercise[]  exercisesClosed */
-/** @var \Looper\Models\database\entities\Question[] nbQuestions */
-/** @var Exercise  exercise */
+//region Variables used in page
+/** @var array $values */
+
+/** @var Exercise[] $exercisesBuilding */
+$exercisesBuilding = $values["exercisesBuilding"];
+
+/** @var Exercise[] $exercisesAnswering */
+$exercisesAnswering = $values["exercisesAnswering"];
+
+/** @var Exercise[] $exercisesClosed */
+$exercisesClosed = $values["exercisesClosed"];
+//endregion
 ?>
 
 <header class="heading results">
@@ -29,11 +36,11 @@ use Looper\Models\database\entities\Exercise;
                 </thead>
                 <tbody>
                     <?php
-                    foreach ($values["exercisesBuilding"] as $exercise) : ?>
+                    foreach ($exercisesBuilding as $exercise) : ?>
                         <tr>
                             <td><?= $exercise->title ?></td>
                             <td><?php
-                                if ($values["nbQuestions"][$exercise->id] > 0): ?>
+                                if ($exercise->hasQuestions()): ?>
                                     <a title="Be ready for answers" rel="nofollow" data-method="put"
                                        href="/exercises/<?= $exercise->id ?>/complete"><i
                                           class="fa fa-comment"></i></a>
@@ -65,7 +72,7 @@ use Looper\Models\database\entities\Exercise;
 
                 <tbody>
                     <?php
-                    foreach ($values["exercisesAnswering"] as $exercise) : ?>
+                    foreach ($exercisesAnswering as $exercise) : ?>
                         <tr>
                             <td><?= $exercise->title ?></td>
                             <td>
@@ -93,7 +100,7 @@ use Looper\Models\database\entities\Exercise;
                 </thead>
                 <tbody>
                     <?php
-                    foreach ($values["exercisesClosed"] as $exercise) : ?>
+                    foreach ($exercisesClosed as $exercise) : ?>
                         <tr>
                             <td><?= $exercise->title ?></td>
                             <td>

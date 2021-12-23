@@ -2,27 +2,40 @@
 
 namespace Looper\Test\Models\database\entities;
 
-use Looper\Test\TestHelper;
-use PHPUnit\Framework\TestCase;
 use Looper\Models\database\entities\Take;
 use Looper\Models\database\entities\Exercise;
 use Looper\Models\database\entities\Question;
 use Looper\Models\database\entities\ExerciseStatus;
 
-class ExerciseTest extends TestCase
+class ExerciseTest extends AbstractDatabaseEntityTest
 {
 
-    public static function setUpBeforeClass(): void
+    public function testConstruct(): void
     {
-        TestHelper::createDatabase();
+        /* Given */
+        $expectedStatus = ExerciseStatus::BUILDING;
+
+        /* When */
+        $exercise = new Exercise();
+
+        /* Then */
+        $this->assertEquals($expectedStatus, $exercise->exercise_status_id);
     }
 
-    public final function setUp(): void
+    public function testAllAnswering(): void
     {
-        TestHelper::createDatabase();
+        /* Given */
+        $status = ExerciseStatus::ANSWERING;
+
+        /* When */
+        $exercises = Exercise::getAllAnswering();
+
+        /* Then */
+        $filtered = array_filter($exercises, static fn($ex) => $ex->exercise_status_id === $status);
+        $this->assertEquals($exercises, $filtered);
     }
 
-    public function testGetQuestions()
+    public function testGetQuestions(): void
     {
         /* Given */
         $exercise = Exercise::get(3);
@@ -35,7 +48,7 @@ class ExerciseTest extends TestCase
         $this->assertNotNull($questions[0]->label);
     }
 
-    public function testGetTakes()
+    public function testGetTakes(): void
     {
         /* Given */
         $exercise = Exercise::get(3);
@@ -48,7 +61,7 @@ class ExerciseTest extends TestCase
         $this->assertNotNull($takes[0]->timestamp);
     }
 
-    public function testGetTakesWhenExerciseHasNotTakes()
+    public function testGetTakesWhenExerciseHasNotTakes(): void
     {
         /* Given */
         $exercise = Exercise::get(1);
@@ -60,7 +73,7 @@ class ExerciseTest extends TestCase
         $this->assertEmpty($takes);
     }
 
-    public function testGetExercisesByStatus()
+    public function testGetExercisesByStatus(): void
     {
         /* Given */
         $exerciseStatus = ExerciseStatus::BUILDING;
@@ -72,5 +85,55 @@ class ExerciseTest extends TestCase
         foreach ($exercisesBuilding as $exercise) {
             $this->assertEquals($exerciseStatus, $exercise->exercise_status_id);
         }
+    }
+
+    public function testHasQuestionsWithQuestions(): void
+    {
+        /* Given */
+        $exercise = Exercise::get(2);
+
+        /* When */
+        $result = $exercise->hasQuestions();
+
+        /* Then */
+        $this->assertTrue($result);
+    }
+
+    public function testHasQuestionsWithoutQuestions(): void
+    {
+        /* Given */
+        $exercise = Exercise::get(1);
+
+        /* When */
+        $result = $exercise->hasQuestions();
+
+        /* Then */
+        $this->assertFalse($result);
+    }
+
+    public function testUpdateStatusFromBuilding(): void
+    {
+        /* Given */
+        $nextStatus = ExerciseStatus::ANSWERING;
+        $exercise = Exercise::get(1);
+
+        /* When */
+        $exercise->updateStatus();
+
+        /* Then */
+        $this->assertEquals($nextStatus, $exercise->exercise_status_id);
+    }
+
+    public function testUpdateStatusFromAnswering(): void
+    {
+        /* Given */
+        $nextStatus = ExerciseStatus::CLOSED;
+        $exercise = Exercise::get(2);
+
+        /* When */
+        $exercise->updateStatus();
+
+        /* Then */
+        $this->assertEquals($nextStatus, $exercise->exercise_status_id);
     }
 }

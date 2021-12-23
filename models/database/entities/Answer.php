@@ -2,12 +2,34 @@
 
 namespace Looper\Models\database\entities;
 
+/**
+ * This class is designed to represent an answer between a take and a question.
+ */
 class Answer extends AbstractEntity
 {
 
     protected const TABLE_NAME = 'answers';
 
-    protected string $value;
-    protected int    $take_id;
-    protected int    $question_id;
+    public int    $take_id;
+    public int    $question_id;
+    public string $value;
+
+    /**
+     * Get a take by its id.
+     *
+     * @param int $takeId take id.
+     *
+     * @return Answer[]
+     */
+    public static function getByTakeId(int $takeId): array
+    {
+        $query = "
+            SELECT a.id, a.take_id, question_id, value
+            FROM answers a
+            INNER JOIN takes t on a.take_id = t.id
+            WHERE t.id=:takeId
+        ";
+        $queryArray = ['takeId' => $takeId];
+        return self::createDatabase()->fetchRecords($query, __CLASS__, $queryArray);
+    }
 }

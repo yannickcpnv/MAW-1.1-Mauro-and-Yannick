@@ -4,6 +4,11 @@ namespace Looper\Models\database\entities;
 
 use DateTime;
 
+/**
+ * this class is designed to represent an {@link Exercise} take.
+ *
+ * @property-read DateTime|string $timestamp
+ */
 class Take extends AbstractEntity
 {
 
@@ -11,6 +16,9 @@ class Take extends AbstractEntity
 
     protected DateTime|string $timestamp;
 
+    /**
+     * Instantiate a new {@link Take}.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -23,30 +31,9 @@ class Take extends AbstractEntity
         }
     }
 
-    /**
-     * Retrieve all takes from database.
-     *
-     * @return Take[] An array of all takes.
-     */
-    public static function getAll(): array
+    private static function strToDateTime($strTimestamp): DateTime|bool
     {
-        $takes = parent::getAll();
-
-        return $takes;
-    }
-
-    /**
-     * Retrieve a take from the database.
-     *
-     * @param int $id - The ID.
-     *
-     * @return Take|null The take
-     */
-    public static function get(int $id): ?Take
-    {
-        $take = parent::get($id);
-
-        return $take;
+        return DateTime::createFromFormat("Y-m-d H:i:s", $strTimestamp);
     }
 
     /**
@@ -63,7 +50,6 @@ class Take extends AbstractEntity
                 $answer->take_id = $this->id;
             }
             $answer->create();
-            unset($answer->id);
         }
     }
 
@@ -82,7 +68,12 @@ class Take extends AbstractEntity
         }
     }
 
-    public function getQuestions()
+    /**
+     * Retrieve all questions of the take.
+     *
+     * @return Question[]
+     */
+    public function getQuestions(): array
     {
         $query = "
             SELECT q.id, q.label, q.exercise_id, q.question_type_id
@@ -113,9 +104,6 @@ class Take extends AbstractEntity
         return self::createDatabase()->fetchRecords($query, Answer::class, $queryArray)[0];
     }
 
-    private static function strToDateTime($strTimestamp): DateTime|bool
-    {
-        return DateTime::createFromFormat("Y-m-d H:i:s", $strTimestamp);
-    }
+    protected function getTimestamp(): DateTime|string { return $this->timestamp; }
 }
 

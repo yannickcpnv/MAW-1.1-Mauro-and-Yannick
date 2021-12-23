@@ -2,11 +2,13 @@
 
 namespace Looper\Controllers;
 
+use Bramus\Router\Router;
+
 require_once 'vendor/autoload.php';
 
 require_once __DIR__ . '\vendor\bramus\router\src\Bramus\Router\Router.php';
 // Create a Router
-$router = new \Bramus\Router\Router();
+$router = new Router();
 
 // Custom 404 Handler
 $router->set404(function () {
@@ -47,7 +49,7 @@ $router->mount('/exercises', function () use ($router) {
      * Take Routes
      */
     $router->get('/(\d+)/createTake', function ($exerciseId) {
-        (new ExerciseController())->takeExercise($exerciseId ?? 0);
+        (new TakeController())->openCreateTake($exerciseId ?? 0);
     });
     $router->post('/(\d+)/createTake', function ($exerciseId) {
         (new TakeController())->createTake($_POST['take'], $exerciseId);
@@ -56,7 +58,7 @@ $router->mount('/exercises', function () use ($router) {
         (new TakeController())->openTakeResult($takeId, $exerciseId);
     });
     $router->get('/(\d+)/takes/(\d+)/edit', function ($exerciseId, $takeId) {
-        (new TakeController())->showDetails($exerciseId, $takeId);
+        (new TakeController())->openEditTake($exerciseId, $takeId);
     });
     $router->post('/(\d+)/takes/(\d+)/edit', function ($exerciseId, $takeId) {
         (new TakeController())->editTake($_POST['take'], $exerciseId, $takeId);

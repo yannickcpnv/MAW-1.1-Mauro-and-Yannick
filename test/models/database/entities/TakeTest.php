@@ -4,27 +4,14 @@ namespace Looper\Test\Models\database\entities;
 
 use DateTime;
 use PDOException;
-use Looper\Test\TestHelper;
-use PHPUnit\Framework\TestCase;
 use Looper\Models\database\entities\Take;
 use Looper\Models\database\entities\Answer;
 use Looper\Models\database\entities\Question;
-use Looper\Models\database\entities\Exercise;
 
-class TakeTest extends TestCase
+class TakeTest extends AbstractDatabaseEntityTest
 {
 
-    public static function setUpBeforeClass(): void
-    {
-        TestHelper::createDatabase();
-    }
-
-    public final function setUp(): void
-    {
-        TestHelper::createDatabase();
-    }
-
-    public function testGetAll()
+    public function testGetAll(): void
     {
         /* Given */
         $expectedTakeQuantity = 2;
@@ -38,22 +25,20 @@ class TakeTest extends TestCase
         $this->assertEquals($expectedTimeStamp, $takes[0]->timestamp);
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         /* Given */
         $takeId = 1;
-        $expectedClass = Take::class;
         $expectedTimeStamp = DateTime::createFromFormat('Y-m-d H:i:s', '2021-09-10 11:16:58');
 
         /* When */
         $take = Take::get($takeId);
 
         /* Then */
-        $this->assertInstanceOf($expectedClass, $take);
         $this->assertEquals($expectedTimeStamp, $take->timestamp);
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         /* Given */
         $take = new Take();
@@ -73,7 +58,7 @@ class TakeTest extends TestCase
     /**
      * @depends testGet
      */
-    public function testSave()
+    public function testSave(): void
     {
         /* Given */
         $takeId = 2;
@@ -91,7 +76,7 @@ class TakeTest extends TestCase
         $this->assertEquals($expectedValue, Answer::get($answerId)->value);
     }
 
-    public function testGetAnswerByQuestionId()
+    public function testGetAnswerByQuestionId(): void
     {
         /* Given */
         $takeId = 1;
@@ -111,7 +96,7 @@ class TakeTest extends TestCase
         $this->assertEquals($expectedAnswerValue, $actualAnswer->value);
     }
 
-    public function testGetQuestions()
+    public function testGetQuestions(): void
     {
         /* Given */
         $takeId = 1;
@@ -119,7 +104,7 @@ class TakeTest extends TestCase
         $take = TAKE::get($takeId);
         $question = Question::get($questionId);
         /* When */
-        $resultingQuestion = $take->getQuestions($takeId)[0];
+        $resultingQuestion = $take->getQuestions()[0];
 
         /* Then */
         $this->assertEquals($question, $resultingQuestion);

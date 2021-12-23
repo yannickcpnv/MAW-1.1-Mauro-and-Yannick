@@ -2,25 +2,13 @@
 
 namespace Looper\Test\Models\database\entities;
 
-use Looper\Test\TestHelper;
-use PHPUnit\Framework\TestCase;
 use Looper\Models\database\entities\Answer;
 use Looper\Models\database\entities\Question;
 
-class QuestionTest extends TestCase
+class QuestionTest extends AbstractDatabaseEntityTest
 {
 
-    public static function setUpBeforeClass(): void
-    {
-        TestHelper::createDatabase();
-    }
-
-    public final function setUp(): void
-    {
-        TestHelper::createDatabase();
-    }
-
-    public function testGetAnswers()
+    public function testGetAnswers(): void
     {
         /* Given */
         $question = new Question(['id' => 2]);
@@ -33,7 +21,7 @@ class QuestionTest extends TestCase
         $this->assertNotNull($answers[0]->value);
     }
 
-    public function testGetAnswerByTakeId()
+    public function testGetAnswerByTakeId(): void
     {
         /* Given */
         $takeId = 1;

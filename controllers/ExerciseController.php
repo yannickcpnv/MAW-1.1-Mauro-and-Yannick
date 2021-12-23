@@ -3,141 +3,91 @@
 namespace Looper\Controllers;
 
 use Looper\Models\database\entities\Exercise;
-use Looper\Models\database\entities\Question;
 use Looper\Models\database\entities\ExerciseStatus;
 
 class ExerciseController extends ViewController
 {
 
-    public function openCreateExercise()
+    public function openCreateExercise(): void
     {
         $this->render('create_exercise');
     }
 
-
-    public function openEditExercise($id)
+    public function openEditExercise(int $exerciseId): void
     {
-        $selectedExercise = Exercise::get($id);
+        $selectedExercise = Exercise::get($exerciseId);
         $selectedQuestions = $selectedExercise->getQuestions();
-        self::renderPage(
-            "edit_exercise",
-            ["selectedExercise" => $selectedExercise, "selectedQuestions" => $selectedQuestions]
-        );
+
+        $this->render("edit_exercise", compact('selectedExercise', 'selectedQuestions'));
     }
 
-    public function validateExerciseCreation($exerciseForm)
+    public function validateExerciseCreation(array $exerciseForm): void
     {
-        if ($exerciseForm["title"] != "") {
-            $selectedExercise =
-                new Exercise(["title" => $exerciseForm["title"], "exercise_status_id" => ExerciseStatus::BUILDING]);
+        if ($exerciseForm["title"] !== "") {
+            $selectedExercise = new Exercise(["title" => $exerciseForm["title"]]);
             $selectedExercise->create();
             $selectedQuestions = $selectedExercise->getQuestions();
-            self::renderPage(
-                "edit_exercise",
-                ["selectedExercise" => $selectedExercise, "selectedQuestions" => $selectedQuestions]
-            );
+
+            $this->render("edit_exercise", compact('selectedExercise', 'selectedQuestions'));
         } else {
             $this->render('create_exercise');
         }
     }
 
-    public function completeExercise(int $id)
+    public function completeExercise(int $exerciseId): void
     {
-        $selectedExercise = Exercise::get($id);
+        $selectedExercise = Exercise::get($exerciseId);
         $selectedQuestions = $selectedExercise->getQuestions();
+
         if (count($selectedQuestions) > 0) {
-            $selectedExercise->exercise_status_id = ExerciseStatus::ANSWERING;
+            $selectedExercise->updateStatus();
             $selectedExercise->save();
             $this->openManageExercise();
         } else {
-            self::renderPage("edit_exercise", [
-                "selectedExercise"  => $selectedExercise,
-                "selectedQuestions" => $selectedQuestions,
-            ]);
+            $this->render("edit_exercise", compact('selectedExercise', 'selectedQuestions'));
         }
     }
 
-    public function listExercises()
-    {
-        $exercises = array_filter(Exercise::getAll(), function ($exercise) {
-            return $exercise->exercise_status_id == ExerciseStatus::ANSWERING;
-        });
-        self::renderPage('list_exercises', ["exercises" => $exercises]);
-    }
-
-    public function takeExercise(int $id)
-    {
-        $exercise = Exercise::get($id);
-        $questions = $exercise->getQuestions();
-        self::renderPage('take_exercise', [
-            "exercise"  => $exercise,
-            'questions' => $questions,
-            "mode"      => 'create',
-        ]);
-    }
-
-    public function openManageExercise()
+    public function openManageExercise(): void
     {
         $exercisesBuilding = Exercise::getExercisesByStatus(ExerciseStatus::BUILDING);
         $exercisesAnswering = Exercise::getExercisesByStatus(ExerciseStatus::ANSWERING);
         $exercisesClosed = Exercise::getExercisesByStatus(ExerciseStatus::CLOSED);
-        $nbQuestions = [];
-        foreach (array_merge($exercisesAnswering, $exercisesBuilding, $exercisesClosed) as $exercise) {
-            $nbQuestions[$exercise->id] = Count($exercise->getQuestions());
-        }
-        $this->render(
-            'manage_exercises',
-            [
-                "exercisesBuilding"  => $exercisesBuilding,
-                "exercisesAnswering" => $exercisesAnswering,
-                "exercisesClosed"    => $exercisesClosed,
-                "nbQuestions"        => $nbQuestions,
-            ]
-        );
+
+        $this->render('manage_exercises', compact('exercisesBuilding', 'exercisesAnswering', 'exercisesClosed'));
     }
 
-    public function removeExercise(int $id)
+    public function listExercises(): void
+    {
+        $exercises = Exercise::getAllAnswering();
+
+        $this->render('list_exercises', compact('exercises'));
+    }
+
+    public function removeExercise(int $id): void
     {
         $selectedExercise = Exercise::get($id);
         $selectedExercise->delete();
+
         $this->openManageExercise();
     }
 
-    public function closeExercise(int $id)
+    public function closeExercise(int $id): void
     {
         $selectedExercise = Exercise::get($id);
-        $selectedExercise->exercise_status_id = ExerciseStatus::CLOSED;
+        $selectedExercise->updateStatus();
         $selectedExercise->save();
+
         $this->openManageExercise();
     }
 
-    public function openExerciseResults(int $id)
+    public function openExerciseResults(int $id): void
     {
-        $selectedExercises = Exercise::get($id);
-        $questions = $selectedExercises->getQuestions();
-        $takes = $selectedExercises->getTakes();
-        $answers = [[]];
-        foreach ($questions as $question) {
-            foreach ($question->getAnswers() as $answer) {
-                if (str_replace(' ', '', $answer->value) == "") {
-                    $type = "fa-times empty";
-                } elseif (strlen($answer->value) > 9) {
-                    $type = "fa-check-double filled";
-                } else {
-                    $type = "fa-check short";
-                }
-                $answers[$answer->take_id][$answer->question_id] = $type;
-            }
-        }
-        $this->render(
-            'result_exercise',
-            [
-                "selectedExercises" => $selectedExercises,
-                "questions"         => $questions,
-                "takes"             => $takes,
-                "answers"           => $answers,
-            ]
-        );
+        $selectedExercise = Exercise::get($id);
+        $questions = $selectedExercise->getQuestions();
+        $takes = $selectedExercise->getTakes();
+
+        $this->render('result_exercise', compact('selectedExercise', 'questions', 'takes'));
     }
 }
 

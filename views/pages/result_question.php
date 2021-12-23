@@ -1,20 +1,28 @@
 <?php
 
 use Looper\Models\database\entities\Take;
-use Looper\Models\database\entities\Question;
 use Looper\Models\database\entities\Exercise;
+use Looper\Models\database\entities\Question;
 
-/** @var Exercise $values ["selectedExercise"] */
-/** @var Question $values ["selectedQuestion] */
-/** @var Take[] $values ['takes'] */
-/** @var Take $take */
+//region Variables used in page
+/** @var array $values */
+
+/** @var Exercise $selectedExercise */
+$selectedExercise = $values['selectedExercise'];
+
+/** @var Take $takes */
+$takes = $values['takes'];
+
+/** @var Question $selectedQuestion */
+$selectedQuestion = $values['selectedQuestion'];
+//endregion
 ?>
 <header class="heading results">
     <section class="container">
         <a href="/"><img src="/views/assets/logo/logo.png"></a>
         <span class="exercise-label">
-            Exercise: <a href="/exercises/<?= $values["selectedExercise"]->id ?>">
-                <?= $values['selectedExercise']->title ?>
+            Exercise: <a href="/exercises/<?= $selectedExercise->id ?>">
+                <?= $selectedExercise->title ?>
             </a>
         </span>
     </section>
@@ -32,14 +40,14 @@ use Looper\Models\database\entities\Exercise;
 
         <tbody>
             <?php
-            foreach ($values['takes'] as $key => $take): ?>
+            foreach ($takes as $key => $take): ?>
                 <tr>
                     <td><a
-                          href="/exercises/<?= $values["selectedExercise"]->id ?>/takes/<?= $take->id ?>">
+                          href="/exercises/<?= $selectedExercise->id ?>/takes/<?= $take->id ?>">
                             <?= $take->timestamp->format('Y-m-d H:i:s e') ?>
                         </a>
                     </td>
-                    <td><?= $take->getAnswerByQuestionId($values['selectedQuestion']->id)->value ?></td>
+                    <td><?= $take->getAnswerByQuestionId($selectedQuestion->id)->value ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

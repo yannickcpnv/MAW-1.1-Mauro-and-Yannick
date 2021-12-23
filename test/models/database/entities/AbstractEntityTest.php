@@ -5,6 +5,7 @@ namespace Looper\Test\Models\database\entities;
 use PDOException;
 use Looper\Test\TestHelper;
 use Looper\Test\fake\FakeEntity;
+use Looper\Models\database\entities\EntityNotFoundException;
 
 /**
  * @coversDefaultClass \Looper\Models\database\entities\AbstractEntity
@@ -23,14 +24,12 @@ class AbstractEntityTest extends AbstractDatabaseEntityTest
         TestHelper::createMiniDatabase();
     }
 
-    public final function setUp(): void
+    public function setUp(): void
     {
         TestHelper::createMiniDatabase();
     }
 
-    /**
-     */
-    public function testGetAll()
+    public function testGetAll(): void
     {
         /* Given */
         $expectedEntitiesQuantity = 50;
@@ -42,26 +41,32 @@ class AbstractEntityTest extends AbstractDatabaseEntityTest
         $this->assertCount($expectedEntitiesQuantity, $entities);
     }
 
-    /**
-     */
-    public function testGet()
+    public function testGet(): void
     {
         /* Given */
         $entityId = 12;
-        $expectedClassInstance = FakeEntity::class;
         $expectedIpAddress = "122.88.122.26";
 
         /* When */
         $entity = FakeEntity::get($entityId);
 
         /* Then */
-        $this->assertInstanceOf($expectedClassInstance, $entity);
         $this->assertEquals($expectedIpAddress, $entity->ip_address);
     }
 
-    /**
-     */
-    public function testCreate()
+    public function testGetNoutFound(): void
+    {
+        /* Given */
+        $entityId = 12345;
+
+        /* Except */
+        $this->expectException(EntityNotFoundException::class);
+
+        /* When */
+        FakeEntity::get($entityId);
+    }
+
+    public function testCreate(): void
     {
         /* Given */
         $entity = new FakeEntity(
@@ -87,18 +92,16 @@ class AbstractEntityTest extends AbstractDatabaseEntityTest
     /**
      * @depends testGet
      */
-    /**
-     */
-    public function testSave()
+    public function testSave(): void
     {
         /* Given */
         $entityId = 8;
         $futurEntity = new FakeEntity(
             [
-                "id"         => $entityId,
+                "id" => $entityId,
                 "first_name" => "Darth",
-                "last_name"  => "Vader",
-                "email"      => "vader@imperial.emp",
+                "last_name" => "Vader",
+                "email" => "vader@imperial.emp",
                 "ip_address" => "255.255.255.255",
             ]
         );
@@ -107,13 +110,13 @@ class AbstractEntityTest extends AbstractDatabaseEntityTest
         $futurEntity->save();
 
         /* Then */
-        $this->assertEquals($futurEntity->firstname, FakeEntity::get($entityId)->firstname);
+        $this->assertEquals($futurEntity->first_name, FakeEntity::get($entityId)->first_name);
     }
 
     /**
      * @depends testGet
      */
-    public function testDelete()
+    public function testDelete(): void
     {
         /* Given */
         $entityId = 1;
@@ -123,6 +126,7 @@ class AbstractEntityTest extends AbstractDatabaseEntityTest
         $entity->delete();
 
         /* Then */
+        $this->expectException(EntityNotFoundException::class);
         $this->assertNull(FakeEntity::get($entityId));
     }
 

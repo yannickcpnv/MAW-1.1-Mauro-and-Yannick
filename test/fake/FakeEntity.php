@@ -9,8 +9,8 @@ class FakeEntity extends AbstractEntity
 
     protected const TABLE_NAME = 'users_test';
 
-    protected string $first_name;
-    protected string $last_name;
-    protected string $email;
-    protected string $ip_address;
+    public string $first_name;
+    public string $last_name;
+    public string $email;
+    public string $ip_address;
 }

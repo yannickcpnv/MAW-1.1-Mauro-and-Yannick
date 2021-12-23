@@ -1,21 +1,24 @@
 <?php
 
-use Looper\Models\database\entities\Take;
-use Looper\Models\database\entities\Answer;
 use Looper\Models\database\entities\Exercise;
 use Looper\Models\database\entities\Question;
 
-/** @var Exercise $values ["selectedExercises"] */
-/** @var Question[] $values ["questions"] */
-/** @var Take[] $values ["takes"] */
-/** @var Answer[] $values ["selectedExercises"] */
+//region Variables used in page
+/** @var array $values */
+
+/** @var Exercise $selectedExercise */
+$selectedExercise = $values["selectedExercise"];
+
+/** @var Question $questions */
+$questions = $values['questions'];
+//endregion
 ?>
 <header class="heading results">
     <section class="container">
         <a href="/"><img src="/views/assets/logo/logo.png"></a>
         <span class="exercise-label">Exercise: <a
-              href="/exercises/<?= $values["selectedExercises"]->id ?>"><?=
-                $values["selectedExercises"]->title ?></a></span>
+              href="/exercises/<?= $selectedExercise->id ?>"><?=
+                $selectedExercise->title ?></a></span>
     </section>
 </header>
 <main class="container">
@@ -24,9 +27,9 @@ use Looper\Models\database\entities\Question;
             <tr>
                 <th>Take</th>
                 <?php
-                foreach ($values['questions'] as $question): ?>
+                foreach ($questions as $question): ?>
                     <th><a
-                          href='/exercises/<?= $values["selectedExercises"]->id ?>/questions/<?= $question->id ?>'><?= $question->label ?></a>
+                          href='/exercises/<?= $selectedExercise->id ?>/questions/<?= $question->id ?>'><?= $question->label ?></a>
                     </th>
                 <?php
                 endforeach; ?>
@@ -37,12 +40,19 @@ use Looper\Models\database\entities\Question;
             foreach ($values["takes"] as $take): ?>
                 <tr>
                     <td><a
-                          href="/exercises/<?= $values["selectedExercises"]->id ?>/takes/<?= $take->id ?>"><?=
+                          href="/exercises/<?= $selectedExercise->id ?>/takes/<?= $take->id ?>"><?=
                             $take->timestamp->format('Y-m-d H:i:s e') ?></a>
                     </td>
                     <?php
-                    foreach ($values["questions"] as $question): ?>
-                        <td class="answer"><i class="fa <?= $values["answers"][$take->id][$question->id] ?>"></i></td>
+                    foreach ($questions as $question): ?>
+                        <?php $value = $question->getAnswerByTakeId($take->id)->value; ?>
+                        <?php if (trim($value) === ''): ?>
+                            <td class="answer"><i class="fa fa-times empty"></i></td>
+                        <?php elseif (strlen($value) > 9): ?>
+                            <td class="answer"><i class="fa fa-check-double filled"></i></td>
+                        <?php else: ?>
+                            <td class="answer"><i class="fa fa-check short"></i></td>
+                        <?php endif; ?>
                     <?php
                     endforeach; ?>
                 </tr>
