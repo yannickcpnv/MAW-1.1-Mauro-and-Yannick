@@ -14,18 +14,13 @@ class Question extends AbstractEntity
     protected const TABLE_NAME = 'questions';
     //endregion
 
+    //region Fields
     public string $label;
     public int    $question_type_id;
     public int    $exercise_id;
+    //endregion
 
-    /**
-     * @return int
-     */
-    public function getExerciseId(): int
-    {
-        return $this->exercise_id;
-    }
-
+    //region Methods
     /**
      * Get all answers of Question form the database.
      *
@@ -63,4 +58,10 @@ class Question extends AbstractEntity
         $queryArray = ['questionId' => $this->id, 'takeId' => $takeId];
         return self::createDatabase()->fetchOne($query, Answer::class, $queryArray);
     }
+    //endregion
+
+    //region Accessors
+    /** @noinspection PhpUnused */
+    protected function getExerciseId(): int { return $this->exercise_id; }
+    //endregion
 }
