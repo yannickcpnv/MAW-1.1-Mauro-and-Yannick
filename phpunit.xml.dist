@@ -20,8 +20,7 @@
         </testsuite>
     </testsuites>
 
-    <coverage cacheDirectory=".phpunit.cache/code-coverage"
-    >
+    <coverage cacheDirectory=".phpunit.cache/code-coverage">
         <include>
             <directory>models</directory>
         </include>

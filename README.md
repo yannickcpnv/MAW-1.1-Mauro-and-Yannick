@@ -2,6 +2,8 @@
 
 MAW 1.1 Copy of Looper project for ES dev technician formation.
 
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/yannickcpnv/MAW-1.1-Mauro-and-Yannick?label=version&style=flat-square)
+
 ## Requirements
 
 | Tools                                         | Version            |
@@ -11,6 +13,13 @@ MAW 1.1 Copy of Looper project for ES dev technician formation.
 | [MariaDB](https://mariadb.org/download/)      | 10.3.31-MariaDB    |
 
 Others version of dependencies can be found in composer.json.
+
+## Dependencies
+
+- [phpunit/phpunit](https://packagist.org/packages/phpunit/phpunit) : Unit tests
+- [vlucas/phpdotenv](https://packagist.org/packages/vlucas/phpdotenv) : .env files
+- [bramus/router](https://packagist.org/packages/bramus/router) : Router
+- [icanboogie/accessor](https://packagist.org/packages/icanboogie/accessor) : Use getter/setter with same name as field
 
 ## Installation
 
@@ -50,6 +59,7 @@ FLUSH PRIVILEGES;
    ```
 3. Enable php extensions in you php.ini :
    1. ext-pdo => Database access
+4. Go in the root folder of the project and run `php -S localhost:8083`
 
 ## Test
 
