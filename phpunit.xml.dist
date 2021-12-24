@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         cacheResultFile=".phpunit.cache/test-results"
+         beStrictAboutOutputDuringTests="true"
+         beStrictAboutTodoAnnotatedTests="true"
+         beStrictAboutTestsThatDoNotTestAnything="false"
+         convertDeprecationsToExceptions="true"
+         verbose="true"
+         colors="true"
+>
+    <logging>
+        <testdoxHtml outputFile=".phpunit.cache/test-dox.html"/>
+    </logging>
+
+    <testsuites>
+        <testsuite name="default">
+            <directory>test</directory>
+        </testsuite>
+    </testsuites>
+
+    <coverage cacheDirectory=".phpunit.cache/code-coverage">
+        <include>
+            <directory>models</directory>
+        </include>
+        <report>
+            <html outputDirectory=".phpunit.cache/code-coverage/html"/>
+        </report>
+    </coverage>
+
+    <php>
+        <env name="APP_ENV" value="test"/>
+    </php>
+</phpunit>

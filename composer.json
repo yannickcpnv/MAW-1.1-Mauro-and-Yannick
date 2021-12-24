@@ -1,2 +1,45 @@
 {
+    "version": "1.0.0",
+    "authors": [
+        {
+            "name": "Yannick Baudraz",
+            "email": "Yannick.BAUDRAZ@cpnv.ch"
+        },
+        {
+            "name": "Mauro Santos",
+            "email": "Mauro-Alexandre.COSTA-DOS-SANTOS@cpnv.ch"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Looper\\Controllers\\": "controllers",
+            "Looper\\Models\\": "models",
+            "Looper\\Test\\": "test",
+            "Looper\\Test\\Models\\": "test/models"
+        },
+        "files": [
+            "config/config.php"
+        ]
+    },
+    "scripts": {
+        "test": [
+            "@putenv APP_ENV=test",
+            "vendor/bin/phpunit test --testdox"
+        ],
+        "test:coverage": [
+            "@putenv APP_ENV=test",
+            "@putenv XDEBUG_MODE=coverage",
+            "vendor/bin/phpunit test"
+        ]
+    },
+    "require": {
+        "ext-pdo": "*",
+        "phpunit/phpunit": "^9.5",
+        "vlucas/phpdotenv": "^5.3",
+        "bramus/router": "~1.6",
+        "icanboogie/accessor": "^4.0"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest"
+    }
 }
