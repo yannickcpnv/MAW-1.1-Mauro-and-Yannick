@@ -7,7 +7,7 @@ use PDOStatement;
 use Looper\Models\database\entities\AbstractEntity;
 
 /**
- * This class interact with the SQL database.
+ * This class is designed to interact with the SQL database.
  */
 class DatabaseConnector
 {
@@ -19,7 +19,7 @@ class DatabaseConnector
 
     //region Constructor
     /**
-     * Instantiate a new database object.
+     * Instantiate a new {@link DatabaseConnector} object.
      *
      * @param string $dsn      The Data Source Name, contains the information required to connect to the database.
      * @param string $username The username for the DSN string.

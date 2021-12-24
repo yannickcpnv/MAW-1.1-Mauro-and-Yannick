@@ -8,17 +8,24 @@ namespace Looper\Models\database\entities;
 class Exercise extends AbstractEntity
 {
 
+    //region Constants
     protected const TABLE_NAME = 'exercises';
+    //endregion
 
+    //region Fields
     public string $title;
     public int    $exercise_status_id;
+    //endregion
 
+    //region Constructor
     public function __construct(array $fields = [])
     {
         parent::__construct($fields);
         $this->exercise_status_id = $this->exercise_status_id ?? ExerciseStatus::BUILDING;
     }
+    //endregion
 
+    //region Methods
     /**
      * Get all exercises with status answering.
      *
@@ -123,4 +130,5 @@ class Exercise extends AbstractEntity
             ExerciseStatus::ANSWERING => ExerciseStatus::CLOSED,
         };
     }
+    //endregion
 }

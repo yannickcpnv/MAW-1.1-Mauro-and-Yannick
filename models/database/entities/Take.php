@@ -12,13 +12,15 @@ use DateTime;
 class Take extends AbstractEntity
 {
 
+    //region Constants
     protected const TABLE_NAME = 'takes';
+    //endregion
 
+    //region Fields
     protected DateTime|string $timestamp;
+    //endregion
 
-    /**
-     * Instantiate a new {@link Take}.
-     */
+    //region Constructor
     public function __construct()
     {
         parent::__construct();
@@ -30,12 +32,9 @@ class Take extends AbstractEntity
             $this->timestamp = date("Y-m-d H:i:s");
         }
     }
+    //endregion
 
-    private static function strToDateTime($strTimestamp): DateTime|bool
-    {
-        return DateTime::createFromFormat("Y-m-d H:i:s", $strTimestamp);
-    }
-
+    //region Methods
     /**
      * Create a new take in the database.
      *
@@ -104,6 +103,14 @@ class Take extends AbstractEntity
         return self::createDatabase()->fetchRecords($query, Answer::class, $queryArray)[0];
     }
 
+    private static function strToDateTime($strTimestamp): DateTime|bool
+    {
+        return DateTime::createFromFormat("Y-m-d H:i:s", $strTimestamp);
+    }
+    //endregion
+
+    //region Accessors
     protected function getTimestamp(): DateTime|string { return $this->timestamp; }
+    //endregion
 }
 

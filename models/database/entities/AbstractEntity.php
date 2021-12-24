@@ -8,6 +8,8 @@ use ICanBoogie\Accessor\AccessorCamelTrait;
 use Looper\Models\database\DatabaseConnector;
 
 /**
+ * This class is designed to abstract the concept of an entity.
+ *
  * @property-read int $id
  */
 abstract class AbstractEntity
@@ -15,11 +17,12 @@ abstract class AbstractEntity
 
     use AccessorCamelTrait, Hydratable, Arrayable;
 
-    //region Fields
+    //region Constants
     protected const TABLE_NAME = '';
+    //endregion
 
+    //region Fields
     protected int $id;
-
     //endregion
 
     //region Methods
@@ -113,7 +116,9 @@ abstract class AbstractEntity
 
         self::createDatabase()->delete($query, $queryArray);
     }
+    //endregion
 
+    //region Accessors
     /** @noinspection PhpUnused */
     protected function getId(): int { return $this->id; }
     //endregion

@@ -4,11 +4,14 @@ namespace Looper\Models\database;
 
 use Looper\Models\database\entities\Answer;
 
+/**
+ * This class is designed to convert object|array|variable to an entity.
+ */
 class EntityConverter
 {
 
     /**
-     * Map an array of answer (ex : $array['index']['value']) to an array of {@link Answer}.
+     * Map an array of answer to an array of {@link Answer}.
      *
      * @param array[] $answersForm The answers from the form.
      *

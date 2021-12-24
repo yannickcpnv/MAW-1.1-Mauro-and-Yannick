@@ -2,11 +2,11 @@
 
 namespace Looper\Controllers;
 
+use Exception;
 use Bramus\Router\Router;
 
 require_once 'vendor/autoload.php';
 
-require_once __DIR__ . '\vendor\bramus\router\src\Bramus\Router\Router.php';
 // Create a Router
 $router = new Router();
 
@@ -19,10 +19,10 @@ $router->get('/', function () {
 });
 $router->mount('/exercises', function () use ($router) {
     $router->get('/answering', function () {
-        (new ExerciseController())->listExercises();
+        (new ExerciseController())->openListExercises();
     });
     $router->get('/manage', function () {
-        (new ExerciseController())->openManageExercise();
+        (new ExerciseController())->openManageExercises();
     });
     $router->get('/createExercise', function () {
         (new ExerciseController())->openCreateExercise();
@@ -52,7 +52,7 @@ $router->mount('/exercises', function () use ($router) {
         (new TakeController())->openCreateTake($exerciseId ?? 0);
     });
     $router->post('/(\d+)/createTake', function ($exerciseId) {
-        (new TakeController())->createTake($_POST['take'], $exerciseId);
+        (new TakeController())->createTake($exerciseId, $_POST['take']);
     });
     $router->get('/(\d+)/takes/(\d+)', function ($exerciseId, $takeId) {
         (new TakeController())->openTakeResult($takeId, $exerciseId);
@@ -61,7 +61,7 @@ $router->mount('/exercises', function () use ($router) {
         (new TakeController())->openEditTake($exerciseId, $takeId);
     });
     $router->post('/(\d+)/takes/(\d+)/edit', function ($exerciseId, $takeId) {
-        (new TakeController())->editTake($_POST['take'], $exerciseId, $takeId);
+        (new TakeController())->editTake($exerciseId, $takeId, $_POST['take']);
     });
     /**
      * Question Routes
@@ -88,4 +88,9 @@ $router->mount('/exercises', function () use ($router) {
         (new QuestionController())->removeQuestion($questionId);
     });
 });
-$router->run();
+
+try {
+    $router->run();
+} catch (Exception) {
+    ViewController::renderPage('500');
+}

@@ -10,7 +10,9 @@ namespace Looper\Models\database\entities;
 class Question extends AbstractEntity
 {
 
+    //region Constants
     protected const TABLE_NAME = 'questions';
+    //endregion
 
     public string $label;
     public int    $question_type_id;

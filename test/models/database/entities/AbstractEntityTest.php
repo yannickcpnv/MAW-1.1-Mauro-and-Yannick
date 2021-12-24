@@ -127,7 +127,7 @@ class AbstractEntityTest extends AbstractDatabaseEntityTest
 
         /* Then */
         $this->expectException(EntityNotFoundException::class);
-        $this->assertNull(FakeEntity::get($entityId));
+        FakeEntity::get($entityId);
     }
 
     public static function tearDownAfterClass(): void

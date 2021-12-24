@@ -8,12 +8,17 @@ namespace Looper\Models\database\entities;
 class Answer extends AbstractEntity
 {
 
+    //region Constants
     protected const TABLE_NAME = 'answers';
+    //endregion
 
+    //region Fields
     public int    $take_id;
     public int    $question_id;
     public string $value;
+    //endregion
 
+    //region Methods
     /**
      * Get a take by its id.
      *
@@ -32,4 +37,5 @@ class Answer extends AbstractEntity
         $queryArray = ['takeId' => $takeId];
         return self::createDatabase()->fetchRecords($query, __CLASS__, $queryArray);
     }
+    //endregion
 }

@@ -5,16 +5,13 @@ namespace Looper\Controllers;
 class ViewController
 {
 
-    protected function render(string $page, array $values = []): void
-    {
-        self::renderPage($page, $values);
-    }
-
     /**
      * Render a view.
      *
      * @param string $page   Name of the view page.
      * @param array  $values Array of variables used in the view.
+     *
+     * @noinspection PhpUnusedParameterInspection
      */
     public static function renderPage(string $page, array $values = []): void
     {
@@ -27,6 +24,11 @@ class ViewController
         }
         $content = ob_get_clean();
         require 'views/includes/layout.php';
+    }
+
+    protected function render(string $page, array $values = []): void
+    {
+        self::renderPage($page, $values);
     }
 
     protected function redirect(string $location): void
